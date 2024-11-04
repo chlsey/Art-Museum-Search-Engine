@@ -2,7 +2,7 @@ Nazafarin Jalilian-NazafarinJ \
 Yiwei Jiang-JYW5114 \
 Chelsey Junting Wang-chlsey \
 Kathleen Wang-kaz123456789 \
-Frai Li-Frappey \
+Frai Li-Frappey 
 
 
 # Art-Museum-Search-Engine
