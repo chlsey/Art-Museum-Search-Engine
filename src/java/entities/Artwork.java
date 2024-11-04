@@ -1,4 +1,4 @@
-package entities;
+package java.entities;
 
 public class Artwork {
     private String title;
