@@ -22,11 +22,11 @@ The program makes queries using APIs of museums and art galleries based on speci
 
 2. Bobby saw an artwork in the Metropolitan Museum of Art but needed to remember what the piece was called. Thankfully, he remembers the genre and general period and searches it up. He is given the picture, title, location, time, artist name, etc… of the potential pieces it could be.
 
-3. Emily, an art history professor, prepares a public service lecture on Renaissance art aimed at a non-specialist audience. She wants to recommend art exhibits that her audience can visit. So she turns to the program to search for artworks from the Renaissance period, filtering by nearby museums and galleries. The program adapts to each museum's API and retrieves relevant pieces, providing details like the artist, museum location, and available images. With this information, Emily can recommend specific Renaissance artworks that her audience can easily visit in local museums.
+3. Emily uses our search engine to find artworks. She is able to favorite the ones she likes.
 
-4. Anna is a high school student who is looking for some artworks for her Art project. She is not sure about a specific painting that she wants, but she does know there are some keywords she is looking for. She enters some keywords related to her project (e.g., "impressionism," "blue tones," "nature," or "19th-century art") in the Art Museum search engine and it will provide her with a list of artworks that match the entered keywords. 
+4. Anna wants to export some artworks onto her laptop. She is able to select artworks she wants and export them as a pdf file.
 
-5. Robby is visiting Toronto and wants to see impressionist paintings, so he searches for the genre and city. He is given the titles, images, and other information of the paintings that match this description.
+5. Robby sees some artworks he REALLY hates. He is able to leave hate comments under the artwork page.
 
 6. Liam wants to take the rest of 1D to a magnificent art gallery and be their tour guide so he can prove that singing is not his only talent. By looking up every art piece with all its associated information, he can do it smoothly. 
 
