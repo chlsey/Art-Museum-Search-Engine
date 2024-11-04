@@ -1,3 +1,10 @@
+Nazafarin Jalilian-NazafarinJ
+Yiwei Jiang-JYW5114
+Chelsey Junting Wang-chlsey
+Kathleen Wang-kaz123456789
+Frai Li-Frappey
+
+
 # Art-Museum-Search-Engine
 The program makes queries using APIs of museums and art galleries based on specifications the user gives it.
 
