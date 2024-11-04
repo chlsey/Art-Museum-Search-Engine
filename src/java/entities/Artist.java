@@ -2,6 +2,7 @@ package java.entities;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Artist {
     private String name;
     private String lifeSpan;
