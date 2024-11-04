@@ -24,7 +24,7 @@ The program makes queries using APIs of museums and art galleries based on speci
 
 3. Emily uses our search engine to find artworks. She is able to favorite the ones she likes.
 
-4. Anna wants to export some artworks onto her laptop. She is able to select artworks she wants and export them as a pdf file.
+4. Anna wants to rate some artworks. She is able to rate them out of 5 stars.
 
 5. Robby sees some artworks he REALLY hates. He is able to leave hate comments under the artwork page.
 
@@ -32,6 +32,7 @@ The program makes queries using APIs of museums and art galleries based on speci
 
 ### Proposed Entities for the Domain:
 #### Artwork: 
+- Title
 - Time period
 - Artist
 - Gallery
@@ -41,7 +42,6 @@ The program makes queries using APIs of museums and art galleries based on speci
 
 #### Artist:
 - Name
-- Image
 - Time period
 - List of artworks
 - Gender
