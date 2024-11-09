@@ -2,6 +2,7 @@ package use_case.search;
 
 import java.io.IOException;
 
+import data.MuseumDataAccessObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,7 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SearchInteractor {
+public class SearchInteractor implements SearchInputBoundary {
     private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
     private static final String QUERY_MET = "https://collectionapi.metmuseum.org/public/collection/v1";
     private static final String QUERY_HAR = "https://api.harvardartmuseums.org/";
@@ -27,6 +28,9 @@ public class SearchInteractor {
     private static final String QUERY_EUR = "https://api.europeana.eu/record/v2/search.json";
     private static final String EUR_TOKEN = "kerambleat";
     private static final String MESSAGE = "message";
+
+    public SearchInteractor(MuseumDataAccessObject museumDataAccessObject, SearchOutputBoundary searchOutputBoundary) {
+    }
 
     // TODO: get the IDs of the search query etc then make an "object" API call to get attributes of the Artwork
     public static List<Artwork> searchArtwork(String query){
@@ -101,10 +105,8 @@ public class SearchInteractor {
         }
     }
 
-    public static void main(String[] args) {
-        List<Artwork> all = searchArtwork("sunflower");
-        for (Artwork art: all) {
-            System.out.println(art.getTitle());
-        }
+    @Override
+    public void execute(SearchInputData searchInputData) {
+        //need to add later
     }
 }

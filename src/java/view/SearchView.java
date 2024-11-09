@@ -3,12 +3,16 @@ package view;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
 
+import java.util.List;
+import entities.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import static use_case.search.SearchInteractor.searchArtwork;
 
 /**
  * The View for the Search Use Case.
@@ -18,7 +22,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     private final SearchViewModel searchViewModel;
     private final JTextField keywordInputField = new JTextField(15);
-    private final JTextField timePeriodInputField = new JTextField(15);
     private final JTextArea searchResultsArea = new JTextArea(10, 30);
     private final SearchController searchController;
 
@@ -39,17 +42,24 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         final LabelTextPanel keywordInfo = new LabelTextPanel(
                 new JLabel("Keywords:"), keywordInputField);
-        final LabelTextPanel timePeriodInfo = new LabelTextPanel(
-                new JLabel("Time Period:"), timePeriodInputField);
 
         inputPanel.add(keywordInfo);
-        inputPanel.add(timePeriodInfo);
 
         // Panel for action buttons
         final JPanel buttons = new JPanel();
         searchButton = new JButton("Search");
         clearButton = new JButton("Clear");
-
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String searchword = keywordInputField.getText();
+                List<Artwork> all = searchArtwork(searchword);
+                StringBuilder artworks = new StringBuilder();
+                for (Artwork art: all) {
+                    artworks.append(art.getTitle());
+                }
+                 searchResultsArea.setText(artworks.toString());
+            }
+        });
         buttons.add(searchButton);
         buttons.add(clearButton);
 
@@ -63,8 +73,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 final String keyword = keywordInputField.getText();
-                final String timePeriod = timePeriodInputField.getText();
-                searchController.executeSearch(keyword, timePeriod);
+                searchController.executeSearch(keyword);
             }
         });
          */
@@ -73,7 +82,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         // Add listeners to input fields
         addKeywordListener();
-        addTimePeriodListener();
 
         // Arrange components in layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -84,8 +92,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(scrollPane);
     }
 
-    private void addTimePeriodListener() {
-    }
 
     private void addKeywordListener() {
     }
@@ -98,5 +104,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
 
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 }
