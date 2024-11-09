@@ -1,6 +1,6 @@
 package java.use_case.search;
 
-import java.entities.Artwork;
+import java.entities.*;
 import java.util.ArrayList;
 
 public class SearchInteractor implements SearchInputBoundary {
