@@ -1,9 +1,9 @@
-package java.view;
+package view;
 
 import java.awt.CardLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.interface_adapters.ViewManagerModel;
+import interface_adapters.ViewManagerModel;
 
 import javax.swing.JPanel;
 
