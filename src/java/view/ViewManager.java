@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * The View Manager for the program. It listens for property change events
  * in the ViewManagerModel and updates which View should be visible.
  */
-public class ViewManager implements PropertyChangeListener {
+public class ViewManager {
     private final CardLayout cardLayout;
     private final JPanel views;
     private final ViewManagerModel viewManagerModel;
@@ -20,14 +20,7 @@ public class ViewManager implements PropertyChangeListener {
         this.views = views;
         this.cardLayout = cardLayout;
         this.viewManagerModel = viewManagerModel;
-        this.viewManagerModel.addPropertyChangeListener(this);
+
     }
 
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("state")) {
-            final String viewModelName = (String) evt.getNewValue();
-            cardLayout.show(views, viewModelName);
-        }
-    }
 }

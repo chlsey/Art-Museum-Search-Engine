@@ -1,23 +1,26 @@
 package interface_adapters.search;
 
-import use_case.artwork_search.ArtworkSearchInputBoundary;
-import use_case.artwork_search.ArtworkSearchInputData;
+import use_case.search.SearchInputBoundary;
+import use_case.search.SearchInputData;
 
 /**
  * Controller for artwork search use case.
  */
 
 public class SearchController {
-    private final ArtworkSearchInputBoundary artworkSearchInputBoundary;
+    private final SearchInputBoundary SearchInputBoundary;
 
-    public SearchController(ArtworkSearchInputBoundary artworkSearchInputBoundary) {
-        this.artworkSearchInputBoundary = artworkSearchInputBoundary;
+    public SearchController(SearchInputBoundary artworkSearchInputBoundary) {
+        this.SearchInputBoundary = artworkSearchInputBoundary;
     }
 
     /**
      * Executes the artwork search Use Case.
      */
     public void execute(String searchMessage){
-        final ArtworkSearchInputData artworkSearchInputData = new ArtworkSearchInputData(searchMessage);
+        final SearchInputData artworkSearchInputData = new SearchInputData(searchMessage);
+    }
+
+    public void executeSearch(String keyword, String timePeriod) {
     }
 }
