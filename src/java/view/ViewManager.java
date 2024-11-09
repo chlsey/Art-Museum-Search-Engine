@@ -1,4 +1,5 @@
-package view;
+package java.view;
 
 public class ViewManager {
+
 }

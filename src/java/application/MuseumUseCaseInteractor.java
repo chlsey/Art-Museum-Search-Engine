@@ -1,4 +1,4 @@
-package application;
+package java.application;
 
 public class MuseumUseCaseInteractor {
 }
