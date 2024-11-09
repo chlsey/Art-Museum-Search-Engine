@@ -67,7 +67,7 @@ public class SearchInteractor implements SearchInputBoundary {
                 // change from the list of IDs to actual artworks; if there are too many entries, cap the amount
                 if ((int) JSONObject.stringToValue(resp.get("total").toString()) > 10) {
                     Random rand = new Random();
-                    for (int i = 0; i < 10; i++) {
+                    for (int i = 0; i < 1; i++) {
                         int id = rand.nextInt((int) JSONObject.stringToValue(resp.get("total").toString()));
                         final Request artReq = new Request.Builder().url(String.format("%s/objects/%d", QUERY_MET, (int) ((JSONArray) resp.get("objectIDs")).get(id))).build();
                         final Response artResp = client.newCall(artReq).execute();

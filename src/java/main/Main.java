@@ -2,8 +2,15 @@ package main;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
+import use_case.search.*;
+
+import static use_case.search.SearchInteractor.searchArtwork;
+import entities.*;
 
 public class Main {
+    public static String searchText;
     public static void main(String[] args) {
         JLabel label = new JLabel("Hi there!");
         JButton button = new JButton("click me");
@@ -25,13 +32,24 @@ public class Main {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.add(search);
         mainPanel.add(buttonPanel);
+        mainPanel.add(label);
         frame.setContentPane(mainPanel);
         JTextField searchField = new JTextField(15);
         JButton go = new JButton("go");
         go.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String searchText = searchField.getText();
+                searchText = searchField.getText();
+                List<Artwork> all = searchArtwork(getSearchText());
+                StringBuilder artworks = new StringBuilder();
+                for (Artwork art: all) {
+                    artworks.append(art.getTitle());
+                    label.setText(artworks.toString());
+                }
             }
         });
+    }
+
+    public static String getSearchText() {
+        return searchText;
     }
 }
