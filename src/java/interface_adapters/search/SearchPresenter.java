@@ -1,4 +1,4 @@
-package java.interface_adapters.search;
+package interface_adapters.search;
 
 public class SearchPresenter {
 }
