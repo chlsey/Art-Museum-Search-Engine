@@ -1,19 +1,14 @@
 package view;
 
-import java.awt.Component;
+import interface_adapters.search.SearchController;
+import interface_adapters.search.SearchViewModel;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import interface_adapters.search.SearchController;
-import java.util.List;
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-
-import interface_adapters.search.SearchViewModel;
-import entities.Artwork;
 
 /**
  * The View for the Search Use Case.
