@@ -3,6 +3,8 @@ package view;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import entities.*;
 import javax.swing.*;
@@ -44,7 +46,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 new JLabel("Keywords:"), keywordInputField);
 
         inputPanel.add(keywordInfo);
-
+        JLabel label = new JLabel();
         // Panel for action buttons
         final JPanel buttons = new JPanel();
         searchButton = new JButton("Search");
@@ -56,6 +58,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 StringBuilder artworks = new StringBuilder();
                 for (Artwork art: all) {
                     artworks.append(art.getTitle());
+                    try {
+                        ImageIcon imageIcon = new ImageIcon(new URL(art.getImageUrl())); // load the image to a imageIcon
+                        Image image = imageIcon.getImage(); // transform it
+                        Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                        imageIcon = new ImageIcon(newimg);  // transform it back
+                        label.setIcon(imageIcon);
+                    } catch (MalformedURLException ew) {
+                        throw new RuntimeException(ew);
+                    }
                 }
                  searchResultsArea.setText(artworks.toString());
             }
@@ -90,6 +101,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
         this.add(new JLabel("Search Results:"));
         this.add(scrollPane);
+        this.add(label);
     }
 
 
