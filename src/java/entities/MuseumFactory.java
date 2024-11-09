@@ -1,4 +1,4 @@
-package java.entities;
+package entities;
 
 public class MuseumFactory {
     public static Artwork createArtwork(String title, String artistName, String timePeriod,

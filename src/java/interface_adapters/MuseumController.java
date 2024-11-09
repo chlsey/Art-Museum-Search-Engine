@@ -1,6 +1,6 @@
-package java.interface_adapters;
+package interface_adapters;
 
-import java.entities.Museum;
+import entities.Museum;
 
 public class MuseumController {
 private final Museum museum;

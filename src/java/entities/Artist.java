@@ -6,7 +6,7 @@ import java.util.List;
 public class Artist {
     private String name;
     private String lifeSpan;
-    private List<java.entities.Artwork> artworks;
+    private List<Artwork> artworks;
     private String gender;
 
     public Artist(String name, String lifeSpan, String[] artworks, String gender) {
@@ -22,7 +22,7 @@ public class Artist {
     public String getLifeSpan() {
         return lifeSpan;
     }
-    public List<java.entities.Artwork> getArtworks() {
+    public List<Artwork> getArtworks() {
         return artworks;
     }
     public String getGender() {
