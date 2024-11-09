@@ -3,7 +3,7 @@ package entities;
 public class ArtworkFactory {
 
     public static Artwork createArtwork(String title, String artistName, String timePeriod,
-                                        String genre, String gallery, String imageUrl,
+                                        String gallery, String imageUrl,
                                         String[] keyWords) {
         return new Artwork(title, artistName, timePeriod, gallery, imageUrl, keyWords);
     }
