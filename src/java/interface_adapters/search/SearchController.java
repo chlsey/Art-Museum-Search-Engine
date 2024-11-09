@@ -1,7 +1,7 @@
-package java.interface_adapters.search;
+package interface_adapters.search;
 
-import java.use_case.search.SearchInputBoundary;
-import java.use_case.search.SearchInputData;
+import use_case.search.SearchInputBoundary;
+import use_case.search.SearchInputData;
 
 /**
  * Controller for artwork search use case.
@@ -19,5 +19,8 @@ public class SearchController {
      */
     public void execute(String searchMessage){
         final SearchInputData artworkSearchInputData = new SearchInputData(searchMessage);
+    }
+
+    public void executeSearch(String keyword, String timePeriod) {
     }
 }
