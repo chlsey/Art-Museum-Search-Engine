@@ -6,10 +6,10 @@ public class Artwork {
     private String timePeriod;
     private String gallery;
     private String imageUrl;
-    private String[] keyWords;
+    private String keyWords;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
-                   String imageUrl, String[] keyWords) {
+                   String imageUrl, String keyWords) {
         this.title = title;
         this.artistName = artistName;
         this.timePeriod = timePeriod;
@@ -24,5 +24,5 @@ public class Artwork {
 
     public String getGallery() { return gallery; }
     public String getImageUrl() { return imageUrl; }
-    public String[] getKeyWords() { return keyWords; }
+    public String getKeyWords() { return keyWords; }
 }

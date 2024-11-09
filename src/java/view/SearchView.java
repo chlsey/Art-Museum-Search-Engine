@@ -30,6 +30,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JButton searchButton;
     private final JButton clearButton;
 
+
     public SearchView(SearchController controller, SearchViewModel searchViewModel) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
@@ -63,6 +64,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
         // Add action listeners
+        /**
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 final String keyword = keywordInputField.getText();
@@ -70,6 +72,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 searchController.executeSearch(keyword, timePeriod);
             }
         });
+         */
 
         clearButton.addActionListener(this);
 
