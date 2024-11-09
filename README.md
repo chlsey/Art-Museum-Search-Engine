@@ -20,7 +20,7 @@ The program makes queries using APIs of museums and art galleries based on speci
 ### User Stories: 
 1. James wants to view some artworks. He can smoothly scroll through a gallery of art pieces, each displayed with a clear title, artist name, composition date, and brief description.
 
-2. Bobby saw an artwork in the Metropolitan Museum of Art but needed to remember what the piece was called. Thankfully, he remembers the genre and general period and searches it up. He is given the picture, title, location, time, artist name, etc… of the potential pieces it could be.
+2. Bobby saw an artwork in the Metropolitan Museum of Art but needed to remember what the piece was called. Thankfully, he remembers the general period and searches it up. He is given the picture, title, location, time, artist name, etc… of the potential pieces it could be.
 
 3. Emily uses our search engine to find artworks. She is able to favorite the ones she likes.
 
@@ -36,7 +36,6 @@ The program makes queries using APIs of museums and art galleries based on speci
 - Time period
 - Artist
 - Gallery
-- Genre
 - List of keywords
 - Image
 
