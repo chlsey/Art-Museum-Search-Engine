@@ -1,6 +1,6 @@
-package java.use_case.search;
+package use_case.search;
 
-import java.entities.Artwork;
+import entities.Artwork;
 import java.util.ArrayList;
 
 public class SearchOutputData {
