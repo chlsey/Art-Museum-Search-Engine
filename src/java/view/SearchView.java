@@ -3,10 +3,14 @@ package view;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import entities.*;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -35,7 +39,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         searchViewModel.addPropertyChangeListener(this);
-
         final JLabel title = new JLabel(SearchViewModel.SEARCH_BUTTON_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -45,32 +48,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         final LabelTextPanel keywordInfo = new LabelTextPanel(
                 new JLabel("Keywords:"), keywordInputField);
 
+        JLabel imagedisp = new JLabel();
+        imagedisp.setLayout(new BoxLayout(imagedisp, BoxLayout.Y_AXIS));
+        imagedisp.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         inputPanel.add(keywordInfo);
-        JLabel label = new JLabel();
         // Panel for action buttons
         final JPanel buttons = new JPanel();
         searchButton = new JButton("Search");
         clearButton = new JButton("Clear");
-        searchButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String searchword = keywordInputField.getText();
-                List<Artwork> all = searchArtwork(searchword);
-                StringBuilder artworks = new StringBuilder();
-                for (Artwork art: all) {
-                    artworks.append(art.getTitle());
-                    try {
-                        ImageIcon imageIcon = new ImageIcon(new URL(art.getImageUrl())); // load the image to a imageIcon
-                        Image image = imageIcon.getImage(); // transform it
-                        Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-                        imageIcon = new ImageIcon(newimg);  // transform it back
-                        label.setIcon(imageIcon);
-                    } catch (MalformedURLException ew) {
-                        throw new RuntimeException(ew);
-                    }
-                }
-                 searchResultsArea.setText(artworks.toString());
-            }
-        });
         buttons.add(searchButton);
         buttons.add(clearButton);
 
@@ -79,14 +65,16 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         JScrollPane scrollPane = new JScrollPane(searchResultsArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
+
+
         // Add action listeners
         /**
-        searchButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                final String keyword = keywordInputField.getText();
-                searchController.executeSearch(keyword);
-            }
-        });
+         searchButton.addActionListener(new ActionListener() {
+         public void actionPerformed(ActionEvent evt) {
+         final String keyword = keywordInputField.getText();
+         searchController.executeSearch(keyword);
+         }
+         });
          */
 
         clearButton.addActionListener(this);
@@ -100,8 +88,32 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(inputPanel);
         this.add(buttons);
         this.add(new JLabel("Search Results:"));
+
+        searchButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String searchword = keywordInputField.getText();
+                List<Artwork> all = searchArtwork(searchword, "Artist");
+                StringBuilder artworks = new StringBuilder();
+                for (Artwork art: all) {
+                    artworks.append(art.getTitle() + " Artist: " + art.getArtistName() + "\n");
+                    try {
+                        // https://www.youtube.com/watch?v=Xm9Wx-uFIRE
+                        // watch this video to see how to display videos
+                        ImageIcon imageIcon = new ImageIcon(new URL(art.getImageUrl())); // load the image to a imageIcon
+                        Image image = imageIcon.getImage(); // transform it
+                        Image newimg = image.getScaledInstance(400, 400,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                        imageIcon = new ImageIcon(newimg);  // transform it back
+                        imagedisp.setIcon(imageIcon);
+                    } catch (MalformedURLException ew) {
+                        throw new RuntimeException(ew);
+                    }
+                }
+                searchResultsArea.setText(artworks.toString());
+            }
+        });
         this.add(scrollPane);
-        this.add(label);
+        this.add(imagedisp);
+
     }
 
 
