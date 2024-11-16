@@ -38,7 +38,7 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     @Override
     public Artwork getArtworkByTitle(String artworkTitle) {
-        for (Artwork artwork : artworks) {
+        for (Artwork artwork : artworks.values()) {
             if (artwork.getTitle().equalsIgnoreCase(artworkTitle)) {
                 return artwork;
             }
