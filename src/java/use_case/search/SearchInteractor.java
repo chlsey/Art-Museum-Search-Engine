@@ -128,7 +128,8 @@ public class SearchInteractor implements SearchInputBoundary {
         artworks.add(ArtworkFactory.createArtwork(artObj.get("title").toString()
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
-                artObj.get("primaryImage").toString(), artObj.get("tags").toString()));
+                artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
+                artObj.get("description").toString()));
     }
 
     @Override
@@ -136,6 +137,5 @@ public class SearchInteractor implements SearchInputBoundary {
         //need to add later
         return null;
     }
-
 
 }

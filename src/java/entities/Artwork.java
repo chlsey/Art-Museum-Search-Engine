@@ -8,9 +8,10 @@ public class Artwork {
     private String imageUrl;
     private String keyWords;
     private String comment;
+    private String description;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
-                   String imageUrl, String keyWords) {
+                   String imageUrl, String keyWords,String description) {
         this.title = title;
         this.artistName = artistName;
         this.timePeriod = timePeriod;
@@ -18,16 +19,18 @@ public class Artwork {
         this.imageUrl = imageUrl;
         this.keyWords = keyWords;
         this.comment = "";
+        this.description = description;
     }
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
-                   String imageUrl, String keyWords, String comment) {
+                   String imageUrl, String keyWords, String description, String comment) {
         this.title = title;
         this.artistName = artistName;
         this.timePeriod = timePeriod;
         this.gallery = gallery;
         this.imageUrl = imageUrl;
         this.keyWords = keyWords;
+        this.description = description;
         this.comment = comment;
     }
 
@@ -39,4 +42,6 @@ public class Artwork {
     public String getImageUrl() { return imageUrl; }
     public String getKeyWords() { return keyWords; }
     public String getComment() { return comment; }
+    public String getDescription() { return description; }
+    public String getTimePeriod() { return timePeriod; }
 }

@@ -18,12 +18,15 @@ public class ClickArtPresenter implements ClickArtOutputBoundary {
 
 
     @Override
-    public void prepareSuccessView(ClickArtOutputData outputData) {
-        clickArtViewModel.setArtwork(outputData.getArtwork());
+    public void prepareSuccessView(ClickArtOutputData artWork) {
+        final ClickArtState clickArtState = clickArtViewModel.getState();
+        clickArtState.setArtUrl(artWork.getArtUrl());
+        clickArtState.setTitle(artWork.getTitle());
+        clickArtState.setDescription(artWork.getDescription());
+        clickArtState.setArtistName(artWork.getArtistName());
+        clickArtState.setTimePeriod(artWork.getTimePeriod());
 
         // Update the view state to display the detail view
-        viewManagerModel.setSelectedArtwork(outputData.getArtwork());
-        viewManagerModel.setState("ArtworkDetailView");
         viewManagerModel.firePropertyChanged();
     }
 
