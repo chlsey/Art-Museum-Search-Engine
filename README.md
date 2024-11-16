@@ -28,7 +28,7 @@ The program makes queries using APIs of museums and art galleries based on speci
 
 5. Robby sees some artworks he REALLY hates. He is able to leave hate comments under the artwork page.
 
-6. Liam wants to take the rest of 1D to a magnificent art gallery and be their tour guide so he can prove that singing is not his only talent. By looking up every art piece with all its associated information, he can do it smoothly. 
+6. Liam wants to take the rest of 1D to a magnificent art gallery and be their tour guide. By looking up every art piece with all its associated information, including people's comments about it, he can do it smoothly. 
 
 ### Proposed Entities for the Domain:
 #### Artwork: 
@@ -59,3 +59,5 @@ Provides an API for retrieving information about all the artworks in the Metropo
 Meeting time outside of lab: Tuesday Afternoon (flexible)
 Mode of Communication: in person
 
+### Credits 
+No Image image by Adrien Coquet from https://thenounproject.com/browse/icons/term/no-image/ No Image IconsNoun Project (CC BY 3.0)

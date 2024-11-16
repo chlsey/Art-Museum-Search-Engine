@@ -3,6 +3,7 @@ package use_case.search;
 import java.io.IOException;
 
 import data.MuseumDataAccessObject;
+import okio.Path;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,12 +34,23 @@ public class SearchInteractor implements SearchInputBoundary {
     }
 
     // TODO: get the IDs of the search query etc then make an "object" API call to get attributes of the Artwork
-    public static List<Artwork> searchArtwork(String query){
+    public static List<Artwork> searchArtwork(String query, String spec){
+
+        String filters = "Artwork";
+        if (spec != null) {
+            filters = spec;
+        }
+
         final OkHttpClient client = new OkHttpClient();
         // search?q=%s&username=%s to add more
         List<JSONObject> responses = new ArrayList<>();
         List<entities.Artwork> artworks = new ArrayList<>();
-        final Request reqMet = new Request.Builder().url((String.format("%s/search?q=%s", QUERY_MET, query))).build();
+        Request reqMet;
+        if (spec == "Artist"){
+            reqMet = new Request.Builder().url((String.format("%s/search?q=%s?artistOrCulture=true", QUERY_MET, query))).build();
+        } else {
+            reqMet = new Request.Builder().url((String.format("%s/search?q=%s", QUERY_MET, query))).build();
+        }
         /**
          final Request reqChi = new Request.Builder().url((String.format("%s/search?q=%s", QUERY_CHI, query))).build();
          final Request reqHar = new Request.Builder()
@@ -67,26 +79,14 @@ public class SearchInteractor implements SearchInputBoundary {
                 // change from the list of IDs to actual artworks; if there are too many entries, cap the amount
                 if ((int) JSONObject.stringToValue(resp.get("total").toString()) > 10) {
                     Random rand = new Random();
-                    for (int i = 0; i < 1; i++) {
+                    for (int i = 0; i < 10; i++) {
                         int id = rand.nextInt((int) JSONObject.stringToValue(resp.get("total").toString()));
-                        final Request artReq = new Request.Builder().url(String.format("%s/objects/%d", QUERY_MET, (int) ((JSONArray) resp.get("objectIDs")).get(id))).build();
-                        final Response artResp = client.newCall(artReq).execute();
-                        final JSONObject artObj = new JSONObject(artResp.body().string());
-                        artworks.add(ArtworkFactory.createArtwork(artObj.get("title").toString()
-                                , artObj.get("artistDisplayName").toString(),
-                                artObj.get("period").toString(), artObj.get("repository").toString(),
-                                artObj.get("primaryImage").toString(), artObj.get("tags").toString()));
+                        metmuseumHandler(client, artworks, resp, id);
                     }
                 }
                 else {
                     for (int i = 0; i < (int) JSONObject.stringToValue(resp.get("total").toString()); i++) {
-                        final Request artReq = new Request.Builder().url(String.format("%s/objects/%d", QUERY_MET, (int) ((JSONArray) resp.get("objectIDs")).get(i))).build();
-                        final Response artResp = client.newCall(artReq).execute();
-                        final JSONObject artObj = new JSONObject(artResp.body().string());
-                        artworks.add(ArtworkFactory.createArtwork(artObj.get("title").toString()
-                                , artObj.get("artistDisplayName").toString(),
-                                artObj.get("period").toString(), artObj.get("repository").toString(),
-                                artObj.get("primaryImage").toString(), artObj.get("tags").toString()));
+                        metmuseumHandler(client, artworks, resp, i);
                     }
                 }
             }
@@ -105,8 +105,37 @@ public class SearchInteractor implements SearchInputBoundary {
         }
     }
 
-    @Override
-    public void execute(SearchInputData searchInputData) {
-        //need to add later
+    private static void metmuseumHandler(OkHttpClient client, List<Artwork> artworks, JSONObject resp, int i) throws IOException {
+        final Request artReq = new Request.Builder().url(String.format("%s/objects/%d", QUERY_MET, (int) ((JSONArray) resp.get("objectIDs")).get(i))).build();
+        final Response artResp = client.newCall(artReq).execute();
+        final JSONObject artObj = new JSONObject(artResp.body().string());
+        String[] properties = {"title", "artistDisplayName", "period", "repository", "primaryImage", "tags"};
+        for (String property: properties) {
+            if (!artObj.has(property)) {
+                if (property.equals("primaryImage")) {
+                    artObj.put("primaryImage", "src/images/noimage.png");
+                }
+                else {
+                    artObj.put(property, property + " Not found");
+                }
+            }
+        }
+
+        if (artObj.get("primaryImage") == "") {
+            artObj.put("primaryImage", "src/images/noimage.png");
+        }
+
+        artworks.add(ArtworkFactory.createArtwork(artObj.get("title").toString()
+                , artObj.get("artistDisplayName").toString(),
+                artObj.get("period").toString(), artObj.get("repository").toString(),
+                artObj.get("primaryImage").toString(), artObj.get("tags").toString()));
     }
+
+    @Override
+    public List<Artwork> execute(SearchInputData searchInputData) {
+        //need to add later
+        return null;
+    }
+
+
 }
