@@ -48,7 +48,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 new JLabel("Keywords:"), keywordInputField);
 
         inputPanel.add(keywordInfo);
-        JLabel label = new JLabel();
+        JPanel panelPictures = new JPanel();
         // Panel for action buttons
         final JPanel buttons = new JPanel();
         searchButton = new JButton("Search");
@@ -72,12 +72,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         Image image = imageIcon.getImage(); // transform it
                         Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                         imageIcon = new ImageIcon(newimg);  // transform it back
-                        label.setIcon(imageIcon);
+                        JLabel imagelabel = new JLabel(imageIcon);
+                        panelPictures.add(imagelabel);
                     } catch (URISyntaxException | MalformedURLException ew) {
                         throw new RuntimeException(ew);
                     }
                 }
-                 searchResultsArea.setText(artworks.toString());
+                repaint();
+                revalidate();
+                searchResultsArea.setText(artworks.toString());
             }
         });
         buttons.add(searchButton);
@@ -110,7 +113,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(buttons);
         this.add(new JLabel("Search Results:"));
         this.add(scrollPane);
-        this.add(label);
+        this.add(panelPictures);
     }
 
 

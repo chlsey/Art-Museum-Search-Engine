@@ -1,5 +1,8 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Artwork {
     private String title;
     private String artistName;
@@ -7,8 +10,8 @@ public class Artwork {
     private String gallery;
     private String imageUrl;
     private String keyWords;
-    private String comment;
     private boolean favorited;
+    private List<String> comments;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
                    String imageUrl, String keyWords) {
@@ -18,20 +21,10 @@ public class Artwork {
         this.gallery = gallery;
         this.imageUrl = imageUrl;
         this.keyWords = keyWords;
-        this.comment = "";
         this.favorited = false;
+        this.comments = new ArrayList<>();
     }
 
-    public Artwork(String title, String artistName, String timePeriod, String gallery,
-                   String imageUrl, String keyWords, String comment) {
-        this.title = title;
-        this.artistName = artistName;
-        this.timePeriod = timePeriod;
-        this.gallery = gallery;
-        this.imageUrl = imageUrl;
-        this.keyWords = keyWords;
-        this.comment = comment;
-    }
 
     public String getTitle() { return title; }
     public String getArtistName() { return artistName; }
@@ -40,7 +33,12 @@ public class Artwork {
     public String getGallery() { return gallery; }
     public String getImageUrl() { return imageUrl; }
     public String getKeyWords() { return keyWords; }
-    public String getComment() { return comment; }
     public boolean checkFavorited() { return favorited; }
     public void setFavorited() { favorited = !favorited; }
+    public List<String> getComments() {
+        return comments;
+    }
+    public void addComment(String comment) {
+        this.comments.add(comment);
+    }
 }
