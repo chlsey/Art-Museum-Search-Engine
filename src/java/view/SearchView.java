@@ -4,6 +4,8 @@ import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
 
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import entities.*;
@@ -57,14 +59,21 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 List<Artwork> all = searchArtwork(searchword);
                 StringBuilder artworks = new StringBuilder();
                 for (Artwork art: all) {
-                    artworks.append(art.getTitle());
+                    artworks.append(art.getTitle() + "\n");
                     try {
-                        ImageIcon imageIcon = new ImageIcon(new URL(art.getImageUrl())); // load the image to a imageIcon
+                        URI newuri = new URI(art.getImageUrl());
+                        System.out.println(newuri);
+                        ImageIcon imageIcon;
+                        if (newuri.isAbsolute()) {
+                            imageIcon = new ImageIcon(newuri.toURL());
+                        } else {
+                            imageIcon = new ImageIcon(art.getImageUrl());
+                        } // load the image to a imageIcon
                         Image image = imageIcon.getImage(); // transform it
                         Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                         imageIcon = new ImageIcon(newimg);  // transform it back
                         label.setIcon(imageIcon);
-                    } catch (MalformedURLException ew) {
+                    } catch (URISyntaxException | MalformedURLException ew) {
                         throw new RuntimeException(ew);
                     }
                 }
