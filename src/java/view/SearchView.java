@@ -62,7 +62,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     artworks.append(art.getTitle() + "\n");
                     try {
                         URI newuri = new URI(art.getImageUrl());
-                        System.out.println(newuri);
+                        // System.out.println(newuri);
                         ImageIcon imageIcon;
                         if (newuri.isAbsolute()) {
                             imageIcon = new ImageIcon(newuri.toURL());
