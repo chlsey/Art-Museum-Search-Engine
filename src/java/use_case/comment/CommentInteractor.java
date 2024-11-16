@@ -1,28 +1,30 @@
 package use_case.comment;
-import interface_adapters.search.SearchViewModel;
+
+import entities.Artwork;
+
+import java.util.List;
 
 public class CommentInteractor implements CommentInputBoundary {
-    private final CommentDataAccessInterface commentDataAccessInterface;
-    private final CommentOutputBoundary commentOutputBoundary;
+    private final CommentDataAccessInterface commentDataAccessObject;
+    private final CommentOutputBoundary commentPresenter;
 
-
-
-    public CommentInteractor(CommentDataAccessInterface commentDataAccessInterface, CommentOutputBoundary commentOutputBoundary){
-        this.commentDataAccessInterface = commentDataAccessInterface;
-        this.commentOutputBoundary = commentOutputBoundary;
+    public CommentInteractor(CommentDataAccessInterface commentDataAccessObject,
+                             CommentOutputBoundary commentOutputBoundary) {
+        this.commentDataAccessObject = commentDataAccessObject;
+        this.commentPresenter = commentOutputBoundary;
     }
 
     @Override
-    public void execute(CommentInputBoundary commentInputBoundary) {
+    public void addComment(CommentInputData commentInputData) {
+        final String artworkTitle = commentInputData.getArtworkTitle();
+        final String comment = commentInputData.getComment();
+        Artwork artwork = commentDataAccessObject.getArtworkByTitle(artworkTitle);
 
+        commentDataAccessObject.addCommentToArtwork(artworkTitle, comment);
+
+        CommentOutputData outputData = new CommentOutputData(artworkTitle, comment, true);
+        commentPresenter.presentSuccess(outputData);
     }
 
-    @Override
-    public void execute(CommentInputData commentInputData) {
-        if () {
-
-        }
-
-    }
 
 }

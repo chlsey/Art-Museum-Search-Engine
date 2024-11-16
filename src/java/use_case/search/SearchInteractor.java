@@ -1,4 +1,4 @@
-package use_case.Search;
+package use_case.search;
 
 import java.io.IOException;
 
@@ -10,11 +10,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.random.*;
 
 import entities.*;
-import view.*;
-import app.Main;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

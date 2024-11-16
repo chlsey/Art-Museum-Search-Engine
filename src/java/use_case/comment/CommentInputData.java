@@ -1,20 +1,19 @@
 package use_case.comment;
-import entities.Artwork;
 
 public class CommentInputData {
+    private final String artworkTitle;
     private final String comment;
-    private final String author;
 
-    public CommentInputData(String comment, String author) {
+    public CommentInputData(String artworkTitle, String comment) {
+        this.artworkTitle = artworkTitle;
         this.comment = comment;
-        this.author = author;
+    }
+
+    public String getArtworkTitle() {
+        return artworkTitle;
     }
 
     public String getComment() {
         return comment;
     }
-    public String getAuthor() {
-        return author;
-    }
-
 }
