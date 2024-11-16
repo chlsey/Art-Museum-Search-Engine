@@ -14,6 +14,16 @@ public class SearchPresenter implements SearchOutputBoundary {
         this.viewManagerModel = viewManagerModel;
     }
 
+    @Override
+    public void prepareSuccessView(SearchOutputData outputData) {
+
+    }
+
+    @Override
+    public void prepareFailView(String errorMessage) {
+
+    }
+
 
 //    @Override
 //    public void prepareSuccessView(SearchOutputData outputData) {
