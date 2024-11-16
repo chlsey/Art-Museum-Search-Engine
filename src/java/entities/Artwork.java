@@ -10,6 +10,7 @@ public class Artwork {
     private String gallery;
     private String imageUrl;
     private String keyWords;
+    private boolean favorited;
     private List<String> comments;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
@@ -20,6 +21,7 @@ public class Artwork {
         this.gallery = gallery;
         this.imageUrl = imageUrl;
         this.keyWords = keyWords;
+        this.favorited = false;
         this.comments = new ArrayList<>();
     }
 
@@ -31,10 +33,11 @@ public class Artwork {
     public String getGallery() { return gallery; }
     public String getImageUrl() { return imageUrl; }
     public String getKeyWords() { return keyWords; }
+    public boolean checkFavorited() { return favorited; }
+    public void setFavorited() { favorited = !favorited; }
     public List<String> getComments() {
         return comments;
     }
-
     public void addComment(String comment) {
         this.comments.add(comment);
     }
