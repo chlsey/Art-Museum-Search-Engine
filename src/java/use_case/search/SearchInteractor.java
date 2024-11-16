@@ -1,4 +1,4 @@
-package use_case.search;
+package use_case.Search;
 
 import java.io.IOException;
 
@@ -20,7 +20,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class SearchInteractor implements SearchInputBoundary {
+public class SearchInteractor implements use_case.search.SearchInputBoundary {
     private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
     private static final String QUERY_MET = "https://collectionapi.metmuseum.org/public/collection/v1";
     private static final String QUERY_HAR = "https://api.harvardartmuseums.org/";
@@ -29,7 +29,7 @@ public class SearchInteractor implements SearchInputBoundary {
     private static final String EUR_TOKEN = "kerambleat";
     private static final String MESSAGE = "message";
 
-    public SearchInteractor(MuseumDataAccessObject museumDataAccessObject, SearchOutputBoundary searchOutputBoundary) {
+    public SearchInteractor(MuseumDataAccessObject museumDataAccessObject, use_case.search.SearchOutputBoundary searchOutputBoundary) {
     }
 
     // TODO: get the IDs of the search query etc then make an "object" API call to get attributes of the Artwork
@@ -106,7 +106,8 @@ public class SearchInteractor implements SearchInputBoundary {
     }
 
     @Override
-    public void execute(SearchInputData searchInputData) {
-        //need to add later
+    public void execute(use_case.search.SearchInputData searchInputData) {
+
     }
+
 }
