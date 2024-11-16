@@ -100,16 +100,16 @@ public class SearchInteractor implements SearchInputBoundary {
         for (String property: properties) {
             if (!artObj.has(property)) {
                 if (property.equals("primaryImage")) {
-                    artObj.put("primaryImage", "src/images/noimage.png");
+                    artObj.put("primaryImage", "src/images/noimg.png");
                 }
                 else {
                     artObj.put(property, property + " Not found");
                 }
             }
         }
-
+        // changed
         if (artObj.get("primaryImage") == "") {
-            artObj.put("primaryImage", "src/images/noimage.png");
+            artObj.put("primaryImage", "src/images/noimg.png");
         }
 
         artworks.add(ArtworkFactory.createArtwork(artObj.get("title").toString()
@@ -142,7 +142,7 @@ public class SearchInteractor implements SearchInputBoundary {
             for (String property: properties) {
                 if (!artIndiv.has(property) || artIndiv.get(property) == null) {
                     if (property.equals("image_id")) {
-                        artIndiv.put("image_id", "src/images/noimage.png");
+                        artIndiv.put("image_id", "src/images/noimg.png");
                         hasImage = false;
                     }
                     else {
