@@ -6,13 +6,11 @@ import use_case.favorite.FavoriteOutputData;
 
 public class FavoritePresenter implements FavoriteOutputBoundary {
 
-    private final FavoriteViewModel loginViewModel;
-    private final FavoriteViewModel loggedInViewModel;
+    private final FavoriteViewModel favoriteViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public FavoritePresenter(FavoriteViewModel loginViewModel, FavoriteViewModel loggedInViewModel, ViewManagerModel viewManagerModel) {
-        this.loginViewModel = loginViewModel;
-        this.loggedInViewModel = loggedInViewModel;
+    public FavoritePresenter(FavoriteViewModel favoriteViewModel, ViewManagerModel viewManagerModel) {
+        this.favoriteViewModel = favoriteViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
