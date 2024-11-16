@@ -34,12 +34,23 @@ public class SearchInteractor implements SearchInputBoundary {
     }
 
     // TODO: get the IDs of the search query etc then make an "object" API call to get attributes of the Artwork
-    public static List<Artwork> searchArtwork(String query){
+    public static List<Artwork> searchArtwork(String query, String spec){
+
+        String filters = "Artwork";
+        if (spec != null) {
+            filters = spec;
+        }
+
         final OkHttpClient client = new OkHttpClient();
         // search?q=%s&username=%s to add more
         List<JSONObject> responses = new ArrayList<>();
         List<entities.Artwork> artworks = new ArrayList<>();
-        final Request reqMet = new Request.Builder().url((String.format("%s/search?q=%s", QUERY_MET, query))).build();
+        Request reqMet;
+        if (spec == "Artist"){
+            reqMet = new Request.Builder().url((String.format("%s/search?q=%s?artistOrCulture=true", QUERY_MET, query))).build();
+        } else {
+            reqMet = new Request.Builder().url((String.format("%s/search?q=%s", QUERY_MET, query))).build();
+        }
         /**
          final Request reqChi = new Request.Builder().url((String.format("%s/search?q=%s", QUERY_CHI, query))).build();
          final Request reqHar = new Request.Builder()
@@ -121,8 +132,9 @@ public class SearchInteractor implements SearchInputBoundary {
     }
 
     @Override
-    public void execute(SearchInputData searchInputData) {
+    public List<Artwork> execute(SearchInputData searchInputData) {
         //need to add later
+        return null;
     }
 
 

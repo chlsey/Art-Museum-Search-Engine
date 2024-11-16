@@ -56,7 +56,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String searchword = keywordInputField.getText();
-                List<Artwork> all = searchArtwork(searchword);
+                List<Artwork> all = searchArtwork(searchword, "Artist");
                 StringBuilder artworks = new StringBuilder();
                 for (Artwork art: all) {
                     artworks.append(art.getTitle() + "\n");
