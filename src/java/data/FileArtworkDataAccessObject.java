@@ -2,6 +2,7 @@ package data;
 
 import entities.Artwork;
 import entities.ArtworkFactory;
+import use_case.favorite.FavoriteDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
 
 import java.io.*;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileArtworkDataAccessObject implements SearchDataAccessInterface {
+public class FileArtworkDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface {
     private static final String HEADER = "title,artistname,timeperiod,gallery,imageURL,comment,keywords";
 
     private final File txtFile;
@@ -90,10 +91,15 @@ public class FileArtworkDataAccessObject implements SearchDataAccessInterface {
     }
 
     @Override
-    public void favorite(Artwork artwork) {
+    public void updateFavorite(Artwork artwork) {
         if (!artworks.containsKey(artwork.getTitle())) {
             artworks.put(artwork.getTitle(), artwork);
             this.save();
         }
+    }
+
+    @Override
+    public void save(Artwork artwork) {
+
     }
 }

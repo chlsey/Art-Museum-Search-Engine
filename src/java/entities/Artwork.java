@@ -8,6 +8,7 @@ public class Artwork {
     private String imageUrl;
     private String keyWords;
     private String comment;
+    private boolean favorited;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
                    String imageUrl, String keyWords) {
@@ -18,6 +19,7 @@ public class Artwork {
         this.imageUrl = imageUrl;
         this.keyWords = keyWords;
         this.comment = "";
+        this.favorited = false;
     }
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
@@ -39,4 +41,6 @@ public class Artwork {
     public String getImageUrl() { return imageUrl; }
     public String getKeyWords() { return keyWords; }
     public String getComment() { return comment; }
+    public boolean checkFavorited() { return favorited; }
+    public void setFavorited() { favorited = !favorited; }
 }
