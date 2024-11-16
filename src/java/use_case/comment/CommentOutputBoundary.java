@@ -1,6 +1,6 @@
 package use_case.comment;
 
 public interface CommentOutputBoundary {
-    void presentSuccess(CommentOutputData outputData);
-    void presentFailure(String errorMessage);
+    void presentSuccessView(CommentOutputData outputData);
+    void presentFailureView(String errorMessage);
 }

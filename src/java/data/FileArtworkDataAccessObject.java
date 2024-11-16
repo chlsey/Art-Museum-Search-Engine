@@ -127,6 +127,4 @@ public class FileArtworkDataAccessObject implements SearchDataAccessInterface, C
     public List<String> getCommentsForArtwork(String artworkTitle) {
         return commentsMap.getOrDefault(artworkTitle, new ArrayList<>());
     }
-
-
 }
