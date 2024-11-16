@@ -2,6 +2,7 @@ package use_case.search;
 
 import java.io.IOException;
 
+import data.MuseumDataAccessObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +26,8 @@ public class SearchInteractor implements SearchInputBoundary {
     private static final String QUERY_EUR = "https://api.europeana.eu/record/v2/search.json";
     private static final String EUR_TOKEN = "kerambleat";
     private static final String MESSAGE = "message";
+
+    public SearchInteractor(MuseumDataAccessObject museumDataAccessObject, SearchOutputBoundary searchOutputBoundary) {}
 
     // TODO: get the IDs of the search query etc then make an "object" API call to get attributes of the Artwork
     public static List<Artwork> searchArtwork(String query, String spec){
@@ -74,11 +77,7 @@ public class SearchInteractor implements SearchInputBoundary {
                     metmuseumHandler(client, artworks, artsM, i);
                 }
             }
-
-
-            CmuseumHandler(artworks, responseChi);
-
-
+            CmuseumHandler(artworks, artsC);
 
             /*artworks.add(ArtworkFactory.createArtwork(artM.get("title"), artM.get("artistDisplayName"),
                     artM.get("period"), artM.get("repository"), artM.get("primaryImage"), artM.get("tags"), "genome")); */
@@ -132,32 +131,39 @@ public class SearchInteractor implements SearchInputBoundary {
         return new Request.Builder().url((String.format("%s/search?fields=id,title,artist_title,description,date_display,image_id?q=%s", QUERY_CHI, query))).build();
     }
 
-    private static void CmuseumHandler(List<Artwork> artworks, Response artResp) throws IOException {
+    private static void CmuseumHandler(List<Artwork> artworks, JSONObject artResp) throws IOException {
         // for (JSONObject art: new JSONObject(artResp.body()) {};
-        final JSONObject artObj = new JSONObject(artResp.body().string());
+        final JSONArray artObj = new JSONArray(artResp.get("data").toString());
+        final JSONObject link = new JSONObject(artResp.get("config").toString());
         String[] properties = {"title", "artist_title", "date_display", "image_id"};
-        boolean hasImage = true;
-        for (String property: properties) {
-            if (!artObj.has(property) || artObj.get(property) == null) {
-                if (property.equals("image_id")) {
-                    artObj.put("image_id", "src/images/noimage.png");
-                    hasImage = false;
-                }
-                else {
-                    artObj.put(property, property + " Not found");
+        for (Integer i = 0; i < 10; i++) {
+            boolean hasImage = true;
+            JSONObject artIndiv = artObj.getJSONObject(i);
+            for (String property: properties) {
+                if (!artIndiv.has(property) || artIndiv.get(property) == null) {
+                    if (property.equals("image_id")) {
+                        artIndiv.put("image_id", "src/images/noimage.png");
+                        hasImage = false;
+                    }
+                    else {
+                        artIndiv.put(property, property + " Not found");
+                    }
                 }
             }
+            if (hasImage) {
+                // format
+                artIndiv.put("image_id", String.format("%s/%s/full/843,/0/default.jpg", link.get("iiif_url"), artIndiv.get("image_id").toString()));
+            }
+
+            System.out.println(artIndiv.toString());
+            artworks.add(ArtworkFactory.createArtwork(artIndiv.get("title").toString()
+                    , artIndiv.get("artist_title").toString(),
+                    artIndiv.get("date_display").toString(), "Art Institute of Chicago",
+                    artIndiv.get("image_id").toString(), ""));
         }
 
-        if (hasImage) {
-            // format
-            artObj.put("image_id", String.format("%s/%s/full/843,/0/default.jpg", (JSONObject)artObj.get("config").get("iiif_url"), artObj.get("image_id").toString()));
-        }
-        // help
-        artworks.add(ArtworkFactory.createArtwork(artObj.get("title").toString()
-                , artObj.get("artist_title").toString(),
-                artObj.get("date_display").toString(), "Art Institute of Chicago",
-                artObj.get("image_id").toString(), ""));
+
+
     }
 
     @Override
