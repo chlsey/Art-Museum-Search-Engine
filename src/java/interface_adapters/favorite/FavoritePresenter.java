@@ -1,16 +1,19 @@
 package interface_adapters.favorite;
 
+import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
 import use_case.favorite.FavoriteOutputBoundary;
 import use_case.favorite.FavoriteOutputData;
 
 public class FavoritePresenter implements FavoriteOutputBoundary {
 
-    private final FavoriteViewModel favoriteViewModel;
+    private final CFRViewModel loginViewModel;
+    private final CFRViewModel loggedInViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public FavoritePresenter(FavoriteViewModel favoriteViewModel, ViewManagerModel viewManagerModel) {
-        this.favoriteViewModel = favoriteViewModel;
+    public FavoritePresenter(CFRViewModel loginViewModel, CFRViewModel loggedInViewModel, ViewManagerModel viewManagerModel) {
+        this.loginViewModel = loginViewModel;
+        this.loggedInViewModel = loggedInViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 

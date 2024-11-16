@@ -23,7 +23,7 @@ public class CommentInteractor implements CommentInputBoundary {
         commentDataAccessObject.addCommentToArtwork(artworkTitle, comment);
 
         CommentOutputData outputData = new CommentOutputData(artworkTitle, comment, true);
-        commentPresenter.presentSuccess(outputData);
+        commentPresenter.presentSuccessView(outputData);
     }
 
 
