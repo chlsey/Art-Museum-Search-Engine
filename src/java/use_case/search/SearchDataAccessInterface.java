@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public interface SearchDataAccessInterface {
     /**
      * Queries the DB to find a list of artworks that match the search message.
-     * @param searchMessage the list of words used to find artworks.
+     * @param artwork the artwork to be saved.
      */
-    ArrayList<Artwork> searchArtworks(String searchMessage);
+    void favorite(Artwork artwork);
 }
