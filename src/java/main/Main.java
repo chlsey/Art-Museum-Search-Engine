@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import use_case.search.*;
-
 import static use_case.search.SearchInteractor.searchArtwork;
 import entities.*;
 

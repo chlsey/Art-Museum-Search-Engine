@@ -7,6 +7,7 @@ public class Artwork {
     private String gallery;
     private String imageUrl;
     private String keyWords;
+    private String comment;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
                    String imageUrl, String keyWords) {
