@@ -4,8 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-import use_case.search.*;
-
 import static use_case.search.SearchInteractor.searchArtwork;
 import entities.*;
 
@@ -39,8 +37,7 @@ public class Main {
         go.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 searchText = searchField.getText();
-                String filters = "Artist";
-                List<Artwork> all = searchArtwork(searchText, filters);
+                List<Artwork> all = searchArtwork(getSearchText());
                 StringBuilder artworks = new StringBuilder();
                 for (Artwork art: all) {
                     artworks.append(art.getTitle());
