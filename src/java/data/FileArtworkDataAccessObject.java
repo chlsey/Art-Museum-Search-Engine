@@ -106,6 +106,11 @@ public class FileArtworkDataAccessObject implements SearchDataAccessInterface, C
     }
 
     @Override
+    public void save(Artwork artwork) {
+
+    }
+
+    @Override
     public void addCommentToArtwork(String artworkTitle, String comment) {
         if (!artworks.containsKey(artworkTitle)) {
             throw new IllegalArgumentException("Artwork not found: " + artworkTitle);
