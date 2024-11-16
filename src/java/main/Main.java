@@ -39,7 +39,8 @@ public class Main {
         go.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 searchText = searchField.getText();
-                List<Artwork> all = searchArtwork(getSearchText());
+                String filters = "Artist";
+                List<Artwork> all = searchArtwork(searchText, filters);
                 StringBuilder artworks = new StringBuilder();
                 for (Artwork art: all) {
                     artworks.append(art.getTitle());
