@@ -1,6 +1,7 @@
 package interface_adapters;
 
 import interface_adapters.comment.CommentState;
+import interface_adapters.favorite.FavoriteState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -8,6 +9,7 @@ import java.beans.PropertyChangeSupport;
 public class CFRViewModel {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private CommentState commentState;
+    private FavoriteState favoriteState;
     private final String viewName = "CFRView";
 
     public CFRViewModel() {

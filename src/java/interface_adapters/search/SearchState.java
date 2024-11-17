@@ -1,5 +1,7 @@
 package interface_adapters.search;
 
+import entities.Artwork;
+
 /**
  * The state for the Search View Model.
  */
@@ -11,6 +13,8 @@ public class SearchState {
     private String keywordsError;
     private String timePeriodError;
     private String locationError;
+    private boolean viewingDetails = false;
+    private Artwork selectedArtwork;
 
     public String getKeywords() {
         return keywords;
@@ -70,6 +74,18 @@ public class SearchState {
                 ", timePeriod='" + timePeriod + '\'' +
                 ", location='" + location + '\'' +
                 '}';
+    }
+
+    public boolean isViewingDetails() {
+        return viewingDetails;
+    }
+
+    public Artwork getSelectedArtwork() {
+        return selectedArtwork;
+    }
+
+    public void setSelectedArtwork(Artwork selectedArtwork) {
+        this.selectedArtwork = selectedArtwork;
     }
 }
 
