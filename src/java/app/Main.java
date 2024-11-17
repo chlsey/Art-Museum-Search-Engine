@@ -1,9 +1,16 @@
 package app;
+import data.InMemoryDataAccessObject;
 import data.MuseumDataAccessObject;
 import entities.Artwork;
 import interface_adapters.ViewManagerModel;
+import interface_adapters.click_art.ClickArtController;
+import interface_adapters.click_art.ClickArtPresenter;
+import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.search.SearchViewModel;
+import use_case.click_art.ClickArtInteractor;
+import use_case.click_art.ClickArtOutputBoundary;
 import use_case.search.SearchDataAccessInterface;
+import view.ClickView;
 import view.SearchView;
 import view.ViewManager;
 
@@ -28,10 +35,18 @@ public class Main {
 
         final SearchViewModel searchViewModel = new SearchViewModel();
         final MuseumDataAccessObject museumDataAccessObject = new MuseumDataAccessObject();
+        final InMemoryDataAccessObject inMemoryDataAccessObject = new InMemoryDataAccessObject();
 
-        final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject);
+        final ClickArtViewModel clickArtViewModel = new ClickArtViewModel();
+        final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject,clickArtViewModel);
+        final ClickArtOutputBoundary clickArtPresenter = new ClickArtPresenter(clickArtViewModel,viewManagerModel);
+        final ClickArtController clickArtController = new ClickArtController(new ClickArtInteractor(inMemoryDataAccessObject, clickArtPresenter));
+
+        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, clickArtViewModel, inMemoryDataAccessObject);
+
 
         views.add(searchView);
+        views.add(clickView);
         viewManagerModel.setState(searchView.getViewName());
         viewManagerModel.firePropertyChanged();
         frame.pack();
