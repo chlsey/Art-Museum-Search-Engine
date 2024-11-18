@@ -4,12 +4,12 @@ import entities.Artwork;
 import use_case.favorite.FavoriteDataAccessInterface;
 import use_case.comment.CommentDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
-
+import use_case.rating.RatingDataAccessInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, CommentDataAccessInterface {
+public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, CommentDataAccessInterface, RatingDataAccessInterface {
 
     private Map<String, Artwork> artworks = new HashMap<>();
 
@@ -44,5 +44,20 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
             }
         }
         return null;
+    }
+
+    @Override
+    public int getRating() {
+        return 0;
+    }
+
+    @Override
+    public void incrementRatingCount(int ratingValue) {
+
+    }
+
+    @Override
+    public double calculateAverageRating() {
+        return 0;
     }
 }
