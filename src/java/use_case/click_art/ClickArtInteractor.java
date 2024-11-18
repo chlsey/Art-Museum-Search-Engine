@@ -1,15 +1,17 @@
 package use_case.click_art;
 
 
+import data.InMemoryDataAccessObject;
 import entities.Artwork;
+import use_case.comment.CommentDataAccessInterface;
 
 public class ClickArtInteractor implements ClickArtInputBoundary {
-    private final ClickArtDataAccessInterface clickArtAccessObject;
+    private final InMemoryDataAccessObject artworkDataAccessObject;
     private final ClickArtOutputBoundary clickArtPresenter;
 
-    public ClickArtInteractor(ClickArtDataAccessInterface userDataAccessInterface,
+    public ClickArtInteractor(InMemoryDataAccessObject artworkDataAccessObject,
                                   ClickArtOutputBoundary clickArtOutputBoundary) {
-        this.clickArtAccessObject = userDataAccessInterface;
+        this.artworkDataAccessObject = artworkDataAccessObject;
         this.clickArtPresenter = clickArtOutputBoundary;
     }
 

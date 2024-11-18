@@ -41,4 +41,9 @@ public class Artwork {
     public void addComment(String comment) {
         this.comments.add(comment);
     }
+
+    public String getDescription() {
+        String description = "implement later";
+        return description;
+    }
 }

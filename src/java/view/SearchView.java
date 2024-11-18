@@ -1,8 +1,11 @@
 package view;
 
+import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -28,14 +31,21 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField keywordInputField = new JTextField(15);
     private final JTextArea searchResultsArea = new JTextArea(10, 30);
     private final SearchController searchController;
+    private final ClickArtViewModel clickArtViewModel;
 
     private final JButton searchButton;
     private final JButton clearButton;
+    private JPanel panelPictures;
+    //private final JButton nextButton;
+    //private final JButton detailButton;
 
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
+        this.clickArtViewModel = clickArtViewModel;
+        //this.nextButton = nextButton;
+        //this.detailButton = detailButton;
         searchViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel(SearchViewModel.SEARCH_BUTTON_LABEL);
@@ -73,6 +83,20 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                         imageIcon = new ImageIcon(newimg);  // transform it back
                         JLabel imagelabel = new JLabel(imageIcon);
+                        // Add a mouse listener to the image label for clicks
+                        final Artwork artwork = art; // Final reference for use in the mouse listener
+                        imagelabel.addMouseListener(new MouseAdapter() {
+                            @Override
+                            public void mouseClicked(MouseEvent e) {
+                                // When image is clicked, set selected artwork and switch to ClickView
+                                clickArtViewModel.setSelectedArtwork(artwork);
+                                clickArtViewModel.firePropertyChanged();
+                                // Switch to ClickView
+                                // This assumes you are using CardLayout for view switching
+                                CardLayout cardLayout = (CardLayout) getParent().getLayout();
+                                cardLayout.show(getParent(), "ClickView");
+                            }
+                        });
                         panelPictures.add(imagelabel);
                     } catch (URISyntaxException | MalformedURLException ew) {
                         throw new RuntimeException(ew);
@@ -122,7 +146,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        keywordInputField.setText("");
+        searchResultsArea.setText("");
+        panelPictures.removeAll(); // Clear images
+        revalidate();
     }
 
     @Override
