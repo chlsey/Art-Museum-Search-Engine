@@ -1,15 +1,14 @@
 package use_case.favorite;
 
-import data.FileArtworkDataAccessObject;
 import data.InMemoryDataAccessObject;
 import entities.Artwork;
 
 public class FavoriteInteractor implements FavoriteInputBoundary {
-    private final InMemoryDataAccessObject artworkDataAccessObject;
+    private final FavoriteDataAccessInterface artworkDataAccessObject;
     private final FavoriteOutputBoundary artworkPresenter;
 
 
-    public FavoriteInteractor(InMemoryDataAccessObject artworkDataAccessObject,
+    public FavoriteInteractor(FavoriteDataAccessInterface artworkDataAccessObject,
                               FavoriteOutputBoundary artworkPresenter) {
         this.artworkDataAccessObject = artworkDataAccessObject;
         this.artworkPresenter = artworkPresenter;
@@ -20,12 +19,11 @@ public class FavoriteInteractor implements FavoriteInputBoundary {
         if (artworkDataAccessObject.contains(favoriteInputData.getArtwork())) {
             artworkDataAccessObject.updateFavorite(favoriteInputData.getArtwork());
             Artwork art = favoriteInputData.getArtwork();
-            art.setFavorited();
             artworkPresenter.prepareSuccessView(new FavoriteOutputData(art));
         } else {
             Artwork art = favoriteInputData.getArtwork();
-            art.setFavorited();
             artworkDataAccessObject.save(art);
+            artworkDataAccessObject.updateFavorite(art);
             artworkPresenter.prepareSuccessView(new FavoriteOutputData(art));
         }
     }

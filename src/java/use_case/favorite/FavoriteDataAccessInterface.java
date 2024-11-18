@@ -10,4 +10,8 @@ public interface FavoriteDataAccessInterface {
     void updateFavorite(Artwork artwork);
 
     void save(Artwork artwork);
+
+    Artwork getArtworkByTitle(String title);
+
+    boolean contains(Artwork artwork);
 }

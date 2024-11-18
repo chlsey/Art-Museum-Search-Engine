@@ -124,6 +124,12 @@ public class FileArtworkDataAccessObject implements SearchDataAccessInterface, C
         return artworks.get(artworkTitle);
     }
 
+    @Override
+    public boolean contains(Artwork artwork) {
+        return false;
+    }
+    // TODO: this is wrong gotta implement
+
     public List<String> getCommentsForArtwork(String artworkTitle) {
         return commentsMap.getOrDefault(artworkTitle, new ArrayList<>());
     }
