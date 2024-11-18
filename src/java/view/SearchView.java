@@ -48,14 +48,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         //this.detailButton = detailButton;
         searchViewModel.addPropertyChangeListener(this);
 
-        final JLabel title = new JLabel(SearchViewModel.SEARCH_BUTTON_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         final JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
 
         final LabelTextPanel keywordInfo = new LabelTextPanel(
-                new JLabel("Keywords:"), keywordInputField);
+                new JLabel("Search Keywords:"), keywordInputField);
+
+        keywordInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         inputPanel.add(keywordInfo);
         JPanel panelPictures = new JPanel();
@@ -104,16 +103,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
                 repaint();
                 revalidate();
-                searchResultsArea.setText(artworks.toString());
             }
         });
         buttons.add(searchButton);
         buttons.add(clearButton);
 
+        buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
         // Set up search results area
         searchResultsArea.setEditable(false);
+        searchResultsArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+        /**
         JScrollPane scrollPane = new JScrollPane(searchResultsArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+         */
 
         // Add action listeners
         /**
@@ -132,11 +134,12 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         // Arrange components in layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
         this.add(inputPanel);
         this.add(buttons);
-        this.add(new JLabel("Search Results:"));
-        this.add(scrollPane);
+        JLabel searchResults = new JLabel("Search Results:");
+        searchResults.setAlignmentX(Component.CENTER_ALIGNMENT);
+        this.add(searchResults);
+        // this.add(scrollPane);
         this.add(panelPictures);
     }
 
