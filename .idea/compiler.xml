@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Artmuseumsearchengine" />
+        <module name="Art-Museum-Search-Engine" />
       </profile>
     </annotationProcessing>
   </component>
