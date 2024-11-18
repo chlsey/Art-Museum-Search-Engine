@@ -59,3 +59,7 @@ Provides an API for retrieving information about all the artworks in the Metropo
 Meeting time outside of lab: Tuesday Afternoon (flexible)
 Mode of Communication: in person
 
+
+### credits
+No Image by Adrien Coquet from https://thenounproject.com/browse/icons/term/no-image (CC BY 3.0)
+
