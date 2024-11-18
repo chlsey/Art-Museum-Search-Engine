@@ -155,7 +155,6 @@ public class SearchInteractor implements SearchInputBoundary {
                 artIndiv.put("image_id", String.format("%s/%s/full/843,/0/default.jpg", link.get("iiif_url"), artIndiv.get("image_id").toString()));
             }
 
-            System.out.println(artIndiv.toString());
             artworks.add(ArtworkFactory.createArtwork(artIndiv.get("title").toString()
                     , artIndiv.get("artist_title").toString(),
                     artIndiv.get("date_display").toString(), "Art Institute of Chicago",
