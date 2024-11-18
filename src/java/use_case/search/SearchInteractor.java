@@ -21,15 +21,12 @@ import okhttp3.Response;
 public class SearchInteractor implements SearchInputBoundary {
     private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
     private static final String QUERY_MET = "https://collectionapi.metmuseum.org/public/collection/v1";
-    private static final String QUERY_HAR = "https://api.harvardartmuseums.org/";
-    private static final String HAR_TOKEN = "652c0f7b-48d9-4f4d-b1ca-ddfb582c9c12";
-    private static final String QUERY_EUR = "https://api.europeana.eu/record/v2/search.json";
-    private static final String EUR_TOKEN = "kerambleat";
     private static final String MESSAGE = "message";
 
     public SearchInteractor(MuseumDataAccessObject museumDataAccessObject, SearchOutputBoundary searchOutputBoundary) {}
 
-    // TODO: get the IDs of the search query etc then make an "object" API call to get attributes of the Artwork
+    // TODO: make it so this doesnt take parameters. instead use attributes that are assigned to it when you call the
+    // TODO: constructor.
     public static List<Artwork> searchArtwork(String query, String spec){
 
         String filters = "Artwork";
@@ -44,25 +41,21 @@ public class SearchInteractor implements SearchInputBoundary {
         Request reqChi = reqChiBuilder(query, filters);
 
 
-        /**
-         final Request reqHar = new Request.Builder()
-         .url((String.format("%s/object?apikey=%s?keyword=%s", QUERY_HAR, HAR_TOKEN, query))).build();
-         final Request reqEur = new Request.Builder()
-         .url((String.format("%s/search?apikey=%s?query=%s", QUERY_EUR, EUR_TOKEN, query))).build();
+         /**
+          * token required and expired for these museum APIs
+          final Request reqEur = new Request.Builder()
+          .url((String.format("%s/search?apikey=%s?query=%s", QUERY_EUR, EUR_TOKEN, query))).build();
+          final Request reqHar = new Request.Builder()
+          .url((String.format("%s/object?apikey=%s?keyword=%s", QUERY_HAR, HAR_TOKEN, query))).build();
          */
 
         try {
             final Response responseMet = client.newCall(reqMet).execute();
-            // TODO: other three museums
             final Response responseChi = client.newCall(reqChi).execute();
-            /**
-             final Response responseHar = client.newCall(reqHar).execute();
-             final Response responseEur = client.newCall(reqEur).execute();
-             */
+
+
             final JSONObject artsM = new JSONObject(responseMet.body().string());
             final JSONObject artsC = new JSONObject(responseChi.body().string());
-            // final JSONObject artsH = new JSONObject(responseHar.body().string());
-            // final JSONObject artsE = new JSONObject(responseEur.body().string());
 
             // Add met museum responses. if there are more than 10 images, add 10 randomly
             if ((int) JSONObject.stringToValue(artsM.get("total").toString()) > 10) {
@@ -160,9 +153,6 @@ public class SearchInteractor implements SearchInputBoundary {
                     artIndiv.get("date_display").toString(), "Art Institute of Chicago",
                     artIndiv.get("image_id").toString(), ""));
         }
-
-
-
     }
 
     @Override
