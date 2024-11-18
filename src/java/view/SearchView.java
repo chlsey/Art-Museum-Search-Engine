@@ -64,8 +64,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         clearButton = new JButton("Clear");
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                // clear previous search results
+                if (!(panelPictures.getComponents() == null)) {
+                    panelPictures.removeAll();
+                }
+
                 String searchword = keywordInputField.getText();
-                List<Artwork> all = searchArtwork(searchword, "Artist");
+                List<Artwork> all = searchArtwork(searchword, "Hasimages");
                 StringBuilder artworks = new StringBuilder();
                 for (Artwork art: all) {
                     artworks.append(art.getTitle() + "\n");
