@@ -32,29 +32,6 @@ public class RatingInteractorTest {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //public class RatingInteractorTest {
 //
 //    private RatingInteractor interactor;
