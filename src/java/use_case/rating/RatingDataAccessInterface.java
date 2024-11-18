@@ -1,8 +1,8 @@
 package use_case.rating;
-import entities.*;
+
 public interface RatingDataAccessInterface {
-    void getAllRatings();
-    int getRatingCount(int ratingValue);
+    //void getAllRatings();
+    int getRating();
     void incrementRatingCount(int ratingValue);
     double calculateAverageRating();
 }
