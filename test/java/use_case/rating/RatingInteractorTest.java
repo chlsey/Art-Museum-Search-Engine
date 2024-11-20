@@ -3,9 +3,17 @@ import entities.*;
 import org.junit.Before;
 import org.junit.Test;
 import data.InMemoryDataAccessObject;
+import org.junit.jupiter.api.BeforeEach;
+
 import static org.junit.Assert.assertEquals;
 public class RatingInteractorTest {
 
+
+
+    @BeforeEach
+    void beforeEach() {
+
+    }
     @Test
     public void ratingTest() {
         RatingInputData ratingInputData = new RatingInputData(5);
@@ -19,6 +27,18 @@ public class RatingInteractorTest {
 
     }
 
+    @Test
+    public void ratingTestAgain() {
+        RatingInputData ratingInputData = new RatingInputData(6);
+        RatingDataAccessInterface repository = (RatingDataAccessInterface) new InMemoryDataAccessObject();
+        RatingOutputBoundary ratingOutputBoundary = new RatingOutputBoundary() {
+            @Override
+            public void prepareRatingView(RatingOutputData data) {
+                assertEquals(6, repository.getRating());
+            }
+        };
+
+    }
 }
 
 
