@@ -50,8 +50,8 @@ The program makes queries using APIs of museums and art galleries based on speci
 - List of artworks
 
 ### Proposed API for the project:
-https://collection.cooperhewitt.org/api
-Provides many different APIs for retrieving information about galleries, artworks, and artists in their art collections.
+https://api.artic.edu/docs
+API for the database of the Art institute of Chicago
 https://metmuseum.github.io/ 
 Provides an API for retrieving information about all the artworks in the Metropolitan Museum of Modern Art.
 
@@ -60,6 +60,6 @@ Meeting time outside of lab: Tuesday Afternoon (flexible)
 Mode of Communication: in person
 
 
-### credits
+### Credits
 No Image by Adrien Coquet from https://thenounproject.com/browse/icons/term/no-image (CC BY 3.0)
 
