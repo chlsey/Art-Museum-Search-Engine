@@ -39,7 +39,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
     private void submitComment() {
         String newComment = commentInput.getText().trim();
         if (!newComment.isEmpty()) {
-            CommentState commentState = cfrViewModel.getState();
+            CommentState commentState = cfrViewModel.getCommentState();
             if (commentState != null) {
                 commentState.addComment(newComment);
                 cfrViewModel.firePropertyChanged();
@@ -51,7 +51,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Update the comments display when the model changes
-        CommentState updatedState = cfrViewModel.getState();
+        CommentState updatedState = cfrViewModel.getCommentState();
     }
 }
 
