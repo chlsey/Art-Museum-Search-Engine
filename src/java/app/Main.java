@@ -41,11 +41,11 @@ public class Main {
         final ClickArtOutputBoundary clickArtPresenter = new ClickArtPresenter(clickArtViewModel,viewManagerModel);
         //final ClickArtController clickArtController = new ClickArtController(new ClickArtInteractor(museumDataAccessObject, clickArtPresenter));
 
-        //final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, clickArtViewModel, museumDataAccessObject);
+        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, clickArtViewModel, museumDataAccessObject);
 
 
         views.add(searchView, searchView.getViewName());
-        //views.add(clickView, clickView.getViewName());
+        views.add(clickView, clickView.getViewName());
         viewManagerModel.setState(searchView.getViewName());
         viewManagerModel.firePropertyChanged();
         frame.pack();

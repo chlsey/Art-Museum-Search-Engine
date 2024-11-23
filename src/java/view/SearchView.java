@@ -35,7 +35,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     private final JButton searchButton;
     private final JButton clearButton;
-    private JPanel panelPictures;
+    private final JPanel panelPictures;
+    private JScrollPane scrollPanelPictures;
     //private final JButton nextButton;
     //private final JButton detailButton;
 
@@ -58,6 +59,10 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         inputPanel.add(keywordInfo);
         panelPictures = new JPanel();
+        panelPictures.setLayout(new GridLayout(0, 7, 10, 10));
+        scrollPanelPictures = new JScrollPane(panelPictures);
+        scrollPanelPictures.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPanelPictures.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         // Panel for action buttons
         final JPanel buttons = new JPanel();
         searchButton = new JButton("Search");
@@ -157,7 +162,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchResults.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(searchResults);
         // this.add(scrollPane);
-        this.add(panelPictures);
+        this.add(scrollPanelPictures);
     }
 
 
@@ -194,9 +199,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             clickArtViewModel.setSelectedArtwork(art);
-                            clickArtViewModel.firePropertyChanged();
+                            clickArtViewModel.firePropertyChanged("click");
                             CardLayout layout = (CardLayout) getParent().getLayout();
-                            layout.show(getParent(), "click");
+                            layout.show(getParent(), "ClickView");
                         }
                     });
                     panelPictures.add(imageLabel);
