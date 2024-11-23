@@ -39,7 +39,7 @@ public class SearchPresenter implements SearchOutputBoundary {
         //searchViewModel.firePropertyChanged();
 
         this.viewManagerModel.setState(clickArtViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
+        this.viewManagerModel.firePropertyChanged("searched");
 
 //        StringBuilder artworks = new StringBuilder();
 //        JPanel panelPictures = new JPanel();

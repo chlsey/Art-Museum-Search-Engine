@@ -6,6 +6,7 @@ import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtPresenter;
 import interface_adapters.click_art.ClickArtViewModel;
+import interface_adapters.search.SearchViewModel;
 import use_case.click_art.*;
 import view.ClickView;
 
@@ -14,19 +15,20 @@ import view.ClickView;
  */
 public class ClickUseCaseFactory {
 
-    public static ClickView create(ViewManagerModel viewManagerModel, ClickArtViewModel clickViewModel,
+    public static ClickView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, ClickArtViewModel clickViewModel,
                                    MuseumDataAccessObject dataAccessObject) {
         // Create the controller for handling click actions
-        final ClickArtController clickController = createClickUseCase(viewManagerModel, clickViewModel, dataAccessObject);
+        final ClickArtController clickController = createClickUseCase(viewManagerModel, searchViewModel, clickViewModel, dataAccessObject);
         // Create and return the view connected to the controller and ViewModel
         return new ClickView(clickController, clickViewModel);
     }
 
     private static ClickArtController createClickUseCase(ViewManagerModel viewManagerModel,
+                                                         SearchViewModel searchViewModel,
                                                          ClickArtViewModel clickViewModel,
                                                          MuseumDataAccessObject dataAccessObject) {
         // Create the output boundary (Presenter) to handle UI updates and view transitions
-        final ClickArtOutputBoundary clickArtOutputBoundary = new ClickArtPresenter(clickViewModel,viewManagerModel);
+        final ClickArtOutputBoundary clickArtOutputBoundary = new ClickArtPresenter(searchViewModel, clickViewModel,viewManagerModel);
         // Create the input boundary (Interactor) to handle business logic for fetching and preparing data
         final ClickArtInputBoundary clickArtInteractor = new ClickArtInteractor(dataAccessObject, clickArtOutputBoundary);
 

@@ -5,15 +5,19 @@ import use_case.click_art.ClickArtInputData;
 import entities.Artwork;
 
 public class ClickArtController {
-    private final ClickArtInputBoundary ClickArtUseCaseInteractor;
+    private final ClickArtInputBoundary clickArtUseCaseInteractor;
 
     public ClickArtController(ClickArtInputBoundary ClickArtUseCaseInteractor) {
-        this.ClickArtUseCaseInteractor = ClickArtUseCaseInteractor;
+        this.clickArtUseCaseInteractor = ClickArtUseCaseInteractor;
     }
 
     public void execute(Artwork artwork) {
         final ClickArtInputData clickArtInputData = new ClickArtInputData(artwork);
-        ClickArtUseCaseInteractor.execute(clickArtInputData);
+        clickArtUseCaseInteractor.execute(clickArtInputData);
+    }
+
+    public void switchToSearch(){
+        clickArtUseCaseInteractor.switchToSearchView();
     }
 }
 

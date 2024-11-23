@@ -6,4 +6,5 @@ public interface ClickArtInputBoundary {
      * @param clickArtInputData the input data
      */
     void execute(ClickArtInputData clickArtInputData);
+    void switchToSearchView();
 }
