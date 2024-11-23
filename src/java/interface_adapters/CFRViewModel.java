@@ -6,6 +6,7 @@ import interface_adapters.rating.RatingState;
 import view.CFRState;
 
 
+
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
