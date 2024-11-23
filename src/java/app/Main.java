@@ -35,49 +35,21 @@ public class Main {
 
         final SearchViewModel searchViewModel = new SearchViewModel();
         final MuseumDataAccessObject museumDataAccessObject = new MuseumDataAccessObject();
-        final InMemoryDataAccessObject inMemoryDataAccessObject = new InMemoryDataAccessObject();
 
         final ClickArtViewModel clickArtViewModel = new ClickArtViewModel();
-        final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject,clickArtViewModel);
+        final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
         final ClickArtOutputBoundary clickArtPresenter = new ClickArtPresenter(clickArtViewModel,viewManagerModel);
-        final ClickArtController clickArtController = new ClickArtController(new ClickArtInteractor(inMemoryDataAccessObject, clickArtPresenter));
+        //final ClickArtController clickArtController = new ClickArtController(new ClickArtInteractor(museumDataAccessObject, clickArtPresenter));
 
-        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, clickArtViewModel, inMemoryDataAccessObject);
+        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, clickArtViewModel, museumDataAccessObject);
 
 
-        views.add(searchView);
-        views.add(clickView);
+        views.add(searchView, searchView.getViewName());
+        views.add(clickView, clickView.getViewName());
         viewManagerModel.setState(searchView.getViewName());
         viewManagerModel.firePropertyChanged();
         frame.pack();
         frame.setVisible(true);
-
-        //JLabel label = new JLabel("Hi there!");
-        //JButton button = new JButton("click me");
-        //JPanel panel = new JPanel();
-        //panel.add(label);
-        //panel.add(button);
-        //frame.setSize(300, 200);
-        //frame.setContentPane(panel);
-        //frame.setVisible(true);
-        //JPanel search = new JPanel();
-        //search.add(new JLabel("art: "));
-        //search.add(new JTextField(15));
-        //JPanel buttonPanel = new JPanel();
-        //buttonPanel.add(new JButton("go"));
-        //buttonPanel.add(new JButton("cancel"));
-        //JPanel mainPanel = new JPanel();
-       // mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-       // mainPanel.add(search);
-       // mainPanel.add(buttonPanel);
-       // frame.setContentPane(mainPanel);
-        //JTextField searchField = new JTextField(15);
-        //JButton go = new JButton("go");
-        //go.addActionListener(new ActionListener() {
-            //public void actionPerformed(ActionEvent e) {
-               // String searchText = searchField.getText();
-            //}
-        //});
     }
 }
 

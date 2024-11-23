@@ -3,14 +3,22 @@ package interface_adapters.click_art;
 import entities.Artwork;
 import interface_adapters.ViewModel;
 
-public class ClickArtViewModel extends ViewModel<ClickArtState> {
-    public static final String STATE_CHANGED_PROPERTY = "stateChanged";
+import java.util.List;
 
+public class ClickArtViewModel extends ViewModel<ClickArtState> {
+    public static final String STATE_CHANGED_PROPERTY = "click";
+
+    private List<Artwork> artworks;
     private Artwork selectedArtwork;
     public ClickArtViewModel() {
         super("clickView");
         setState(new ClickArtState());
     }
+
+    public List<Artwork> getArtworks() {
+        return this.getState().getArtworks();
+    }
+
     public Artwork getSelectedArtwork() {
         return selectedArtwork;
     }
