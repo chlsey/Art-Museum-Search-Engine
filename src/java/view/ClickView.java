@@ -23,7 +23,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 public class ClickView extends JPanel implements PropertyChangeListener {
-    private final String viewName = "click";
+    private final String viewName = "ClickView";
     private final ClickArtController clickArtController;
     private final ClickArtViewModel clickArtViewModel;
 
@@ -36,29 +36,6 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         this.clickArtController = clickArtController;
         clickArtViewModel.addPropertyChangeListener(this);
 
-//        List<Artwork> ourArtworks = clickArtViewModel.getArtworks();
-//        StringBuilder artworks = new StringBuilder();
-//        JPanel panelPictures = new JPanel();
-//        for (Artwork art: ourArtworks) {
-//            artworks.append(art.getTitle() + "\n");
-//            try {
-//                URI newuri = new URI(art.getImageUrl());
-//                // System.out.println(newuri);
-//                ImageIcon imageIcon;
-//                if (newuri.isAbsolute()) {
-//                    imageIcon = new ImageIcon(newuri.toURL());
-//                } else {
-//                    imageIcon = new ImageIcon(art.getImageUrl());
-//                } // load the image to a imageIcon
-//                Image image = imageIcon.getImage(); // transform it
-//                Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-//                imageIcon = new ImageIcon(newimg);  // transform it back
-//                JLabel imagelabel = new JLabel(imageIcon);
-//                panelPictures.add(imagelabel);
-//            } catch (URISyntaxException | MalformedURLException ew) {
-//                throw new RuntimeException(ew);
-//            }
-//        }
 
         // Set BoxLayout to stack components vertically
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -91,6 +68,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Check if the state has changed and we are now viewing artwork details
+        System.out.println(evt.getPropertyName());
         if (ClickArtViewModel.STATE_CHANGED_PROPERTY.equals(evt.getPropertyName())) {
             Artwork selectedArtwork = clickArtViewModel.getSelectedArtwork();
             if (clickArtViewModel.getSelectedArtwork() != null) {

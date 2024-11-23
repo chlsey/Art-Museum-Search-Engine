@@ -6,7 +6,7 @@ import interface_adapters.ViewModel;
 import java.util.List;
 
 public class ClickArtViewModel extends ViewModel<ClickArtState> {
-    public static final String STATE_CHANGED_PROPERTY = "stateChanged";
+    public static final String STATE_CHANGED_PROPERTY = "click";
 
     private List<Artwork> artworks;
     private Artwork selectedArtwork;
