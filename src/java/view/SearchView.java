@@ -5,8 +5,7 @@ import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchState;
 import interface_adapters.search.SearchViewModel;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,8 +15,6 @@ import entities.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -67,9 +64,23 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         final JPanel buttons = new JPanel();
         searchButton = new JButton("Search");
         clearButton = new JButton("Clear");
+
         searchButton.addActionListener(e -> {
             String keyword = keywordInputField.getText();
+            System.out.println("Button clicked, keyword: " + keyword); // Debugging
             searchController.execute(keyword);
+        });
+
+        // The search will also work with enter(return key)
+        keywordInputField.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
+            public void keyPressed(java.awt.event.KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String keyword = keywordInputField.getText();
+                    System.out.println("Enter key pressed, keyword: " + keyword); // Debugging
+                    searchController.execute(keyword);
+                }
+            }
         });
 
         clearButton.addActionListener(this);
@@ -172,9 +183,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
+            // Get the keyword from the input field and trigger the search
             String keyword = keywordInputField.getText();
             searchController.execute(keyword);
         } else if (e.getSource() == clearButton) {
+            // Clear the input field and reset the panel
             keywordInputField.setText("");
             panelPictures.removeAll();
             revalidate();
