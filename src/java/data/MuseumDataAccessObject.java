@@ -83,7 +83,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
         final Request artReq = new Request.Builder().url(String.format("%s/objects/%d", QUERY_MET, ((JSONArray) resp.get("objectIDs")).getInt(i))).build();
         final Response artResp = client.newCall(artReq).execute();
         final JSONObject artObj = new JSONObject(artResp.body().string());
-        String[] properties = {"title", "artistDisplayName", "period", "repository", "primaryImage", "tags", "department", "medium", "classification", "objectName", "artistPrefix", "geographyType"};
+        String[] properties = {"title", "artistDisplayName", "period", "repository", "primaryImage", "tags", "department", "medium", "classification", "objectName", "artistPrefix"};
         for (String property: properties) {
             if (!artObj.has(property)) {
                 if (property.equals("primaryImage")) {
@@ -103,7 +103,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
                 artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
-                String.format("%s, %s, %s, %s %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix"), artObj.get("geographyType")));
+                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")));
 
         artworks.add(result);
     }
