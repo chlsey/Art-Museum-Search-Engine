@@ -53,7 +53,7 @@ public class FileArtworkDataAccessObject implements  CommentDataAccessInterface,
                     final String commentString = String.valueOf(col[headers.get("comments")]);
                     // TODO: must implement multiple keywords function
                     final Artwork artwork = new Artwork(title, artistname, timeperiod,
-                            gallery, image, keywords); // TODO: could implement artwork factory instead.
+                            gallery, image, keywords, "description not found"); // TODO: could implement artwork factory instead.
                     artworks.put(title, artwork); // TODO: could put something else in the place of title to make it easier to search things up.
 
                     if (!commentString.isEmpty()) {

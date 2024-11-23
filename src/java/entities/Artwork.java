@@ -10,19 +10,25 @@ public class Artwork {
     private String gallery;
     private String imageUrl;
     private String keyWords;
+    private String description;
     private boolean favorited;
+    private int totalScore;
+    private int numRate;
     private List<String> comments;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
-                   String imageUrl, String keyWords) {
+                   String imageUrl, String keyWords, String description) {
         this.title = title;
         this.artistName = artistName;
         this.timePeriod = timePeriod;
+        this.description = description;
         this.gallery = gallery;
         this.imageUrl = imageUrl;
         this.keyWords = keyWords;
         this.favorited = false;
         this.comments = new ArrayList<>();
+        this.totalScore = 0;
+        this.numRate = 0;
     }
 
 
@@ -41,9 +47,16 @@ public class Artwork {
     public void addComment(String comment) {
         this.comments.add(comment);
     }
+    public String getRating() {
+        double value = totalScore/numRate;
+        String rating = String.format("%.3f",value);
+        return rating; }
+    public void newRating(float rating) {
+        this.totalScore += rating;
+        this.numRate += 1;
+    }
 
     public String getDescription() {
-        String description = "implement later";
         return description;
     }
 }
