@@ -7,6 +7,7 @@ import use_case.search.SearchDataAccessInterface;
 import use_case.rating.RatingDataAccessInterface;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, CommentDataAccessInterface, RatingDataAccessInterface {
@@ -59,5 +60,10 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     @Override
     public double calculateAverageRating() {
         return 0;
+    }
+
+    @Override
+    public List<Artwork> searchArtwork(String searchMessage, String hasimages) {
+        return List.of();
     }
 }

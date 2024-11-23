@@ -9,7 +9,7 @@ import use_case.search.SearchDataAccessInterface;
 import java.io.*;
 import java.util.*;
 
-public class FileArtworkDataAccessObject implements SearchDataAccessInterface, CommentDataAccessInterface, FavoriteDataAccessInterface {
+public class FileArtworkDataAccessObject implements  CommentDataAccessInterface, FavoriteDataAccessInterface {
 
     private static final String HEADER = "title,artistname,timeperiod,gallery,imageURL,comment,keywords";
 
