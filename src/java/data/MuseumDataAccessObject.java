@@ -8,6 +8,9 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.safety.Cleaner;
 import use_case.search.SearchDataAccessInterface;
 
 import java.io.IOException;
@@ -100,7 +103,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
                 artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
-                String.format("%s, %s, %s, %s, %s, %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix"), artObj.get("geographyType")));
+                String.format("%s, %s, %s, %s %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix"), artObj.get("geographyType")));
 
         artworks.add(result);
     }
@@ -149,10 +152,13 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                 artIndiv.put("image_id", String.format("%s/%s/full/843,/0/default.jpg", link.get("iiif_url"), artIndiv.get("image_id").toString()));
             }
 
+            Document desc = Jsoup.parse(artIndiv.get("description").toString());
+
             Artwork result = ArtworkFactory.createArtwork(artIndiv.get("title").toString()
                     , artIndiv.get("artist_title").toString(),
                     artIndiv.get("date_display").toString(), "Art Institute of Chicago",
-                    artIndiv.get("image_id").toString(), "No keywords", artIndiv.get("description").toString());
+                    artIndiv.get("image_id").toString(), "No keywords",
+                    desc.body().text());
 
             artworks.add(result);
         }
