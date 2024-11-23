@@ -2,6 +2,7 @@ package view;
 
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.search.SearchController;
+import interface_adapters.search.SearchState;
 import interface_adapters.search.SearchViewModel;
 
 import java.awt.event.MouseAdapter;
@@ -12,14 +13,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.List;
 import entities.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import static use_case.search.SearchInteractor.searchArtwork;
 
 /**
  * The View for the Search Use Case.
@@ -57,61 +57,74 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         keywordInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         inputPanel.add(keywordInfo);
-        JPanel panelPictures = new JPanel();
+        panelPictures = new JPanel();
         // Panel for action buttons
         final JPanel buttons = new JPanel();
         searchButton = new JButton("Search");
         clearButton = new JButton("Clear");
-        searchButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // clear previous search results
-                if (!(panelPictures.getComponents() == null)) {
-                    panelPictures.removeAll();
-                }
-
-                String searchword = keywordInputField.getText();
-                List<Artwork> all = searchArtwork(searchword, "Hasimages");
-                StringBuilder artworks = new StringBuilder();
-                for (Artwork art: all) {
-                    artworks.append(art.getTitle() + "\n");
-                    try {
-                        URI newuri = new URI(art.getImageUrl());
-                        // System.out.println(newuri);
-                        ImageIcon imageIcon;
-                        if (newuri.isAbsolute()) {
-                            imageIcon = new ImageIcon(newuri.toURL());
-                        } else {
-                            imageIcon = new ImageIcon(art.getImageUrl());
-                        } // load the image to a imageIcon
-                        Image image = imageIcon.getImage(); // transform it
-                        Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-                        imageIcon = new ImageIcon(newimg);  // transform it back
-                        JLabel imagelabel = new JLabel(imageIcon);
-                        // Add a mouse listener to the image label for clicks
-                        final Artwork artwork = art; // Final reference for use in the mouse listener
-                        imagelabel.addMouseListener(new MouseAdapter() {
-                            @Override
-                            public void mouseClicked(MouseEvent e) {
-                                // When image is clicked, set selected artwork and switch to ClickView
-                                clickArtViewModel.setSelectedArtwork(artwork);
-                                clickArtViewModel.firePropertyChanged();
-                                // Switch to ClickView
-                                // This assumes you are using CardLayout for view switching
-                                CardLayout cardLayout = (CardLayout) getParent().getLayout();
-                                cardLayout.show(getParent(), "ClickView");
-                            }
-                        });
-                        panelPictures.add(imagelabel);
-                    } catch (URISyntaxException | MalformedURLException ew) {
-                        throw new RuntimeException(ew);
-                    }
-                }
-                repaint();
-                revalidate();
-            }
+        searchButton.addActionListener(e -> {
+            String keyword = keywordInputField.getText();
+            searchController.execute(keyword);
         });
+
+        clearButton.addActionListener(this);
         buttons.add(searchButton);
         buttons.add(clearButton);
+//        searchButton.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                // clear previous search results
+//                if (!(panelPictures.getComponents() == null)) {
+//                    panelPictures.removeAll();
+//                }
+//                String searchword = keywordInputField.getText();
+//                final SearchState currentState = searchViewModel.getState();
+//                currentState.setKeywords(searchword);
+//                searchController.execute(
+//                        currentState.getKeywords()
+//                );
+
+//                String searchword = keywordInputField.getText();
+//                List<Artwork> all = searchArtwork(searchword, "Hasimages");
+//                StringBuilder artworks = new StringBuilder();
+//                for (Artwork art: all) {
+//                    artworks.append(art.getTitle() + "\n");
+//                    try {
+//                        URI newuri = new URI(art.getImageUrl());
+//                        // System.out.println(newuri);
+//                        ImageIcon imageIcon;
+//                        if (newuri.isAbsolute()) {
+//                            imageIcon = new ImageIcon(newuri.toURL());
+//                        } else {
+//                            imageIcon = new ImageIcon(art.getImageUrl());
+//                        } // load the image to a imageIcon
+//                        Image image = imageIcon.getImage(); // transform it
+//                        Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+//                        imageIcon = new ImageIcon(newimg);  // transform it back
+//                        JLabel imagelabel = new JLabel(imageIcon);
+//                        // Add a mouse listener to the image label for clicks
+//                        final Artwork artwork = art; // Final reference for use in the mouse listener
+//                        imagelabel.addMouseListener(new MouseAdapter() {
+//                            @Override
+//                            public void mouseClicked(MouseEvent e) {
+//                                // When image is clicked, set selected artwork and switch to ClickView
+//                                clickArtViewModel.setSelectedArtwork(artwork);
+//                                clickArtViewModel.firePropertyChanged();
+//                                // Switch to ClickView
+//                                // This assumes you are using CardLayout for view switching
+//                                CardLayout cardLayout = (CardLayout) getParent().getLayout();
+//                                cardLayout.show(getParent(), "ClickView");
+//                            }
+//                        });
+//                        panelPictures.add(imagelabel);
+//                    } catch (URISyntaxException | MalformedURLException ew) {
+//                        throw new RuntimeException(ew);
+//                    }
+//                }
+//                repaint();
+//                revalidate();
+//            }
+//        });
+
 
         buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
         // Set up search results area
@@ -132,10 +145,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         });
          */
 
-        clearButton.addActionListener(this);
 
         // Add listeners to input fields
-        addKeywordListener();
+//        addKeywordListener();
 
         // Arrange components in layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -154,14 +166,50 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        keywordInputField.setText("");
-        searchResultsArea.setText("");
-        panelPictures.removeAll(); // Clear images
-        revalidate();
+        if (e.getSource() == searchButton) {
+            String keyword = keywordInputField.getText();
+            searchController.execute(keyword);
+        } else if (e.getSource() == clearButton) {
+            keywordInputField.setText("");
+            panelPictures.removeAll();
+            revalidate();
+            repaint();
+        }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        //final SearchState state = (SearchState) evt.getSource();
+        //System.out.println(evt.getPropertyName());
+        if ("searched".equals(evt.getPropertyName())) {
+            List<Artwork> artworks = clickArtViewModel.getArtworks();
+            panelPictures.removeAll();
+            for (Artwork art : artworks) {
+                try {
+                    ImageIcon imageIcon = new ImageIcon(new URL(art.getImageUrl()));
+                    Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    JLabel imageLabel = new JLabel(new ImageIcon(image));
+
+                    imageLabel.addMouseListener(new MouseAdapter() {
+                        @Override
+                        public void mouseClicked(MouseEvent e) {
+                            clickArtViewModel.setSelectedArtwork(art);
+                            clickArtViewModel.firePropertyChanged();
+                            CardLayout layout = (CardLayout) getParent().getLayout();
+                            layout.show(getParent(), "click");
+                        }
+                    });
+                    panelPictures.add(imageLabel);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            panelPictures.revalidate();
+            panelPictures.repaint();
+
+            revalidate();
+            repaint();
+        }
 
     }
 

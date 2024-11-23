@@ -2,11 +2,13 @@ package interface_adapters.search;
 
 import entities.Artwork;
 
+import java.util.List;
+
 /**
  * The state for the Search View Model.
  */
 public class SearchState {
-    private String keywords = "";
+    private String keywords;
     private String timePeriod = "";
     private String location = "";
 
@@ -15,6 +17,8 @@ public class SearchState {
     private String locationError;
     private boolean viewingDetails = false;
     private Artwork selectedArtwork;
+    private List<Artwork> artworks;
+
 
     public String getKeywords() {
         return keywords;
@@ -86,6 +90,14 @@ public class SearchState {
 
     public void setSelectedArtwork(Artwork selectedArtwork) {
         this.selectedArtwork = selectedArtwork;
+    }
+
+    public void setArtworks(List<Artwork> artworks) {
+        this.artworks = artworks;
+    }
+
+    public List<Artwork> getArtworks() {
+        return artworks;
     }
 }
 

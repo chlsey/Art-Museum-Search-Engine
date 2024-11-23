@@ -12,7 +12,9 @@ public class SearchController {
         this.artworkSearchInputBoundary = artworkSearchInputBoundary;
     }
 
-    public void execute(String searchMessage){
-        final SearchInputData artworkSearchInputData = new SearchInputData(searchMessage);
+    public void execute(String keyword){
+        final SearchInputData artworkSearchInputData = new SearchInputData(keyword);
+
+        artworkSearchInputBoundary.execute(artworkSearchInputData);
     }
 }
