@@ -11,7 +11,7 @@ public class RatingInteractor implements RatingInputBoundary{
     }
 
     @Override
-    public void execute(RatingOutputData ratingOutputData) {
+    public void execute(RatingInputData ratingOutputData) {
         int ratingValue = (int) ratingOutputData.getRating();
         if (ratingValue < 1) {
             ratingValue = 1;
