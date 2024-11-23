@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import static org.junit.Assert.assertEquals;
 
 public class clickartInteractorTest {
+
     @BeforeEach
     void beforeEach() {
 
