@@ -57,7 +57,6 @@ public class Artwork {
     }
 
     public String getDescription() {
-        String description = "implement later";
         return description;
     }
 }

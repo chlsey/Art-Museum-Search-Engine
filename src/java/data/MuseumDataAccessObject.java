@@ -80,7 +80,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
         final Request artReq = new Request.Builder().url(String.format("%s/objects/%d", QUERY_MET, ((JSONArray) resp.get("objectIDs")).getInt(i))).build();
         final Response artResp = client.newCall(artReq).execute();
         final JSONObject artObj = new JSONObject(artResp.body().string());
-        String[] properties = {"title", "artistDisplayName", "period", "repository", "primaryImage", "tags"};
+        String[] properties = {"title", "artistDisplayName", "period", "repository", "primaryImage", "tags", "department", "medium", "classification", "objectName", "artistPrefix", "geographyType"};
         for (String property: properties) {
             if (!artObj.has(property)) {
                 if (property.equals("primaryImage")) {
@@ -96,11 +96,11 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
             artObj.put("primaryImage", "src/images/noimg.png");
         }
 
-        System.out.println(artObj.get("primaryImage"));
         Artwork result = ArtworkFactory.createArtwork(artObj.get("title").toString()
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
-                artObj.get("primaryImage").toString(), artObj.get("tags").toString());
+                artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
+                String.format("%s, %s, %s, %s, %s, %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix"), artObj.get("geographyType")));
 
         artworks.add(result);
     }
@@ -129,7 +129,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
         // for (JSONObject art: new JSONObject(artResp.body()) {};
         final JSONArray artObj = new JSONArray(artResp.get("data").toString());
         final JSONObject link = new JSONObject(artResp.get("config").toString());
-        String[] properties = {"title", "artist_title", "date_display", "image_id"};
+        String[] properties = {"title", "artist_title", "date_display", "image_id", "description"};
         for (Integer i = 0; i < 10; i++) {
             boolean hasImage = true;
             JSONObject artIndiv = artObj.getJSONObject(i);
@@ -152,7 +152,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
             Artwork result = ArtworkFactory.createArtwork(artIndiv.get("title").toString()
                     , artIndiv.get("artist_title").toString(),
                     artIndiv.get("date_display").toString(), "Art Institute of Chicago",
-                    artIndiv.get("image_id").toString(), "");
+                    artIndiv.get("image_id").toString(), "No keywords", artIndiv.get("description").toString());
 
             artworks.add(result);
         }

@@ -192,7 +192,7 @@ public class SearchInteractor implements SearchInputBoundary {
 
     @Override
     public void execute(SearchInputData searchInputData) {
-        final List<Artwork> ourartworks = searchDataAccessObject.searchArtwork(searchInputData.getSearchMessage(),"Hasimages");
+        final List<Artwork> ourartworks = searchDataAccessObject.searchArtwork(searchInputData.getSearchMessage(),"");
         boolean failed = false;
         final SearchOutputData searchOutputData = new SearchOutputData(ourartworks,failed);
         searchPresenter.prepareSuccessView(searchOutputData);
