@@ -1,5 +1,6 @@
 package interface_adapters.rating;
 
+
 public class RatingState {
     private int rating;
 

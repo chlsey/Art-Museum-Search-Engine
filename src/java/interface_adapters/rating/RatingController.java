@@ -3,6 +3,7 @@ import use_case.rating.RatingInputBoundary;
 import use_case.rating.RatingInputData;
 import use_case.rating.RatingInteractor;
 
+
 public class RatingController {
     private final RatingInputBoundary ratingInputInteractor;
 

@@ -7,6 +7,7 @@ import use_case.rating.RatingOutputBoundary;
 import use_case.rating.RatingOutputData;
 import view.CFRState;
 
+
 public class RatingPresenter implements RatingOutputBoundary {
     private final CFRViewModel cfrViewModel;
     private final ViewManagerModel viewManagerModel;
