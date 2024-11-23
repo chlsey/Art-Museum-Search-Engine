@@ -12,14 +12,14 @@ import view.SearchView;
 public class SearchUseCaseFactory {
 
     public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel,
-                                    SearchDataAccessInterface museumDataAccessObject, ClickArtViewModel clickArtViewModel) {
+                                    MuseumDataAccessObject museumDataAccessObject, ClickArtViewModel clickArtViewModel) {
         final SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
         return new SearchView(searchController, searchViewModel, clickArtViewModel);
     }
 
     private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel,
                                                         SearchViewModel searchViewModel,
-                                                       SearchDataAccessInterface museumDataAccessObject,
+                                                        MuseumDataAccessObject museumDataAccessObject,
                                                         ClickArtViewModel clickArtViewModel) {
         final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(viewManagerModel, searchViewModel, clickArtViewModel);
         final SearchInputBoundary searchInteractor = new SearchInteractor(museumDataAccessObject, searchOutputBoundary);

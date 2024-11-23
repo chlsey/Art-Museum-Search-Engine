@@ -35,7 +35,11 @@ public class ClickView extends JPanel implements PropertyChangeListener {
 
     private final JLabel titleLabel;
     private final JLabel artistLabel;
+    private final JLabel rating;
+    private final JLabel comment;
+    private final JLabel favorite;
     private final JTextArea descriptionArea;
+
 
 
     public ClickView(ClickArtController clickArtController, ClickArtViewModel clickArtViewModel) {
@@ -59,24 +63,58 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         // Initialize Details panel
         detailsPanel = new JPanel();
         detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
         // Title label
         titleLabel = new JLabel();
         titleLabel.setAlignmentX(CENTER_ALIGNMENT); // Center-align the label
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
         detailsPanel.add(titleLabel);
 
         // Artist label
         artistLabel = new JLabel();
         artistLabel.setAlignmentX(CENTER_ALIGNMENT); // Center-align the label
+        artistLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 30)));
         detailsPanel.add(artistLabel);
 
 
         // Description text area
-        descriptionArea = new JTextArea(10, 30);
+        descriptionArea = new JTextArea(3, 10);
         descriptionArea.setEditable(false);
-        JScrollPane descriptionScrollPane = new JScrollPane(descriptionArea);
-        descriptionScrollPane.setAlignmentX(CENTER_ALIGNMENT); // Center-align the scroll pane
-        detailsPanel.add(descriptionScrollPane);
+        descriptionArea.setLineWrap(true);
+        descriptionArea.setWrapStyleWord(true);
+        descriptionArea.setFont(new Font("Serif", Font.PLAIN, 16));
+        //JScrollPane descriptionScrollPane = new JScrollPane(descriptionArea);
+        //descriptionScrollPane.setAlignmentX(CENTER_ALIGNMENT); // Center-align the scroll pane
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 100)));
+        detailsPanel.add(descriptionArea);
+
+        JPanel cfrPanel = new JPanel();
+        cfrPanel.setLayout(new BoxLayout(cfrPanel, BoxLayout.Y_AXIS));
+        cfrPanel.setAlignmentX(CENTER_ALIGNMENT);
+
+        rating = new JLabel();
+        rating.setFont(new Font("Arial", Font.BOLD, 28)); // Larger font
+        favorite = new JLabel();
+        favorite.setFont(new Font("Arial", Font.BOLD, 28)); // Larger font
+        comment = new JLabel();
+        comment.setFont(new Font("Arial", Font.BOLD, 28)); // Larger font
+
+        // Add spacing between CFR elements
+        JPanel frPanel = new JPanel();
+        frPanel.setLayout(new BoxLayout(frPanel, BoxLayout.X_AXIS));
+        frPanel.setAlignmentX(CENTER_ALIGNMENT);
+        frPanel.add(rating);
+        frPanel.add(Box.createRigidArea(new Dimension(100, 0)));
+        frPanel.add(favorite);
+        cfrPanel.add(frPanel);
+        cfrPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        cfrPanel.add(comment);
+
+        // Add the CFR panel to the details panel
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 200)));
+        detailsPanel.add(cfrPanel);
 
         final JPanel buttons = new JPanel();
 
@@ -91,6 +129,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         });
         buttons.add(cfrButton);
         buttons.add(backButton);
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 200)));
         detailsPanel.add(buttons);
 
 //
@@ -122,6 +161,13 @@ public class ClickView extends JPanel implements PropertyChangeListener {
                 titleLabel.setText("Title: " + selectedArtwork.getTitle());
                 artistLabel.setText("Artist: " + selectedArtwork.getArtistName());
                 descriptionArea.setText(selectedArtwork.getDescription());
+                rating.setText("Rating: " + selectedArtwork.getRating());
+                comment.setText("Comment: " + selectedArtwork.getLastComment());
+                if (selectedArtwork.checkFavorited()) {
+                    favorite.setText("It's my favorite");
+                } else {
+                    favorite.setText("It's not my favorite");
+                }
                 cardLayout.show(mainPanel, "DetailsView"); // Switch to the details view
             } else {
                 cardLayout.show(mainPanel, "GalleryView"); // Switch back to the gallery view

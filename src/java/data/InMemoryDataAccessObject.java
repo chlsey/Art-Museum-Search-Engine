@@ -1,7 +1,6 @@
 package data;
 
 import entities.Artwork;
-import use_case.click_art.ClickArtDataAccessInterface;
 import use_case.favorite.FavoriteDataAccessInterface;
 import use_case.comment.CommentDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
@@ -11,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, CommentDataAccessInterface, RatingDataAccessInterface, ClickArtDataAccessInterface {
+public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, CommentDataAccessInterface, RatingDataAccessInterface {
 
     private Map<String, Artwork> artworks = new HashMap<>();
 

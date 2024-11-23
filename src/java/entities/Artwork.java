@@ -32,7 +32,6 @@ public class Artwork {
     }
 
 
-
     public String getTitle() { return title; }
     public String getArtistName() { return artistName; }
     public String getCompositionDate() { return timePeriod; }
@@ -48,7 +47,16 @@ public class Artwork {
     public void addComment(String comment) {
         this.comments.add(comment);
     }
+    public String getLastComment() {
+        if (comments.size() == 0) {
+            return "";
+        }
+        return comments.get(comments.size() - 1);
+    }
     public String getRating() {
+        if (numRate == 0) {
+            return "0";
+        }
         double value = totalScore/numRate;
         String rating = String.format("%.3f",value);
         return rating; }
