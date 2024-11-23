@@ -7,6 +7,7 @@ import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtPresenter;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.search.SearchViewModel;
+import use_case.click_art.ClickArtDataAccessInterface;
 import use_case.click_art.ClickArtInteractor;
 import use_case.click_art.ClickArtOutputBoundary;
 import use_case.search.SearchDataAccessInterface;
@@ -34,14 +35,14 @@ public class Main {
         new ViewManager(views, cardLayout, viewManagerModel);
 
         final SearchViewModel searchViewModel = new SearchViewModel();
-        final MuseumDataAccessObject museumDataAccessObject = new MuseumDataAccessObject();
-
+        final ClickArtDataAccessInterface clickArtDataAccessInterface = new MuseumDataAccessObject();
+        final SearchDataAccessInterface searchDataAccessObject = new MuseumDataAccessObject();
         final ClickArtViewModel clickArtViewModel = new ClickArtViewModel();
-        final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
+        final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, searchDataAccessObject, clickArtViewModel);
         final ClickArtOutputBoundary clickArtPresenter = new ClickArtPresenter(clickArtViewModel,viewManagerModel);
         //final ClickArtController clickArtController = new ClickArtController(new ClickArtInteractor(museumDataAccessObject, clickArtPresenter));
 
-        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, clickArtViewModel, museumDataAccessObject);
+        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, clickArtViewModel, clickArtDataAccessInterface);
 
 
         views.add(searchView, searchView.getViewName());
