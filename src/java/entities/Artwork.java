@@ -32,6 +32,7 @@ public class Artwork {
     }
 
 
+
     public String getTitle() { return title; }
     public String getArtistName() { return artistName; }
     public String getCompositionDate() { return timePeriod; }

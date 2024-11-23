@@ -15,8 +15,8 @@ import view.ClickView;
  */
 public class ClickUseCaseFactory {
 
-    public static ClickView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, ClickArtViewModel clickViewModel,
-                                   MuseumDataAccessObject dataAccessObject) {
+    public static ClickView create(ViewManagerModel viewManagerModel, ClickArtViewModel clickViewModel,
+                                   ClickArtDataAccessInterface dataAccessObject) {
         // Create the controller for handling click actions
         final ClickArtController clickController = createClickUseCase(viewManagerModel, searchViewModel, clickViewModel, dataAccessObject);
         // Create and return the view connected to the controller and ViewModel
@@ -26,7 +26,7 @@ public class ClickUseCaseFactory {
     private static ClickArtController createClickUseCase(ViewManagerModel viewManagerModel,
                                                          SearchViewModel searchViewModel,
                                                          ClickArtViewModel clickViewModel,
-                                                         MuseumDataAccessObject dataAccessObject) {
+                                                         ClickArtDataAccessInterface dataAccessObject) {
         // Create the output boundary (Presenter) to handle UI updates and view transitions
         final ClickArtOutputBoundary clickArtOutputBoundary = new ClickArtPresenter(searchViewModel, clickViewModel,viewManagerModel);
         // Create the input boundary (Interactor) to handle business logic for fetching and preparing data
