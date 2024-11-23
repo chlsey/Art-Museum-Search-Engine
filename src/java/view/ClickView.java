@@ -22,63 +22,96 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+
 public class ClickView extends JPanel implements PropertyChangeListener {
     private final String viewName = "ClickView";
     private final ClickArtController clickArtController;
     private final ClickArtViewModel clickArtViewModel;
 
+    private final CardLayout cardLayout;
+    private final JPanel mainPanel;
+    private final JPanel detailsPanel;
+    private final JPanel galleryPanel;
+
     private final JLabel titleLabel;
     private final JLabel artistLabel;
     private final JTextArea descriptionArea;
 
+
     public ClickView(ClickArtController clickArtController, ClickArtViewModel clickArtViewModel) {
-        this.clickArtViewModel = clickArtViewModel;
         this.clickArtController = clickArtController;
+        this.clickArtViewModel = clickArtViewModel;
         clickArtViewModel.addPropertyChangeListener(this);
 
+        // Initialize the CardLayout and main panel
+        cardLayout = new CardLayout();
+        mainPanel = new JPanel(cardLayout);
 
-        // Set BoxLayout to stack components vertically
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        // Initialize Gallery panel
+        galleryPanel = new JPanel();
+        galleryPanel.setLayout(new BoxLayout(galleryPanel, BoxLayout.Y_AXIS));
+        JButton viewDetailsButton = new JButton("View Artwork Details");
+        viewDetailsButton.setAlignmentX(CENTER_ALIGNMENT);
+        viewDetailsButton.addActionListener(e -> cardLayout.show(mainPanel, "DetailsView"));
+        galleryPanel.add(viewDetailsButton);
+        galleryPanel.add(new JLabel("Gallery View (Placeholder)"));
+
+        // Initialize Details panel
+        detailsPanel = new JPanel();
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
 
         // Title label
         titleLabel = new JLabel();
         titleLabel.setAlignmentX(CENTER_ALIGNMENT); // Center-align the label
-        add(titleLabel);
+        detailsPanel.add(titleLabel);
 
         // Artist label
         artistLabel = new JLabel();
         artistLabel.setAlignmentX(CENTER_ALIGNMENT); // Center-align the label
-        add(artistLabel);
+        detailsPanel.add(artistLabel);
 
         // Description text area
         descriptionArea = new JTextArea(10, 30);
         descriptionArea.setEditable(false);
         JScrollPane descriptionScrollPane = new JScrollPane(descriptionArea);
         descriptionScrollPane.setAlignmentX(CENTER_ALIGNMENT); // Center-align the scroll pane
-        add(descriptionScrollPane);
+        detailsPanel.add(descriptionScrollPane);
+
+//        // Back button
+//        JButton backButton = new JButton("Back");
+//        backButton.setAlignmentX(CENTER_ALIGNMENT);
+//
+//        backButton.addActionListener(e -> {
+//            // Set the state to "search" in the view model
+//            clickArtViewModel.setState(new ClickArtState("search");
+//        });
+//        detailsPanel.add(backButton);
+
+        // Add panels to the CardLayout
+        mainPanel.add(galleryPanel, "GalleryView");
+        mainPanel.add(detailsPanel, "DetailsView");
+
+        // Add the main panel to the ClickView
+        setLayout(new BorderLayout());
+        add(mainPanel, BorderLayout.CENTER);
+
+        // Show the gallery view by default
+        cardLayout.show(mainPanel, "GalleryView");
     }
 
-
-//    private void displayArtworkDetails(Artwork artwork) {
-//        titleLabel.setText("Title: " + artwork.getTitle());
-//        artistLabel.setText("Artist: " + artwork.getArtistName());
-//        descriptionArea.setText(artwork.getDescription());
-//    }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Check if the state has changed and we are now viewing artwork details
-        System.out.println(evt.getPropertyName());
         if (ClickArtViewModel.STATE_CHANGED_PROPERTY.equals(evt.getPropertyName())) {
             Artwork selectedArtwork = clickArtViewModel.getSelectedArtwork();
-            if (clickArtViewModel.getSelectedArtwork() != null) {
+            if (selectedArtwork != null) {
                 titleLabel.setText("Title: " + selectedArtwork.getTitle());
                 artistLabel.setText("Artist: " + selectedArtwork.getArtistName());
                 descriptionArea.setText(selectedArtwork.getDescription());
-                setVisible(true);
+                cardLayout.show(mainPanel, "DetailsView"); // Switch to the details view
             } else {
-                // Hide the view if no artwork is selected
-                setVisible(false);
+                cardLayout.show(mainPanel, "GalleryView"); // Switch back to the gallery view
             }
         }
     }
@@ -87,4 +120,3 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         return viewName;
     }
 }
-
