@@ -192,29 +192,49 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             for (Artwork art : artworks) {
                 try {
                     URI newuri = new URI(art.getImageUrl());
-                    // System.out.println(newuri);
                     ImageIcon imageIcon;
                     if (newuri.isAbsolute()) {
                         imageIcon = new ImageIcon(newuri.toURL());
                     } else {
                         imageIcon = new ImageIcon(art.getImageUrl());
-                    } // load the image to a imageIcon
+                    } // load the image to an imageIcon
+
                     Image image = imageIcon.getImage(); // transform it
-                    Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                    Image newimg = image.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
                     imageIcon = new ImageIcon(newimg);  // transform it back
+
                     JLabel imagelabel = new JLabel(imageIcon);
-                    // Add a mouse listener to the image label for clicks
+                    imagelabel.setPreferredSize(new Dimension(200, 200)); // Fix the preferred size to prevent resizing
+
+                    // Add a mouse listener to the image label for hover and click
                     final Artwork artwork = art; // Final reference for use in the mouse listener
+
                     imagelabel.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
                             // When image is clicked, set selected artwork and switch to ClickView
                             clickArtViewModel.setSelectedArtwork(artwork);
                             clickArtViewModel.firePropertyChanged();
+
                             // Switch to ClickView
-                            // This assumes you are using CardLayout for view switching
                             CardLayout cardLayout = (CardLayout) getParent().getLayout();
                             cardLayout.show(getParent(), "ClickView");
+                        }
+
+                        @Override
+                        public void mouseEntered(MouseEvent e) {
+                            // On hover, increase the size of the image
+                            Image hoverImage = image.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
+                            ImageIcon hoverIcon = new ImageIcon(hoverImage);
+                            imagelabel.setIcon(hoverIcon); // Set the new hover icon
+                        }
+
+                        @Override
+                        public void mouseExited(MouseEvent e) {
+                            // On exit, reset the image to its original size
+                            Image normalImage = image.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
+                            ImageIcon normalIcon = new ImageIcon(normalImage);
+                            imagelabel.setIcon(normalIcon); // Reset the original icon
                         }
                     });
                     panelPictures.add(imagelabel);
