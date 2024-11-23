@@ -14,6 +14,10 @@ Team Name: Javaphiles
 Domain:
 Art Museum search engine
 
+### Essential Features
+1. Search artworks by keywords
+2. View artwork descriptions by clicking into 
+
 ### Software Specification:
 The program makes queries using APIs of museums and art galleries based on specifications the user gives it (e.g. Historical period where the artifact belongs, Form of art, Nationality, Style) in the form of Tags or searching for specific names, etc. and returns a collection of all the art pieces as well as details such as the Artist credited, the museum which it currently belongs in, the date of acquisition of this artifact, and an image of the art piece(if available). The program would also selectively “adapt” to each of the APIs of different museums since it’s a possibility that there are features of a museum/gallery API which might help with our java.interface_adapters.search query but is not present in every API.
 
