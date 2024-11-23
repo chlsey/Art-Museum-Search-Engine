@@ -15,9 +15,10 @@ public class Artwork {
     private int totalScore;
     private int numRate;
     private List<String> comments;
+    private String id;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
-                   String imageUrl, String keyWords, String description) {
+                   String imageUrl, String keyWords, String description, String id) {
         this.title = title;
         this.artistName = artistName;
         this.timePeriod = timePeriod;
@@ -29,6 +30,7 @@ public class Artwork {
         this.comments = new ArrayList<>();
         this.totalScore = 0;
         this.numRate = 0;
+        this.id = id;
     }
 
 
@@ -67,5 +69,16 @@ public class Artwork {
 
     public String getDescription() {
         return description;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public int getnumRate() {
+        return numRate;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
     }
 }
