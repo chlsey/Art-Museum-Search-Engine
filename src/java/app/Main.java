@@ -38,10 +38,10 @@ public class Main {
 
         final ClickArtViewModel clickArtViewModel = new ClickArtViewModel();
         final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
-        final ClickArtOutputBoundary clickArtPresenter = new ClickArtPresenter(clickArtViewModel,viewManagerModel);
+        final ClickArtOutputBoundary clickArtPresenter = new ClickArtPresenter(searchViewModel, clickArtViewModel,viewManagerModel);
         //final ClickArtController clickArtController = new ClickArtController(new ClickArtInteractor(museumDataAccessObject, clickArtPresenter));
 
-        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, clickArtViewModel, museumDataAccessObject);
+        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, searchViewModel, clickArtViewModel, museumDataAccessObject);
 
 
         views.add(searchView, searchView.getViewName());

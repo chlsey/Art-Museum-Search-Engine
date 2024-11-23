@@ -31,4 +31,9 @@ public class ClickArtInteractor implements ClickArtInputBoundary {
 //        clickArtPresenter.prepareFailView("Page not found.");
 
     }
+
+    @Override
+    public void switchToSearchView() {
+        clickArtPresenter.switchToSearchView();
+    }
 }
