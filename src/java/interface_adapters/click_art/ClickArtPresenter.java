@@ -1,5 +1,6 @@
 package interface_adapters.click_art;
 
+import interface_adapters.search.SearchViewModel;
 import use_case.click_art.ClickArtInputData;
 import use_case.click_art.ClickArtOutputBoundary;
 import use_case.click_art.ClickArtOutputData;
@@ -7,11 +8,13 @@ import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.*;
 
 public class ClickArtPresenter implements ClickArtOutputBoundary {
+    private final SearchViewModel searchViewModel;
     private final ClickArtViewModel clickArtViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public ClickArtPresenter(ClickArtViewModel clickArtViewModel,
+    public ClickArtPresenter(SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel,
                              ViewManagerModel viewManagerModel) {
+        this.searchViewModel = searchViewModel;
         this.clickArtViewModel = clickArtViewModel;
         this.viewManagerModel = viewManagerModel;
     }
@@ -35,5 +38,10 @@ public class ClickArtPresenter implements ClickArtOutputBoundary {
         final ClickArtState clickArtState = clickArtViewModel.getState();
         clickArtState.setClickArtError(error);
         clickArtViewModel.firePropertyChanged();
+    }
+
+    public void switchToSearchView(){
+        viewManagerModel.setState(searchViewModel.getViewName());
+        viewManagerModel.firePropertyChanged("search");
     }
 }
