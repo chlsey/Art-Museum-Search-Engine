@@ -2,6 +2,7 @@ package interface_adapters;
 
 import interface_adapters.comment.CommentState;
 import interface_adapters.favorite.FavoriteState;
+import view.CFRState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -14,15 +15,22 @@ public class CFRViewModel {
 
     public CFRViewModel() {
         this.commentState = null;
+        this.favoriteState = null;
     }
 
-    public CommentState getState() {
+    public CommentState getCommentState() {
         return commentState;
     }
 
-    public void setState(CommentState commentState) {
+    public FavoriteState getFavoriteState() {
+        return favoriteState;
+    }
+
+    public void setCommentState(CommentState commentState) {
         this.commentState = commentState;
     }
+
+    public void setFavoriteState(FavoriteState favoriteState) { this.favoriteState = favoriteState; }
 
     public String getViewName() {
         return viewName;

@@ -28,7 +28,4 @@ public class FavoriteInteractor implements FavoriteInputBoundary {
         }
     }
 
-    @Override
-    public void switchToArtworkView() {
-    }
 }
