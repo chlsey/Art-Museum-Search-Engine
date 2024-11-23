@@ -13,9 +13,9 @@ public class FavoriteInteractorTest {
     @Test
     public void favoriteSavedArtTest() {
         Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
-                "MoMA", "", "starsnightbluefamous");
+                "MoMA", "", "starsnightbluefamous", "no description");
         Artwork artwork2 = ArtworkFactory.createArtwork("Madame X", "John Singer Sargent", "1883",
-                "MoMA", "", "womanblackdressportrait");
+                "MoMA", "", "womanblackdressportrait", "no description");
         FavoriteInputData inputData = new FavoriteInputData(artwork1);
         FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
@@ -41,7 +41,7 @@ public class FavoriteInteractorTest {
     @Test
     public void favoriteNewArtTest() {
         Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
-                "MoMA", "", "starsnightbluefamous");
+                "MoMA", "", "starsnightbluefamous", "no description");
         FavoriteInputData inputData = new FavoriteInputData(artwork1);
         FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
@@ -64,7 +64,7 @@ public class FavoriteInteractorTest {
     @Test
     public void unfavoriteTest() {
         Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
-                "MoMA", "", "starsnightbluefamous");
+                "MoMA", "", "starsnightbluefamous", "no description");
         artwork1.setFavorited();
         FavoriteInputData inputData = new FavoriteInputData(artwork1);
         FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
