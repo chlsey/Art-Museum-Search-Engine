@@ -7,10 +7,10 @@ import entities.Artwork;
 import use_case.comment.CommentDataAccessInterface;
 
 public class ClickArtInteractor implements ClickArtInputBoundary {
-    private final ClickArtDataAccessInterface artworkDataAccessObject;
+    private final MuseumDataAccessObject artworkDataAccessObject;
     private final ClickArtOutputBoundary clickArtPresenter;
 
-    public ClickArtInteractor(ClickArtDataAccessInterface artworkDataAccessObject,
+    public ClickArtInteractor(MuseumDataAccessObject artworkDataAccessObject,
                               ClickArtOutputBoundary clickArtOutputBoundary) {
         this.artworkDataAccessObject = artworkDataAccessObject;
         this.clickArtPresenter = clickArtOutputBoundary;
