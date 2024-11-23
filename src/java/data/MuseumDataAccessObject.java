@@ -49,27 +49,17 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
             final JSONObject artsM = new JSONObject(responseMet.body().string());
             final JSONObject artsC = new JSONObject(responseChi.body().string());
 
-            int sizeMet = 20;
 
             // since the Chicago museum doesn't seem to have a lot of images..
             if (!spec.equals("Hasimages")) {
                 CmuseumHandler(artworks, artsC);
-                sizeMet = 10;
             }
 
             // Add met museum responses. if there are more than 10 images, add 10 randomly
             if ((int) JSONObject.stringToValue(artsM.get("total").toString()) > 10) {
-                Random rand = new Random();
-                List<Integer> count = new ArrayList<>();
-                for (int i = 0; i < Math.min((int) JSONObject.stringToValue(artsM.get("total").toString()), 30); i++) {
-                    count.add(i);
-                }
-
-                for (int i = 0; i < sizeMet; i++) {
-                    int id = rand.nextInt(count.size());
+                for (int i = 0; i < Math.min((int) JSONObject.stringToValue(artsM.get("total").toString()), 20); i++) {
                     // metmuseumHandler(client, artworks, artsM, id);
-                    metmuseumHandler(client, artworks, artsM, id);
-                    count.remove(id);
+                    metmuseumHandler(client, artworks, artsM, i);
                 }
             }
             else {
@@ -78,11 +68,6 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                 }
             }
 
-            /*artworks.add(ArtworkFactory.createArtwork(artM.get("title"), artM.get("artistDisplayName"),
-                    artM.get("period"), artM.get("repository"), artM.get("primaryImage"), artM.get("tags"), "genome")); */
-            //String title, String artistName, String timePeriod,
-            //                                        String gallery, String imageUrl,
-            //                                        String[] keyWords
             return artworks;
 
         }
@@ -111,10 +96,13 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
             artObj.put("primaryImage", "src/images/noimg.png");
         }
 
-        artworks.add(ArtworkFactory.createArtwork(artObj.get("title").toString()
+        System.out.println(artObj.get("primaryImage"));
+        Artwork result = ArtworkFactory.createArtwork(artObj.get("title").toString()
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
-                artObj.get("primaryImage").toString(), artObj.get("tags").toString()));
+                artObj.get("primaryImage").toString(), artObj.get("tags").toString());
+
+        artworks.add(result);
     }
 
     private static Request reqMetBuilder(String query, String spec) {
@@ -161,10 +149,12 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                 artIndiv.put("image_id", String.format("%s/%s/full/843,/0/default.jpg", link.get("iiif_url"), artIndiv.get("image_id").toString()));
             }
 
-            artworks.add(ArtworkFactory.createArtwork(artIndiv.get("title").toString()
+            Artwork result = ArtworkFactory.createArtwork(artIndiv.get("title").toString()
                     , artIndiv.get("artist_title").toString(),
                     artIndiv.get("date_display").toString(), "Art Institute of Chicago",
-                    artIndiv.get("image_id").toString(), ""));
+                    artIndiv.get("image_id").toString(), "");
+
+            artworks.add(result);
         }
     }
 }

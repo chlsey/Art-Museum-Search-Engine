@@ -191,20 +191,33 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             panelPictures.removeAll();
             for (Artwork art : artworks) {
                 try {
-                    ImageIcon imageIcon = new ImageIcon(new URL(art.getImageUrl()));
-                    Image image = imageIcon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-                    JLabel imageLabel = new JLabel(new ImageIcon(image));
-
-                    imageLabel.addMouseListener(new MouseAdapter() {
+                    URI newuri = new URI(art.getImageUrl());
+                    // System.out.println(newuri);
+                    ImageIcon imageIcon;
+                    if (newuri.isAbsolute()) {
+                        imageIcon = new ImageIcon(newuri.toURL());
+                    } else {
+                        imageIcon = new ImageIcon(art.getImageUrl());
+                    } // load the image to a imageIcon
+                    Image image = imageIcon.getImage(); // transform it
+                    Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                    imageIcon = new ImageIcon(newimg);  // transform it back
+                    JLabel imagelabel = new JLabel(imageIcon);
+                    // Add a mouse listener to the image label for clicks
+                    final Artwork artwork = art; // Final reference for use in the mouse listener
+                    imagelabel.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            clickArtViewModel.setSelectedArtwork(art);
-                            clickArtViewModel.firePropertyChanged("click");
-                            CardLayout layout = (CardLayout) getParent().getLayout();
-                            layout.show(getParent(), "ClickView");
+                            // When image is clicked, set selected artwork and switch to ClickView
+                            clickArtViewModel.setSelectedArtwork(artwork);
+                            clickArtViewModel.firePropertyChanged();
+                            // Switch to ClickView
+                            // This assumes you are using CardLayout for view switching
+                            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+                            cardLayout.show(getParent(), "ClickView");
                         }
                     });
-                    panelPictures.add(imageLabel);
+                    panelPictures.add(imagelabel);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
