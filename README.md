@@ -39,10 +39,20 @@ query multiple museums for results at the same time.
    (screenshots TBA)
 
 ### Installation instructions: 
-
+The software works on Windows 10 and Ubuntu 22.04.5 LTS Linux, other operating systems are not tested. \
+The software depends on version 1.18.1 of the Jsoup library for parsing HTML query results, 
+version 4.12.0 of the okhttp library to read http, as well as version 20240303 of JSON. Junit 4.13.1,
+Jacoco 0.8.12 and RELEASE version Jupiter are used for unit testing and coverage.
 
 ### Usage Guide
-
+(video TBA) \
+1. Searching artworks
+Type your search query into the text box. Select any filters that you wish to be applied to your search.
+Images of search results will pop up. Hover over them to see the name and artist of the artworks, click on them
+to view detailed information. Use the back button to go back to your previous query results, or use clear to clear the 
+queries and search again.
+2. Viewing favorited/rated artworks
+Click on the button in the main window, and all rated or favorited artworks will show up like search queries. 
 
 ### License
 Program code is licensed under MIT License.
