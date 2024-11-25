@@ -31,8 +31,9 @@ public class ClickView extends JPanel implements PropertyChangeListener {
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
     private final JPanel detailsPanel;
-    private final JPanel galleryPanel;
+//    private final JPanel galleryPanel;
 
+    private final JLabel imageLabel;
     private final JLabel titleLabel;
     private final JLabel artistLabel;
     private final JLabel rating;
@@ -52,23 +53,31 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         mainPanel = new JPanel(cardLayout);
 
         // Initialize Gallery panel
-        galleryPanel = new JPanel();
-        galleryPanel.setLayout(new BoxLayout(galleryPanel, BoxLayout.Y_AXIS));
-        JButton viewDetailsButton = new JButton("View Artwork Details");
-        viewDetailsButton.setAlignmentX(CENTER_ALIGNMENT);
-        viewDetailsButton.addActionListener(e -> cardLayout.show(mainPanel, "DetailsView"));
-        galleryPanel.add(viewDetailsButton);
-        galleryPanel.add(new JLabel("Gallery View (Placeholder)"));
+//        galleryPanel = new JPanel();
+//        galleryPanel.setLayout(new BoxLayout(galleryPanel, BoxLayout.Y_AXIS));
+//        JButton viewDetailsButton = new JButton("View Artwork Details");
+//        viewDetailsButton.setAlignmentX(CENTER_ALIGNMENT);
+//        viewDetailsButton.addActionListener(e -> cardLayout.show(mainPanel, "DetailsView"));
+//        galleryPanel.add(viewDetailsButton);
+//        galleryPanel.add(new JLabel("Gallery View (Placeholder)"));
 
         // Initialize Details panel
         detailsPanel = new JPanel();
         detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
         detailsPanel.add(Box.createRigidArea(new Dimension(0, 30)));
 
+        //Image label
+        imageLabel = new JLabel();
+        imageLabel.setAlignmentX(CENTER_ALIGNMENT);
+        imageLabel.setPreferredSize(new Dimension(400, 400));
+        imageLabel.repaint();
+        detailsPanel.add(imageLabel);
+
         // Title label
         titleLabel = new JLabel();
         titleLabel.setAlignmentX(CENTER_ALIGNMENT); // Center-align the label
         titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         detailsPanel.add(titleLabel);
 
         // Artist label
@@ -113,7 +122,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         cfrPanel.add(comment);
 
         // Add the CFR panel to the details panel
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 200)));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 100)));
         detailsPanel.add(cfrPanel);
 
         final JPanel buttons = new JPanel();
@@ -140,7 +149,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
 //        detailsPanel.add(backButton);
 
         // Add panels to the CardLayout
-        mainPanel.add(galleryPanel, "GalleryView");
+//        mainPanel.add(galleryPanel, "GalleryView");
         mainPanel.add(detailsPanel, "DetailsView");
 
         // Add the main panel to the ClickView
@@ -148,7 +157,10 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         add(mainPanel, BorderLayout.CENTER);
 
         // Show the gallery view by default
-        cardLayout.show(mainPanel, "GalleryView");
+        // cardLayout.show(mainPanel, "GalleryView");
+        cardLayout.show(mainPanel, "DetailsView");
+        mainPanel.revalidate();
+        mainPanel.repaint();
     }
 
 
@@ -158,6 +170,30 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         if (ClickArtViewModel.STATE_CHANGED_PROPERTY.equals(evt.getPropertyName())) {
             Artwork selectedArtwork = clickArtViewModel.getSelectedArtwork();
             if (selectedArtwork != null) {
+                URI newuri = null;
+                try {
+                    newuri = new URI(selectedArtwork.getImageUrl());
+                } catch (URISyntaxException e) {
+                    throw new RuntimeException(e);
+                }
+                ImageIcon imageIcon;
+                if (newuri.isAbsolute()) {
+                    try {
+                        imageIcon = new ImageIcon(newuri.toURL());
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+                } else {
+                    imageIcon = new ImageIcon(selectedArtwork.getImageUrl());
+                }
+
+                Image image = imageIcon.getImage(); // transform it
+                Image newimg = image.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
+                imageIcon = new ImageIcon(newimg);  // transform it back
+
+                imageLabel.setIcon(imageIcon);
+                imageLabel.setPreferredSize(new Dimension(200, 200));
+
                 titleLabel.setText("Title: " + selectedArtwork.getTitle());
                 artistLabel.setText("Artist: " + selectedArtwork.getArtistName());
                 descriptionArea.setText(selectedArtwork.getDescription());
@@ -173,6 +209,8 @@ public class ClickView extends JPanel implements PropertyChangeListener {
                 cardLayout.show(mainPanel, "GalleryView"); // Switch back to the gallery view
             }
         }
+        revalidate();
+        repaint();
     }
 
     public String getViewName() {
