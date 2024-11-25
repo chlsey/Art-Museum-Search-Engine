@@ -34,6 +34,8 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         add(inputPanel, BorderLayout.SOUTH);
 
         submitButton.addActionListener(e -> submitComment());
+
+
     }
 
     private void submitComment() {

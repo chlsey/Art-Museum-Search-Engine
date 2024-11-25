@@ -20,7 +20,7 @@ public class RatingInteractor implements RatingInputBoundary{
         }
         ratingDataAccessObject.incrementRatingCount(ratingValue);
         double averageRating = ratingDataAccessObject.calculateAverageRating();
-        RatingOutputData result = new RatingOutputData(ratingValue, averageRating);
+        RatingOutputData result = new RatingOutputData(ratingValue);
         ratingOutputBoundary.prepareRatingView(result);
     }
 
