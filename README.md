@@ -27,10 +27,10 @@ databases specifically other than the search tied to respective museums, and wha
 query multiple museums for results at the same time.
 
 ### Table of contents:
-[Features](?tab=readme-ov-file#essential-features)
-[Installation](?tab=readme-ov-file#installation-instructions)
-[Usage](?tab=readme-ov-file#usage-guide)
-[License](?tab=readme-ov-file#license)
+[Features](?tab=readme-ov-file#essential-features) \
+[Installation](?tab=readme-ov-file#installation-instructions) \
+[Usage](?tab=readme-ov-file#usage-guide) \
+[License](?tab=readme-ov-file#license) 
 
 ### Essential Features
 1. Search artworks by name, artist, etc. With a filter 
