@@ -12,7 +12,7 @@ public class Artwork {
     private String keyWords;
     private String description;
     private boolean favorited;
-    private int totalScore;
+    private int rating;
     private int numRate;
     private List<String> comments;
 
@@ -27,7 +27,7 @@ public class Artwork {
         this.keyWords = keyWords;
         this.favorited = false;
         this.comments = new ArrayList<>();
-        this.totalScore = 0;
+        this.rating = 0;
         this.numRate = 0;
     }
 
@@ -55,13 +55,14 @@ public class Artwork {
     }
     public String getRating() {
         if (numRate == 0) {
-            return "0";
+            return "No Rating";
         }
-        double value = totalScore/numRate;
-        String rating = String.format("%.3f",value);
+        Integer value = rating;
+        String rating = value.toString();
         return rating; }
-    public void newRating(float rating) {
-        this.totalScore += rating;
+
+    public void newRating(int rating) {
+        this.rating = rating;
         this.numRate += 1;
     }
 
