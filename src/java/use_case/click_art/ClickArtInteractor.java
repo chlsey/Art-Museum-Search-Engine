@@ -5,6 +5,7 @@ import data.InMemoryDataAccessObject;
 import data.MuseumDataAccessObject;
 import entities.Artwork;
 
+
 import use_case.comment.CommentDataAccessInterface;
 
 public class ClickArtInteractor implements ClickArtInputBoundary {

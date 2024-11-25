@@ -13,7 +13,7 @@ import use_case.search.SearchDataAccessInterface;
 import view.ClickView;
 import view.SearchView;
 import view.ViewManager;
-
+import app.Main;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

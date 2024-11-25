@@ -7,12 +7,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import use_case.rating.*;
 
 public class CFRView extends JPanel implements PropertyChangeListener {
     private final String viewName = "cfr";
     private final CFRViewModel cfrViewModel;
     private final JTextField commentInput;
     private final JButton submitButton;
+    private final JButton submitRatingButton;
+    private final JTextField ratingInput;
 
     public CFRView(CFRViewModel cfrViewModel) {
         this.cfrViewModel = cfrViewModel;
@@ -34,6 +37,15 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         add(inputPanel, BorderLayout.SOUTH);
 
         submitButton.addActionListener(e -> submitComment());
+        JPanel ratingPanel = new JPanel();
+        inputPanel.setLayout(new FlowLayout());
+        JLabel ratingLabel = new JLabel("rating:");
+        ratingInput = new JTextField(20);
+        submitRatingButton = new JButton("Submit");
+        inputPanel.add(inputLabel);
+        inputPanel.add(ratingLabel);
+        inputPanel.add(submitRatingButton);
+        add(ratingPanel, BorderLayout.NORTH);
 
 
     }
