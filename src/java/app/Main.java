@@ -23,32 +23,40 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        // Create the main JFrame
         final JFrame frame = new JFrame("Museum Search Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        // Set up CardLayout for view switching
         final CardLayout cardLayout = new CardLayout();
         final JPanel views = new JPanel(cardLayout);
-        frame.add(views);
+        frame.setContentPane(views); // Add to frame as content pane
 
+        // View manager model for controlling states
         final ViewManagerModel viewManagerModel = new ViewManagerModel();
         new ViewManager(views, cardLayout, viewManagerModel);
 
+        // Search view setup
         final SearchViewModel searchViewModel = new SearchViewModel();
         final MuseumDataAccessObject museumDataAccessObject = new MuseumDataAccessObject();
-
         final ClickArtViewModel clickArtViewModel = new ClickArtViewModel();
         final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
-        final ClickArtOutputBoundary clickArtPresenter = new ClickArtPresenter(searchViewModel, clickArtViewModel,viewManagerModel);
-        //final ClickArtController clickArtController = new ClickArtController(new ClickArtInteractor(museumDataAccessObject, clickArtPresenter));
 
+        // ClickArt view setup
+        final ClickArtPresenter clickArtPresenter = new ClickArtPresenter(searchViewModel, clickArtViewModel, viewManagerModel);
         final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, searchViewModel, clickArtViewModel, museumDataAccessObject);
 
-
+        // Add views to CardLayout
         views.add(searchView, searchView.getViewName());
         views.add(clickView, clickView.getViewName());
+
+        // Set the initial state to SearchView
         viewManagerModel.setState(searchView.getViewName());
         viewManagerModel.firePropertyChanged();
-        frame.pack();
+
+        // Configure frame for full-screen mode
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window
+        frame.setUndecorated(false); // Keep window decorations like title bar
         frame.setVisible(true);
     }
 }
