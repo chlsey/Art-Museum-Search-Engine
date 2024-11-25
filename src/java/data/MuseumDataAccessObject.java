@@ -103,7 +103,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
                 artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
-                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")));
+                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")), "id placeholder");
 
         artworks.add(result);
     }
@@ -158,7 +158,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                     , artIndiv.get("artist_title").toString(),
                     artIndiv.get("date_display").toString(), "Art Institute of Chicago",
                     artIndiv.get("image_id").toString(), "No keywords",
-                    desc.body().text());
+                    desc.body().text(), "id placeholder");
 
             artworks.add(result);
         }
