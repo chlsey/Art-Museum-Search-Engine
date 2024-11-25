@@ -1,4 +1,5 @@
 package use_case.rating;
+import entities.*;
 
 public class RatingInteractor implements RatingInputBoundary{
     private final RatingDataAccessInterface ratingDataAccessObject;
@@ -12,6 +13,7 @@ public class RatingInteractor implements RatingInputBoundary{
 
     @Override
     public void execute(RatingInputData ratingOutputData) {
+        Artwork artwork = new Artwork();
         int ratingValue = (int) ratingOutputData.getRating();
         if (ratingValue < 1) {
             ratingValue = 1;
