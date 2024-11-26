@@ -1,14 +1,15 @@
 package use_case.rating;
+import entities.Artwork;
 
 public class RatingOutputData {
-    private int rating;
+    private String rating;
 
 
-    public RatingOutputData(int rating) {
-        this.rating = rating;
+    public RatingOutputData(Artwork artwork) {
+        rating = artwork.getRating();
     }
 
-    public int getRating() {
+    public String getRating() {
         return rating;
     }
 

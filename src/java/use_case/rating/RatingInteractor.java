@@ -1,5 +1,5 @@
 package use_case.rating;
-import entities.*;
+import entities.Artwork;
 
 public class RatingInteractor implements RatingInputBoundary{
     private final RatingDataAccessInterface ratingDataAccessObject;
@@ -12,16 +12,18 @@ public class RatingInteractor implements RatingInputBoundary{
     }
 
     @Override
-    public void execute(RatingInputData ratingOutputData) {
-        Artwork artwork = new Artwork();
-        int ratingValue = (int) ratingOutputData.getRating();
+    public void execute(RatingInputData ratingInputData) {
+        Artwork artwork = ratingInputData.getArtwork();
+        Integer ratingValue = ratingInputData.getRating();
         if (ratingValue < 1) {
-            ratingValue = 1;
+            ratingValue.toString() = "★ ☆ ☆ ☆ ☆";
+            artwork.newRating(ratingValue);
         } else if (ratingValue > 5) {
             ratingValue = 5;
+            artwork.newRating(ratingValue);
         }
         ratingDataAccessObject.incrementRatingCount(ratingValue);
-        double averageRating = ratingDataAccessObject.calculateAverageRating();
+       // double averageRating = ratingDataAccessObject.calculateAverageRating();
         RatingOutputData result = new RatingOutputData(ratingValue);
         ratingOutputBoundary.prepareRatingView(result);
     }
