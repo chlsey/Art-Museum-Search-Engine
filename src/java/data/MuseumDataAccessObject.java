@@ -10,17 +10,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.safety.Cleaner;
 import use_case.comment.CommentDataAccessInterface;
 import use_case.filter.FilterDataAccessInterface;
-import use_case.filter.FilterInteractor;
 import use_case.search.SearchDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.logging.Filter;
 
 public class MuseumDataAccessObject implements SearchDataAccessInterface, CommentDataAccessInterface, FilterDataAccessInterface {
     private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
@@ -170,12 +166,12 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
     }
 
     @Override
-    public void addCommentToArtwork(String artworkTitle, String comment) {
-        
+    public void addCommentToArtwork(Artwork artwork, String comment) throws IOException {
+
     }
 
     @Override
-    public Artwork getArtworkByTitle(String artworkTitle) {
+    public Artwork getArtworkById(String id) throws IOException {
         return null;
     }
 }

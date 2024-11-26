@@ -59,6 +59,11 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     }
 
     @Override
+    public void setRating(int rating) {
+
+    }
+
+    @Override
     public void incrementRatingCount(int ratingValue) {
 
     }
