@@ -129,6 +129,12 @@ public class ClickView extends JPanel implements PropertyChangeListener {
 
         //CFR BUTTON
         JButton cfrButton = new JButton("Rate It!");
+        cfrButton.addActionListener(e -> {
+            clickArtController.switchToCFR();
+            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+            cardLayout.show(getParent(), "CFRView");
+        });
+
         // Back button
         JButton backButton = new JButton("Back");
         backButton.addActionListener(e -> {
@@ -138,7 +144,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         });
         buttons.add(cfrButton);
         buttons.add(backButton);
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 200)));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         detailsPanel.add(buttons);
 
 //

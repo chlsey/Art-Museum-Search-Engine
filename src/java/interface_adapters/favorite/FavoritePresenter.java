@@ -5,7 +5,6 @@ import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtViewModel;
 import use_case.favorite.FavoriteOutputBoundary;
 import use_case.favorite.FavoriteOutputData;
-import view.CFRState;
 
 public class FavoritePresenter implements FavoriteOutputBoundary {
 

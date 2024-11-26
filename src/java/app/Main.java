@@ -2,6 +2,7 @@ package app;
 import data.InMemoryDataAccessObject;
 import data.MuseumDataAccessObject;
 import entities.Artwork;
+import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtPresenter;
@@ -10,6 +11,7 @@ import interface_adapters.search.SearchViewModel;
 import use_case.click_art.ClickArtInteractor;
 import use_case.click_art.ClickArtOutputBoundary;
 import use_case.search.SearchDataAccessInterface;
+import view.CFRView;
 import view.ClickView;
 import view.SearchView;
 import view.ViewManager;
@@ -40,15 +42,18 @@ public class Main {
         final SearchViewModel searchViewModel = new SearchViewModel();
         final MuseumDataAccessObject museumDataAccessObject = new MuseumDataAccessObject();
         final ClickArtViewModel clickArtViewModel = new ClickArtViewModel();
+        final CFRViewModel cfrViewModel = new CFRViewModel();
         final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
 
         // ClickArt view setup
-        final ClickArtPresenter clickArtPresenter = new ClickArtPresenter(searchViewModel, clickArtViewModel, viewManagerModel);
-        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, searchViewModel, clickArtViewModel, museumDataAccessObject);
+        //final ClickArtPresenter clickArtPresenter = new ClickArtPresenter(searchViewModel, clickArtViewModel, viewManagerModel);
+        final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, museumDataAccessObject);
+        final CFRView cfrView = CFRUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, museumDataAccessObject);
 
         // Add views to CardLayout
         views.add(searchView, searchView.getViewName());
         views.add(clickView, clickView.getViewName());
+        views.add(cfrView, cfrView.getViewName());
 
         // Set the initial state to SearchView
         viewManagerModel.setState(searchView.getViewName());
