@@ -67,7 +67,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         searchButton.addActionListener(e -> {
             String keyword = keywordInputField.getText();
-            System.out.println("Button clicked, keyword: " + keyword); // Debugging
+            //System.out.println("Button clicked, keyword: " + keyword); // Debugging
             searchController.execute(keyword);
         });
 

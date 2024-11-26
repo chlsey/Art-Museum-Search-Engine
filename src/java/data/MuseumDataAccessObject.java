@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Cleaner;
+import use_case.comment.CommentDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MuseumDataAccessObject implements SearchDataAccessInterface {
+public class MuseumDataAccessObject implements SearchDataAccessInterface, CommentDataAccessInterface {
     private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
     private static final String QUERY_MET = "https://collectionapi.metmuseum.org/public/collection/v1";
 
@@ -103,7 +104,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
                 artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
-                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")));
+                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")), "id placeholder");
 
         artworks.add(result);
     }
@@ -158,10 +159,20 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
                     , artIndiv.get("artist_title").toString(),
                     artIndiv.get("date_display").toString(), "Art Institute of Chicago",
                     artIndiv.get("image_id").toString(), "No keywords",
-                    desc.body().text());
+                    desc.body().text(), "id placeholder");
 
             artworks.add(result);
         }
+    }
+
+    @Override
+    public void addCommentToArtwork(String artworkTitle, String comment) {
+        
+    }
+
+    @Override
+    public Artwork getArtworkByTitle(String artworkTitle) {
+        return null;
     }
 }
 
