@@ -7,4 +7,5 @@ public interface ClickArtInputBoundary {
      */
     void execute(ClickArtInputData clickArtInputData);
     void switchToSearchView();
+    void switchToCFRView();
 }

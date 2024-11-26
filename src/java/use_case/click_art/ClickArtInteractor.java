@@ -38,4 +38,8 @@ public class ClickArtInteractor implements ClickArtInputBoundary {
     public void switchToSearchView() {
         clickArtPresenter.switchToSearchView();
     }
+
+    public void switchToCFRView() {
+        clickArtPresenter.switchToCFRView();
+    }
 }

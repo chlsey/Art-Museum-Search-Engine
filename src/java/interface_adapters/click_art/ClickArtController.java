@@ -19,5 +19,9 @@ public class ClickArtController {
     public void switchToSearch(){
         clickArtUseCaseInteractor.switchToSearchView();
     }
+
+    public void switchToCFR(){
+        clickArtUseCaseInteractor.switchToCFRView();
+    }
 }
 

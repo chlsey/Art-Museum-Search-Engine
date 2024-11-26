@@ -1,11 +1,8 @@
 package interface_adapters.rating;
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.click_art.ClickArtViewModel;
-import interface_adapters.click_art.ClickArtPresenter;
 import use_case.rating.RatingOutputBoundary;
 import use_case.rating.RatingOutputData;
-import view.CFRState;
 
 
 public class RatingPresenter implements RatingOutputBoundary {
