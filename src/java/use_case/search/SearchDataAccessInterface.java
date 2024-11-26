@@ -6,5 +6,5 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface SearchDataAccessInterface {
-    List<Artwork> searchArtwork(String searchMessage, String hasimages);
+    List<Artwork> searchArtwork(String searchMessage);
 }

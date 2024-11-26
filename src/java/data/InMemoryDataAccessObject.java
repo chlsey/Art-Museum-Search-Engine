@@ -69,7 +69,7 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     }
 
     @Override
-    public List<Artwork> searchArtwork(String searchMessage, String hasimages) {
+    public List<Artwork> searchArtwork(String searchMessage) {
         return List.of();
     }
 }
