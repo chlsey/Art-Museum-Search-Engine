@@ -18,6 +18,7 @@ public class RatingInteractor implements RatingInputBoundary{
         } else if (ratingValue > 5) {
             ratingValue = 5;
         }
+
         //ratingDataAccessObject.incrementRatingCount(ratingValue);
         ratingDataAccessObject.setRating(ratingValue);
         RatingOutputData result = new RatingOutputData(ratingValue);
