@@ -31,7 +31,6 @@ public class SearchInteractor implements SearchInputBoundary {
     private final SearchOutputBoundary searchPresenter;
 //    private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
 //    private static final String QUERY_MET = "https://collectionapi.metmuseum.org/public/collection/v1";
-    private static final String MESSAGE = "message";
 
 
     public SearchInteractor(SearchDataAccessInterface searchDataAccessObject, SearchOutputBoundary searchPresenter) {
@@ -39,8 +38,13 @@ public class SearchInteractor implements SearchInputBoundary {
         this.searchPresenter = searchPresenter;
     }
 
-    // TODO: make it so this doesnt take parameters. instead use attributes that are assigned to it when you call the
-    // TODO: constructor.
+    @Override
+    public void execute(SearchInputData searchInputData) {
+        final List<Artwork> ourartworks = searchDataAccessObject.searchArtwork(searchInputData.getSearchMessage());
+        boolean failed = false;
+        final SearchOutputData searchOutputData = new SearchOutputData(ourartworks,failed);
+        searchPresenter.prepareSuccessView(searchOutputData);
+
 //    public static List<Artwork> searchArtwork(String query, String spec){
 //
 //        String filters = "Artwork";
@@ -189,13 +193,6 @@ public class SearchInteractor implements SearchInputBoundary {
 //                    artIndiv.get("image_id").toString(), ""));
 //        }
 //    }
-
-    @Override
-    public void execute(SearchInputData searchInputData) {
-        final List<Artwork> ourartworks = searchDataAccessObject.searchArtwork(searchInputData.getSearchMessage(),"");
-        boolean failed = false;
-        final SearchOutputData searchOutputData = new SearchOutputData(ourartworks,failed);
-        searchPresenter.prepareSuccessView(searchOutputData);
 //        StringBuilder artworks = new StringBuilder();
 //        JPanel panelPictures = new JPanel();
 //        for (Artwork art: ourartworks) {

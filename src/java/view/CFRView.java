@@ -21,6 +21,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
     private final JButton submitButton;
     private final JButton backButton;
     private final JLabel ratingLabel;
+    private final JLabel favoriteLabel;
     private final JButton favoriteButton;
     private int selectedRating = 0; // Holds the user's selected rating
     private boolean isFavorited = false; // Tracks the favorite state
@@ -64,7 +65,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         contentPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Title
-        JLabel titleLabel = new JLabel("Rate and Comment");
+        JLabel titleLabel = new JLabel("Rate, Favorite and Comment");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setAlignmentX(CENTER_ALIGNMENT);
         contentPanel.add(titleLabel);
@@ -73,6 +74,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         // Star Rating
         JPanel starPanel = new JPanel();
         ratingLabel = new JLabel("Rate This Work");
+        ratingLabel.setFont(new Font("Arial", Font.BOLD, 20));
         starPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         starPanel.add(ratingLabel);
         stars = new JButton[5];
@@ -92,12 +94,12 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
         // Favorite Button
-        JPanel favoritePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        favoriteButton = new JButton(heartEmptyIcon); // Default state: not favorited
-        favoriteButton.setFocusPainted(false);
-        favoriteButton.setBorderPainted(false);
-        favoriteButton.setContentAreaFilled(false);
-
+        JPanel favoritePanel = new JPanel();
+        favoriteLabel = new JLabel("Favorite This Work");
+        favoriteLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        favoritePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        favoritePanel.add(ratingLabel);
+        favoriteButton = new JButton(heartEmptyIcon);
         favoriteButton.addActionListener(e -> toggleFavorite());
         favoritePanel.add(favoriteButton);
         contentPanel.add(favoritePanel);
@@ -106,6 +108,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         // Comment Input
         JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel commentLabel = new JLabel("Your Comment:");
+        commentLabel.setFont(new Font("Arial", Font.BOLD, 20));
         commentInput = new JTextField(20);
         commentPanel.add(commentLabel);
         commentPanel.add(commentInput);
@@ -148,7 +151,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
      * Toggles the favorite state and updates the heart icon.
      */
     private void toggleFavorite() {
-        isFavorited = !isFavorited; // Toggle state
+        isFavorited = !isFavorited;
         favoriteButton.setIcon(isFavorited ? heartFilledIcon : heartEmptyIcon);
     }
 
