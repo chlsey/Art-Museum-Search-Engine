@@ -12,29 +12,33 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Cleaner;
 import use_case.comment.CommentDataAccessInterface;
+import use_case.filter.FilterDataAccessInterface;
+import use_case.filter.FilterInteractor;
 import use_case.search.SearchDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Filter;
 
-public class MuseumDataAccessObject implements SearchDataAccessInterface, CommentDataAccessInterface {
+public class MuseumDataAccessObject implements SearchDataAccessInterface, CommentDataAccessInterface, FilterDataAccessInterface {
     private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
     private static final String QUERY_MET = "https://collectionapi.metmuseum.org/public/collection/v1";
+    private String spec;
 
-    public  List<Artwork> searchArtwork(String query, String spec){
+    public void changeFilter(String spec) {
+        this.spec = spec;
+    }
 
-        String filters = "Artwork";
-        if (spec != null) {
-            filters = spec;
-        }
+    public  List<Artwork> searchArtwork(String query){
+
 
         final OkHttpClient client = new OkHttpClient();
         // search?q=%s&username=%s to add more
         List<Artwork> artworks = new ArrayList<>();
-        Request reqMet = reqMetBuilder(query, filters);
-        Request reqChi = reqChiBuilder(query, filters);
+        Request reqMet = reqMetBuilder(query, spec);
+        Request reqChi = reqChiBuilder(query, spec);
 
 
         /**

@@ -271,7 +271,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     }
 
     @Override
-    public List<Artwork> searchArtwork(String searchMessage, String hasimages) {
+    public List<Artwork> searchArtwork(String searchMessage) {
         return List.of();
     }
 }
