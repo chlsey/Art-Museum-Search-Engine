@@ -1,16 +1,15 @@
 package interface_adapters;
 
+import interface_adapters.click_art.ClickArtState;
 import interface_adapters.comment.CommentState;
 import interface_adapters.favorite.FavoriteState;
 import interface_adapters.rating.RatingState;
-import view.CFRState;
-
 
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class CFRViewModel {
+public class CFRViewModel extends ViewModel<CFRState>{
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     private RatingState ratingState;
     private CommentState commentState;
@@ -18,9 +17,16 @@ public class CFRViewModel {
     private final String viewName = "CFRView";
 
     public CFRViewModel() {
+        super("CFRView");
+        setState(new CFRState());
         this.commentState = null;
         this.favoriteState = null;
         this.ratingState = null;
+    }
+
+    public void setState(CFRState cfrState) {
+        super.setState(cfrState);
+        firePropertyChanged("CFRView");
     }
 
     public CommentState getCommentState() {
@@ -47,10 +53,6 @@ public class CFRViewModel {
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         support.removePropertyChangeListener(listener);
-    }
-
-    public void firePropertyChanged() {
-        support.firePropertyChange("commentState", null, this.commentState);
     }
 
     public RatingState getRatingState() {

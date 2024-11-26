@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.safety.Cleaner;
+import use_case.comment.CommentDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
 
 import java.io.IOException;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class MuseumDataAccessObject implements SearchDataAccessInterface {
+public class MuseumDataAccessObject implements SearchDataAccessInterface, CommentDataAccessInterface {
     private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
     private static final String QUERY_MET = "https://collectionapi.metmuseum.org/public/collection/v1";
 
@@ -162,6 +163,16 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface {
 
             artworks.add(result);
         }
+    }
+
+    @Override
+    public void addCommentToArtwork(String artworkTitle, String comment) {
+        
+    }
+
+    @Override
+    public Artwork getArtworkByTitle(String artworkTitle) {
+        return null;
     }
 }
 

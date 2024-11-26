@@ -11,13 +11,14 @@ public class Artwork {
     private String imageUrl;
     private String keyWords;
     private String description;
+    private String id;
     private boolean favorited;
     private int rating;
     private int numRate;
     private List<String> comments;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
-                   String imageUrl, String keyWords, String description) {
+                   String imageUrl, String keyWords, String description, String id) {
         this.title = title;
         this.artistName = artistName;
         this.timePeriod = timePeriod;
@@ -25,6 +26,7 @@ public class Artwork {
         this.gallery = gallery;
         this.imageUrl = imageUrl;
         this.keyWords = keyWords;
+        this.id = id;
         this.favorited = false;
         this.comments = new ArrayList<>();
         this.rating = 0;

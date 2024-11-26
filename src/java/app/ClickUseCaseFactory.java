@@ -2,6 +2,7 @@ package app;
 
 import data.InMemoryDataAccessObject;
 import data.MuseumDataAccessObject;
+import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtPresenter;
@@ -15,10 +16,10 @@ import view.ClickView;
  */
 public class ClickUseCaseFactory {
 
-    public static ClickView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, ClickArtViewModel clickViewModel,
+    public static ClickView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, CFRViewModel cfrViewModel, ClickArtViewModel clickViewModel,
                                    MuseumDataAccessObject dataAccessObject) {
         // Create the controller for handling click actions
-        final ClickArtController clickController = createClickUseCase(viewManagerModel, searchViewModel, clickViewModel, dataAccessObject);
+        final ClickArtController clickController = createClickUseCase(viewManagerModel, searchViewModel, clickViewModel, cfrViewModel, dataAccessObject);
         // Create and return the view connected to the controller and ViewModel
         return new ClickView(clickController, clickViewModel);
     }
@@ -26,9 +27,10 @@ public class ClickUseCaseFactory {
     private static ClickArtController createClickUseCase(ViewManagerModel viewManagerModel,
                                                          SearchViewModel searchViewModel,
                                                          ClickArtViewModel clickViewModel,
+                                                         CFRViewModel cfrViewModel,
                                                          MuseumDataAccessObject dataAccessObject) {
         // Create the output boundary (Presenter) to handle UI updates and view transitions
-        final ClickArtOutputBoundary clickArtOutputBoundary = new ClickArtPresenter(searchViewModel, clickViewModel,viewManagerModel);
+        final ClickArtOutputBoundary clickArtOutputBoundary = new ClickArtPresenter(searchViewModel, clickViewModel, cfrViewModel,viewManagerModel);
         // Create the input boundary (Interactor) to handle business logic for fetching and preparing data
         final ClickArtInputBoundary clickArtInteractor = new ClickArtInteractor(dataAccessObject, clickArtOutputBoundary);
 

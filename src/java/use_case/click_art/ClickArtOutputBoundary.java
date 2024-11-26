@@ -14,4 +14,6 @@ public interface ClickArtOutputBoundary {
     void prepareFailView(String errorMessage);
 
     void switchToSearchView();
+
+    void switchToCFRView();
 }

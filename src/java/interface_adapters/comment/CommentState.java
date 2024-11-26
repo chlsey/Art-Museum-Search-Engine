@@ -27,6 +27,14 @@ public class CommentState {
         comments.add(comment);
     }
 
+    public void setRating(int selectedRating) {
+
+    }
+
+    public void setFavorited(boolean isFavorited) {
+
+    }
+
     //public void setCommentError(String errorMessage) {
     //    System.out.println(errorMessage);
     //}
