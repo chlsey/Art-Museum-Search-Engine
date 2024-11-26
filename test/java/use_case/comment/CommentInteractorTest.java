@@ -15,7 +15,8 @@ public class CommentInteractorTest {
     }
     @Test
     public void commentInteractorTest() {
-        CommentInputData commentInputData = new CommentInputData("rain", "cool");
+        Artwork artwork = new Artwork("rain", "", "", "", "", "", "", "");
+        CommentInputData commentInputData = new CommentInputData(artwork, "cool");
         CommentDataAccessInterface repository = new InMemoryDataAccessObject();
         CommentOutputBoundary commentOutputBoundary = new CommentOutputBoundary() {
             @Override
@@ -32,7 +33,8 @@ public class CommentInteractorTest {
     }
     @Test
     public void commentInteractorTestAgain() {
-        CommentInputData commentInputData = new CommentInputData("Head of a ruler", "brother eww");
+        Artwork artwork = new Artwork("Head of a ruler", "", "", "", "", "", "", "");
+        CommentInputData commentInputData = new CommentInputData(artwork, "brother eww");
         CommentDataAccessInterface repository = new InMemoryDataAccessObject();
         CommentOutputBoundary commentOutputBoundary = new CommentOutputBoundary() {
 

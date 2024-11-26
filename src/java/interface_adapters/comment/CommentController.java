@@ -1,7 +1,10 @@
 package interface_adapters.comment;
 
+import entities.Artwork;
 import use_case.comment.CommentInputBoundary;
 import use_case.comment.CommentInputData;
+
+import java.io.IOException;
 
 public class CommentController {
     private final CommentInputBoundary commentInteractor;
@@ -10,8 +13,8 @@ public class CommentController {
         this.commentInteractor = commentInteractor;
     }
 
-    public void execute(String artworkTitle, String comment) {
-        final CommentInputData commentInputData = new CommentInputData(artworkTitle, comment);
+    public void execute(Artwork artwork, String comment) throws IOException {
+        final CommentInputData commentInputData = new CommentInputData(artwork, comment);
         commentInteractor.addComment(commentInputData);
     }
 }

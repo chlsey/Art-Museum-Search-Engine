@@ -6,16 +6,18 @@ import entities.ArtworkFactory;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.io.IOException;
+
 import static org.junit.Assert.*;
 
 public class FavoriteInteractorTest {
 
     @Test
-    public void favoriteSavedArtTest() {
+    public void favoriteSavedArtTest() throws IOException {
         Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
-                "MoMA", "", "starsnightbluefamous", "no description");
+                "MoMA", "", "starsnightbluefamous", "no description", "111");
         Artwork artwork2 = ArtworkFactory.createArtwork("Madame X", "John Singer Sargent", "1883",
-                "MoMA", "", "womanblackdressportrait", "no description");
+                "MoMA", "", "womanblackdressportrait", "no description", "112");
         FavoriteInputData inputData = new FavoriteInputData(artwork1);
         FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
@@ -24,8 +26,8 @@ public class FavoriteInteractorTest {
 
         FavoriteOutputBoundary successPresenter = new FavoriteOutputBoundary() {
             @Override
-            public void prepareSuccessView(FavoriteOutputData outputData) {
-                assertTrue(artworkRepository.getArtworkByTitle(artwork1.getTitle()).checkFavorited());
+            public void prepareSuccessView(FavoriteOutputData outputData) throws IOException {
+                assertTrue(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
             }
 
             @Override
@@ -39,16 +41,16 @@ public class FavoriteInteractorTest {
     }
 
     @Test
-    public void favoriteNewArtTest() {
+    public void favoriteNewArtTest() throws IOException {
         Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
-                "MoMA", "", "starsnightbluefamous", "no description");
+                "MoMA", "", "starsnightbluefamous", "no description", "111");
         FavoriteInputData inputData = new FavoriteInputData(artwork1);
         FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
         FavoriteOutputBoundary successPresenter = new FavoriteOutputBoundary() {
             @Override
-            public void prepareSuccessView(FavoriteOutputData outputData) {
-                assertTrue(artworkRepository.getArtworkByTitle(artwork1.getTitle()).checkFavorited());
+            public void prepareSuccessView(FavoriteOutputData outputData) throws IOException {
+                assertTrue(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
             }
 
             @Override
@@ -62,17 +64,17 @@ public class FavoriteInteractorTest {
     }
 
     @Test
-    public void unfavoriteTest() {
+    public void unfavoriteTest() throws IOException {
         Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
-                "MoMA", "", "starsnightbluefamous", "no description");
+                "MoMA", "", "starsnightbluefamous", "no description", "111");
         artwork1.setFavorited();
         FavoriteInputData inputData = new FavoriteInputData(artwork1);
         FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
         FavoriteOutputBoundary successPresenter = new FavoriteOutputBoundary() {
             @Override
-            public void prepareSuccessView(FavoriteOutputData outputData) {
-                assertFalse(artworkRepository.getArtworkByTitle(artwork1.getTitle()).checkFavorited());
+            public void prepareSuccessView(FavoriteOutputData outputData) throws IOException {
+                assertFalse(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
             }
 
             @Override

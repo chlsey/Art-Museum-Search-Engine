@@ -81,4 +81,8 @@ public class Artwork {
     public int getTotalScore() {
         return totalScore;
     }
+
+    public void setNumRate(int num) { this.numRate = num; }
+
+    public void setTotalScore(int num) { this.totalScore = num; }
 }

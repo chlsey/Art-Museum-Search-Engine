@@ -6,7 +6,7 @@ import use_case.favorite.FavoriteDataAccessInterface;
 import use_case.comment.CommentDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
 import use_case.rating.RatingDataAccessInterface;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +17,13 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     @Override
     public void updateFavorite(Artwork artwork) {
-        artwork.setFavorited();
+        if (contains(artwork.getId())) {
+            artworks.get(artwork.getId()).setFavorited();
+        }
+        else {
+            artwork.setFavorited();
+            save(artwork);
+        }
     }
 
     @Override
@@ -25,27 +31,26 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
         artworks.put(artwork.getTitle(), artwork);
     }
 
-    public boolean contains(Artwork artwork) {
-        return artworks.containsKey(artwork.getTitle());
+    public boolean contains(String id) {
+        return artworks.containsKey(id);
     }
 
     @Override
-    public void addCommentToArtwork(String artworkTitle, String comment) {
-        Artwork artwork = getArtworkByTitle(artworkTitle);
+    public void addCommentToArtwork(Artwork artwork, String comment) {
+        Artwork art = getArtworkById(artwork.getId());
         if (artwork == null) {
-            throw new IllegalArgumentException("Artwork with title '" + artworkTitle + "' does not exist.");
+            throw new IllegalArgumentException("Artwork with id '" + artwork.getId() + "' does not exist.");
         }
         artwork.addComment(comment);
     }
 
     @Override
-    public Artwork getArtworkByTitle(String artworkTitle) {
-        for (Artwork artwork : artworks.values()) {
-            if (artwork.getTitle().equalsIgnoreCase(artworkTitle)) {
-                return artwork;
-            }
+    public Artwork getArtworkById(String id) {
+        try {
+            return artworks.get(id);
+        } catch (Exception e) {
+            return null;
         }
-        return null;
     }
 
     @Override

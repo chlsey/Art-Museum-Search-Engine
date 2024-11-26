@@ -2,6 +2,7 @@ package use_case.comment;
 
 import entities.Artwork;
 
+import java.io.IOException;
 import java.util.List;
 
 public class CommentInteractor implements CommentInputBoundary {
@@ -15,12 +16,12 @@ public class CommentInteractor implements CommentInputBoundary {
     }
 
     @Override
-    public void addComment(CommentInputData commentInputData) {
+    public void addComment(CommentInputData commentInputData) throws IOException {
         final String artworkTitle = commentInputData.getArtworkTitle();
         final String comment = commentInputData.getComment();
-        Artwork artwork = commentDataAccessObject.getArtworkByTitle(artworkTitle);
+        Artwork artwork = commentDataAccessObject.getArtworkById(commentInputData.getArtwork().getId());
 
-        commentDataAccessObject.addCommentToArtwork(artworkTitle, comment);
+        commentDataAccessObject.addCommentToArtwork(artwork, comment);
 
         CommentOutputData outputData = new CommentOutputData(artworkTitle, comment, true);
         commentPresenter.presentSuccessView(outputData);

@@ -3,6 +3,8 @@ package use_case.favorite;
 import data.InMemoryDataAccessObject;
 import entities.Artwork;
 
+import java.io.IOException;
+
 public class FavoriteInteractor implements FavoriteInputBoundary {
     private final FavoriteDataAccessInterface artworkDataAccessObject;
     private final FavoriteOutputBoundary artworkPresenter;
@@ -15,8 +17,8 @@ public class FavoriteInteractor implements FavoriteInputBoundary {
     }
 
     @Override
-    public void execute(FavoriteInputData favoriteInputData) {
-        if (artworkDataAccessObject.contains(favoriteInputData.getArtwork())) {
+    public void execute(FavoriteInputData favoriteInputData) throws IOException {
+        if (artworkDataAccessObject.contains(favoriteInputData.getArtwork().getId())) {
             artworkDataAccessObject.updateFavorite(favoriteInputData.getArtwork());
             Artwork art = favoriteInputData.getArtwork();
             artworkPresenter.prepareSuccessView(new FavoriteOutputData(art));
