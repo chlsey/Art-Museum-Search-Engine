@@ -204,7 +204,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         if (contains(id)) {
             JsonNode node = rootNode.get(id);
             MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
-            Artwork artwork = DAObj.getArtById(id);
+            Artwork artwork = DAObj.getArtworkById(id);
             Artwork finalArt = new Artwork(artwork.getTitle(), artwork.getArtistName(), artwork.getCompositionDate(),
                     artwork.getGallery(), artwork.getImageUrl(), artwork.getKeyWords(), artwork.getDescription(), id);
             for (JsonNode comment : node.get("comments")) {
@@ -218,7 +218,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
             return finalArt;
         } else {
             MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
-            return DAObj.getArtById(id);
+            return DAObj.getArtworkById(id);
         }
     }
 
@@ -258,6 +258,11 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     @Override
     public int getRating() {
         return 0;
+    }
+
+    @Override
+    public void setRating(int rating) {
+
     }
 
     @Override

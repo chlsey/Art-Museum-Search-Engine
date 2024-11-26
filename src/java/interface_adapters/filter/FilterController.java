@@ -10,7 +10,6 @@ public class FilterController {
 
     public void execute(String spec) {
         final FilterInputData filterdata = new FilterInputData(spec);
-
         filterInputBoundary.execute(filterdata);
     }
 }

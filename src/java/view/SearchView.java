@@ -1,15 +1,12 @@
 package view;
 
 import interface_adapters.click_art.ClickArtViewModel;
+import interface_adapters.filter.FilterController;
 import interface_adapters.search.SearchController;
-import interface_adapters.search.SearchState;
 import interface_adapters.search.SearchViewModel;
 
 import java.awt.event.*;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.List;
 import entities.*;
 
@@ -28,20 +25,26 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextField keywordInputField = new JTextField(15);
     private final JTextArea searchResultsArea = new JTextArea(10, 30);
     private final SearchController searchController;
+    private final FilterController filterController;
     private final ClickArtViewModel clickArtViewModel;
 
     private final JButton searchButton;
     private final JButton clearButton;
+    private final JRadioButton artistButton;
+    private final JRadioButton hasImageButton;
+    private final JRadioButton highLightButton;
+    private final JRadioButton onViewButton;
     private final JPanel panelPictures;
     private JScrollPane scrollPanelPictures;
     //private final JButton nextButton;
     //private final JButton detailButton;
 
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel, FilterController filterController) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.clickArtViewModel = clickArtViewModel;
+        this.filterController = filterController;
         //this.nextButton = nextButton;
         //this.detailButton = detailButton;
         searchViewModel.addPropertyChangeListener(this);
@@ -65,9 +68,45 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchButton = new JButton("Search");
         clearButton = new JButton("Clear");
 
+        // Radio Button
+        JPanel radioPanel = new JPanel();
+        radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.X_AXIS));
+
+        ButtonGroup group = new ButtonGroup();
+        artistButton = new JRadioButton("Artist");
+        hasImageButton = new JRadioButton("Has Image");
+        highLightButton = new JRadioButton("High Light");
+        onViewButton = new JRadioButton("On View");
+
+        group.add(artistButton);
+        group.add(hasImageButton);
+        group.add(highLightButton);
+        group.add(onViewButton);
+
+        radioPanel.add(artistButton);
+        radioPanel.add(hasImageButton);
+        radioPanel.add(highLightButton);
+        radioPanel.add(onViewButton);
+
         searchButton.addActionListener(e -> {
             String keyword = keywordInputField.getText();
             //System.out.println("Button clicked, keyword: " + keyword); // Debugging
+            // Get spec from radiobutton
+            String qual = "";
+            if (artistButton.isSelected()) {
+                qual = "Artist";
+            }
+            else if (hasImageButton.isSelected()) {
+                qual = "Hasimages";
+            }
+            else if (highLightButton.isSelected()) {
+                qual = "Highlight";
+            }
+            else if (onViewButton.isSelected()) {
+                qual = "Onview";
+            }
+            else{qual = "Artist";}
+            filterController.execute(qual);
             searchController.execute(keyword);
         });
 
@@ -77,11 +116,13 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             public void keyPressed(java.awt.event.KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String keyword = keywordInputField.getText();
-                    System.out.println("Enter key pressed, keyword: " + keyword); // Debugging
+                    //System.out.println("Enter key pressed, keyword: " + keyword); // Debugging
                     searchController.execute(keyword);
                 }
             }
         });
+
+
 
         clearButton.addActionListener(this);
         buttons.add(searchButton);
@@ -168,6 +209,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         // Arrange components in layout
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(inputPanel);
+        this.add(radioPanel);
         this.add(buttons);
         JLabel searchResults = new JLabel("Search Results:");
         searchResults.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -186,6 +228,24 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             // Get the keyword from the input field and trigger the search
             String keyword = keywordInputField.getText();
             searchController.execute(keyword);
+
+            // Get spec from radiobutton
+            String qual = "";
+            if (artistButton.isSelected()) {
+                qual = "Artist";
+            }
+            else if (hasImageButton.isSelected()) {
+                qual = "Hasimages";
+            }
+            else if (highLightButton.isSelected()) {
+                qual = "Highlight";
+            }
+            else if (onViewButton.isSelected()) {
+                qual = "Onview";
+            }
+            else{qual = "Artist";}
+            filterController.execute(qual);
+
         } else if (e.getSource() == clearButton) {
             // Clear the input field and reset the panel
             keywordInputField.setText("");

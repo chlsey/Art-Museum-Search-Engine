@@ -79,11 +79,19 @@ public class Artwork {
         return numRate;
     }
 
-    public int getTotalScore() {
-        return totalScore;
-    }
+//    public int getTotalScore() {
+//        return totalScore;
+//    }
 
     public void setNumRate(int num) { this.numRate = num; }
 
-    public void setTotalScore(int num) { this.totalScore = num; }
+    public int getTotalScore() {
+        return 0;
+    }
+
+    public void setTotalScore(int totalScore) {
+
+    }
+
+//    public void setTotalScore(int num) { this.totalScore = num; }
 }

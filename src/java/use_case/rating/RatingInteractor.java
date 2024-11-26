@@ -18,8 +18,8 @@ public class RatingInteractor implements RatingInputBoundary{
         } else if (ratingValue > 5) {
             ratingValue = 5;
         }
-        ratingDataAccessObject.incrementRatingCount(ratingValue);
-        double averageRating = ratingDataAccessObject.calculateAverageRating();
+        //ratingDataAccessObject.incrementRatingCount(ratingValue);
+        ratingDataAccessObject.setRating(ratingValue);
         RatingOutputData result = new RatingOutputData(ratingValue);
         ratingOutputBoundary.prepareRatingView(result);
     }
