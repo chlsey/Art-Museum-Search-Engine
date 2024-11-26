@@ -1,7 +1,9 @@
 package use_case.comment;
 import entities.*;
 
+import java.io.IOException;
+
 public interface CommentDataAccessInterface {
-    void addCommentToArtwork(String artworkTitle, String comment);
-    Artwork getArtworkByTitle(String artworkTitle);
+    void addCommentToArtwork(Artwork artwork, String comment) throws IOException;
+    Artwork getArtworkById(String id) throws IOException;
 }

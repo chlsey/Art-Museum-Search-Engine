@@ -2,16 +2,18 @@ package use_case.favorite;
 
 import entities.Artwork;
 
+import java.io.IOException;
+
 public interface FavoriteDataAccessInterface {
     /**
      * Queries the DB to find a list of artworks that match the search message.
-     * @param artwork the artwork to be saved.
+     * @param artwork is the artwork to be saved.
      */
     void updateFavorite(Artwork artwork);
 
-    void save(Artwork artwork);
+    void save(Artwork artwork) throws IOException;
 
-    Artwork getArtworkByTitle(String title);
+    Artwork getArtworkById(String id) throws IOException;
 
-    boolean contains(Artwork artwork);
+    boolean contains(String id) throws IOException;
 }

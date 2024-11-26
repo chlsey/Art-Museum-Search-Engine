@@ -71,4 +71,19 @@ public class Artwork {
     public String getDescription() {
         return description;
     }
+    public String getId() {
+        return id;
+    }
+
+    public int getnumRate() {
+        return numRate;
+    }
+
+    public int getTotalScore() {
+        return totalScore;
+    }
+
+    public void setNumRate(int num) { this.numRate = num; }
+
+    public void setTotalScore(int num) { this.totalScore = num; }
 }
