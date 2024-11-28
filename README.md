@@ -44,6 +44,7 @@ The software depends on version 1.18.1 of the Jsoup library for parsing HTML que
 version 4.12.0 of the okhttp library to read http, as well as version 20240303 of JSON. Junit 4.13.1,
 Jacoco 0.8.12 and RELEASE version Jupiter are used for unit testing and coverage.
 
+
 ### Usage Guide
 (video TBA) \
 1. Searching artworks
