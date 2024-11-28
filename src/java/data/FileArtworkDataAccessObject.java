@@ -81,20 +81,43 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     public void save(Artwork artwork) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(jsonFile);
 
-            ObjectNode newObject = objectMapper.createObjectNode();
-            newObject.put("favorite", artwork.checkFavorited());
-            newObject.put("rating", artwork.getRating());
+            JsonNode rootNode;
+            if (jsonFile.exists() && jsonFile.length() > 0) {
+                rootNode = objectMapper.readTree(jsonFile);  // parsing existing file
+            } else {
+                rootNode = objectMapper.createObjectNode();  // file empty creating a new object node
+            }
+
+            // Ensure the "artworks" field exists, create it if it doesn't
+            ArrayNode artworksArray;
+            if (rootNode.has("artworks")) {
+                artworksArray = (ArrayNode) rootNode.get("artworks");
+            } else {
+                artworksArray = objectMapper.createArrayNode();
+                ((ObjectNode) rootNode).set("artworks", artworksArray);
+            }
+
+            // Create a new JSON object for the new artwork
+            ObjectNode newArtwork = objectMapper.createObjectNode();
+            newArtwork.put("id", artwork.getId());
+            newArtwork.put("favorite", artwork.checkFavorited());
+            newArtwork.put("rating", artwork.getRating());
+
             ArrayNode commentsArray = objectMapper.createArrayNode();
-
-            for (String comment: artwork.getComments()) {
+            for (String comment : artwork.getComments()) {
                 commentsArray.add(comment);
             }
-            newObject.set("comments", commentsArray);
-            ((ArrayNode) rootNode).add(newObject);
+            newArtwork.set("comments", commentsArray);
+
+            // Add the new artwork to the "artworks" array
+            artworksArray.add(newArtwork);
+
+            // Write the updated structure back to the file
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
+
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -139,7 +162,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         }
     }
 
-    @Override
+    @Override // TODO: must fix this to work properly
     public boolean contains(String id) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonFile);
@@ -180,16 +203,6 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     @Override
     public void setRating(int rating) {
 
-    }
-
-    @Override
-    public void incrementRatingCount(int ratingValue) {
-
-    }
-
-    @Override
-    public double calculateAverageRating() {
-        return 0;
     }
 
     @Override

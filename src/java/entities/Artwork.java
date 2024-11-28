@@ -40,7 +40,13 @@ public class Artwork {
     public String getImageUrl() { return imageUrl; }
     public String getKeyWords() { return keyWords; }
     public boolean checkFavorited() { return favorited; }
-    public void setFavorited() { favorited = !favorited; }
+    public void setFavorited() {
+        if (favorited) {
+            favorited = false;
+        } else {
+            favorited = true;
+        }
+    }
     public List<String> getComments() {
         return comments;
     }
