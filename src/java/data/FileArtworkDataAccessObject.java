@@ -23,7 +23,7 @@ import static java.lang.Integer.parseInt;
 public class FileArtworkDataAccessObject implements CommentDataAccessInterface, FavoriteDataAccessInterface, SearchDataAccessInterface, RatingDataAccessInterface, ClickArtDataAccessInterface {
 
     private final File jsonFile;
-    private final Map<String, ArrayList> artworks = new HashMap<>();
+    private final Map<String, Artwork> artworks = new HashMap<>();
 
 
     public FileArtworkDataAccessObject(String jsonPath) throws IOException {
@@ -31,24 +31,46 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         if (jsonFile.length() != 0) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-                // Parse the JSON file into a List of Maps
-                List<Map<String, Object>> jsonArray = objectMapper.readValue(
-                        jsonFile,
-                        new TypeReference<List<Map<String, Object>>>() {}
-                );
+//                // Parse the JSON file into a List of Maps
+//                List<Map<String, Object>> jsonArray = objectMapper.readValue(
+//                        jsonFile,
+//                        new TypeReference<List<Map<String, Object>>>() {}
+//                );
+//
+//                // Iterate through the list and add
+//                for (int i = 0; i < jsonArray.size(); i++) {
+//                    Map<String, Object> jsonObject = jsonArray.get(i);
+//                    ArrayList artwork = new ArrayList();
+//                    ArrayList<String> comments = objectMapper.readValue(jsonObject.get("comments").toString(), new TypeReference<ArrayList<String>>() {});
+//                    Boolean favorite = Boolean.parseBoolean((String) jsonObject.get("favorite"));
+//                    int rating = (int) jsonObject.get("rating");
+//
+//                    artwork.add(favorite);
+//                    artwork.add(rating);
+//                    artwork.add(comments);
+//                    artworks.put(jsonArray.toString(), artwork);
+                JsonNode rootNode = objectMapper.readTree(jsonFile);
+                ArrayNode artworksArray = (ArrayNode) rootNode.get("artworks");
+                // Iterate through the artworks and create Artwork objects
+                for (JsonNode jsonObject : artworksArray) {
 
-                // Iterate through the list and add
-                for (int i = 0; i < jsonArray.size(); i++) {
-                    Map<String, Object> jsonObject = jsonArray.get(i);
-                    ArrayList artwork = new ArrayList();
-                    ArrayList<String> comments = objectMapper.readValue(jsonObject.get("comments").toString(), new TypeReference<ArrayList<String>>() {});
-                    Boolean favorite = Boolean.parseBoolean((String) jsonObject.get("favorite"));
-                    int rating = (int) jsonObject.get("rating");
+                    // Set the artwork properties using the data from JSON
+                    String id = jsonObject.get("id").asText();
+                    System.out.println(id);
+                    Artwork artwork = getArtworkById(id);
 
-                    artwork.add(favorite);
-                    artwork.add(rating);
-                    artwork.add(comments);
-                    artworks.put(jsonArray.toString(), artwork);
+                    // Set the favorite flag and rating
+                    //artwork.setFavorited();
+                    //artwork.setRating(jsonObject.get("rating").asInt());
+
+                    // Set comments if available
+                    ArrayNode commentsNode = (ArrayNode) jsonObject.get("comments");
+                    List<String> comments = new ArrayList<>();
+                    for (JsonNode commentNode : commentsNode) {
+                        comments.add(commentNode.asText());
+                    }
+                    //artwork.setComments(comments);
+                    artworks.put(id, artwork);
                 }
 
             } catch (IOException e) {
@@ -177,6 +199,38 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
             }
         }
         return containsId;
+    }
+
+    @Override
+    public List<Artwork> getAllFavorites() {
+        List<Artwork> favoriteArtworks = new ArrayList<>();
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(jsonFile);
+
+            ArrayNode artworksArray = (ArrayNode) rootNode.get("artworks");
+            for (JsonNode node : artworksArray) {
+                if (node.get("favorite").asBoolean()) {
+                    favoriteArtworks.add(convertJsonToArtwork(node));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return favoriteArtworks;
+    }
+
+    private Artwork convertJsonToArtwork(JsonNode node) {
+        try {
+            String id = node.get("id").asText();
+
+            Artwork artwork = getArtworkById(id);
+
+            return artwork;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<String> getCommentsForArtwork(Artwork artwork) throws IOException {

@@ -146,6 +146,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         buttons.add(backButton);
         detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         detailsPanel.add(buttons);
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 100)));
 
 //
 //        backButton.addActionListener(e -> {

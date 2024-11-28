@@ -1,11 +1,11 @@
 package use_case.favorite;
 
-import java.io.IOException;
-
 public interface FavoriteOutputBoundary {
-    void prepareSuccessView(FavoriteOutputData outputData) throws IOException;
+    //void prepareSuccessView(FavoriteOutputData outputData) throws IOException;
 
-    void prepareFailView(String errorMessage);
+    //void prepareFailView(String errorMessage);
+
+    void getAllFavorites(FavoriteOutputData outputData);
 
 
 }

@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapters.click_art.ClickArtViewModel;
+import interface_adapters.favorite.FavoriteController;
 import interface_adapters.filter.FilterController;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
@@ -8,7 +9,6 @@ import interface_adapters.search.SearchViewModel;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URL;
 import java.util.List;
 import entities.*;
@@ -30,6 +30,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final JTextArea searchResultsArea = new JTextArea(10, 30);
     private final SearchController searchController;
     private final FilterController filterController;
+    private final FavoriteController favoriteController;
     private final ClickArtViewModel clickArtViewModel;
 
     private final JButton favoriteButton;
@@ -45,14 +46,17 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     //private final JButton detailButton;
 
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel, FilterController filterController) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel, FilterController filterController, FavoriteController favoriteController) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.clickArtViewModel = clickArtViewModel;
         this.filterController = filterController;
+        this.favoriteController = favoriteController;
         //this.nextButton = nextButton;
         //this.detailButton = detailButton;
         searchViewModel.addPropertyChangeListener(this);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
 
         final JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
@@ -77,7 +81,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         // Radio Button
         JPanel radioPanel = new JPanel();
         radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.X_AXIS));
-
+        radioPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         ButtonGroup group = new ButtonGroup();
         artistButton = new JRadioButton("Artist");
         hasImageButton = new JRadioButton("Has Image");
@@ -111,10 +115,17 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             else if (onViewButton.isSelected()) {
                 qual = "Onview";
             }
-            else{qual = "Artist";}
+            else{
+                qual = "Artist";
+            }
             filterController.execute(qual);
             searchController.execute(keyword);
         });
+
+        favoriteButton.addActionListener(e -> {
+            favoriteController.goToFavorite();
+        });
+
 
         // The search will also work with enter(return key)
         keywordInputField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -132,6 +143,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         clearButton.addActionListener(this);
         buttons.add(favoriteButton);
+        buttons.add(Box.createRigidArea(new Dimension(100, 10)));
         buttons.add(searchButton);
         buttons.add(clearButton);
 //        searchButton.addActionListener(new ActionListener() {
