@@ -159,7 +159,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
                     , artIndiv.get("artist_title").toString(),
                     artIndiv.get("date_display").toString(), "Art Institute of Chicago",
                     artIndiv.get("image_id").toString(), "No keywords",
-                    desc.body().text(), "CHI-" + artIndiv.getString("id"));
+                    desc.body().text(), "CHI-" + artIndiv.get("id").toString());
 
             artworks.add(result);
         }

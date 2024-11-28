@@ -9,6 +9,7 @@ import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URL;
 import java.util.List;
 import entities.*;
 
@@ -269,26 +270,15 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
             for (Artwork art : artworks) {
                 try {
-                    URI newUri = new URI(art.getImageUrl());
-                    Image image;
-
-                    if (newUri.isAbsolute()) {
-                        // Use ImageIO to validate and load the image
-                        image = ImageIO.read(newUri.toURL());
-                    } else {
-                        image = ImageIO.read(new File(art.getImageUrl()));
-                    }
-
-                    if (image == null) {
-                        throw new IOException("Image could not be loaded or is invalid.");
-                    }
+                    // Validate and load the image safely
+                    Image image = loadImageSafely(art.getImageUrl());
 
                     // Scale the image
                     Image newImg = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                     ImageIcon imageIcon = new ImageIcon(newImg);
 
                     JLabel imageLabel = new JLabel(imageIcon);
-                    imageLabel.setPreferredSize(new Dimension(200, 200)); // Fix the preferred size
+                    imageLabel.setPreferredSize(new Dimension(200, 200)); // Fix preferred size
 
                     final Artwork artwork = art;
 
@@ -318,28 +308,41 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
                     panelPictures.add(imageLabel);
 
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     ex.printStackTrace();
-                    System.err.println("Failed to load image for artwork: " + art.getImageUrl());
 
-                    // Add a placeholder for the failed image
+                    // If loading fails, add a placeholder
                     JLabel placeholderLabel = new JLabel("Image not available");
                     placeholderLabel.setPreferredSize(new Dimension(200, 200));
                     placeholderLabel.setHorizontalAlignment(SwingConstants.CENTER);
                     placeholderLabel.setVerticalAlignment(SwingConstants.CENTER);
                     panelPictures.add(placeholderLabel);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
                 }
             }
 
             panelPictures.revalidate();
             panelPictures.repaint();
-
-            revalidate();
-            repaint();
         }
     }
+
+    /**
+     * Helper method to load an image safely. Falls back to a placeholder if loading fails.
+     */
+    private Image loadImageSafely(String imageUrl) {
+        try {
+            URL url = new URL(imageUrl);
+            return ImageIO.read(url);
+        } catch (Exception e) {
+            // Log the error and return a placeholder image
+            System.err.println("Failed to load image: " + imageUrl);
+            try {
+                return ImageIO.read(new File("src/images/noimg.png")); // Local placeholder
+            } catch (IOException ex) {
+                throw new RuntimeException("Placeholder image not found.");
+            }
+        }
+    }
+
 
 
     public String getViewName() {
