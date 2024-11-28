@@ -78,7 +78,7 @@ Mode of Communication: in person
 
 ### (to be removed in final README) User Stories:
 
-1. Liam wants to take his friend to a magnificent art gallery and be their tour guide. By looking up every art piece with all its associated information, he can do it smoothly.
+1. Liam wants to take his friend to a magnificent art gallery and be their tour guide. By looking up the art pieces with its associated information(i.e, title, year, etc) he can do it more efficiently. Either at the moment or oncw he is back from the gallery, he can rate the art work out of 5 stars.
 
 2. James wants to view some artworks. He can smoothly scroll through a gallery of art pieces, each displayed with a clear title, artist name, date of acquisition, and brief description.
 
