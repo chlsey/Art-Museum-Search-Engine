@@ -27,8 +27,8 @@ public class SearchUseCaseFactory {
                                                         SearchViewModel searchViewModel,
                                                         MuseumDataAccessObject museumDataAccessObject,
                                                         ClickArtViewModel clickArtViewModel) {
-        final FilterOutputBoundary filterOutputBoundary = new FilterPresenter(searchViewModel,viewManagerModel, clickArtViewModel);
-        final FilterInputBoundary filterInteractor = new FilterInteractor(museumDataAccessObject, filterOutputBoundary);
+        //final FilterOutputBoundary filterOutputBoundary = new FilterPresenter(searchViewModel,viewManagerModel, clickArtViewModel);
+        final FilterInputBoundary filterInteractor = new FilterInteractor(museumDataAccessObject);
         return new FilterController(filterInteractor);
     }
 

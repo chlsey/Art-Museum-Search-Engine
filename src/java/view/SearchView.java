@@ -6,10 +6,13 @@ import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
 
 import java.awt.event.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import entities.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -28,6 +31,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final FilterController filterController;
     private final ClickArtViewModel clickArtViewModel;
 
+    private final JButton favoriteButton;
     private final JButton searchButton;
     private final JButton clearButton;
     private final JRadioButton artistButton;
@@ -65,6 +69,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         scrollPanelPictures.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         // Panel for action buttons
         final JPanel buttons = new JPanel();
+        favoriteButton = new JButton("Go To My Favorite Artworks");
         searchButton = new JButton("Search");
         clearButton = new JButton("Clear");
 
@@ -125,6 +130,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
 
         clearButton.addActionListener(this);
+        buttons.add(favoriteButton);
         buttons.add(searchButton);
         buttons.add(clearButton);
 //        searchButton.addActionListener(new ActionListener() {
@@ -211,7 +217,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(inputPanel);
         this.add(radioPanel);
         this.add(buttons);
-        JLabel searchResults = new JLabel("Search Results:");
+        JLabel searchResults = new JLabel("Results:");
         searchResults.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(searchResults);
         // this.add(scrollPane);
@@ -257,72 +263,84 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //final SearchState state = (SearchState) evt.getSource();
-        //System.out.println(evt.getPropertyName());
         if ("searched".equals(evt.getPropertyName())) {
             List<Artwork> artworks = clickArtViewModel.getArtworks();
             panelPictures.removeAll();
+
             for (Artwork art : artworks) {
                 try {
-                    URI newuri = new URI(art.getImageUrl());
-                    ImageIcon imageIcon;
-                    if (newuri.isAbsolute()) {
-                        imageIcon = new ImageIcon(newuri.toURL());
+                    URI newUri = new URI(art.getImageUrl());
+                    Image image;
+
+                    if (newUri.isAbsolute()) {
+                        // Use ImageIO to validate and load the image
+                        image = ImageIO.read(newUri.toURL());
                     } else {
-                        imageIcon = new ImageIcon(art.getImageUrl());
-                    } // load the image to an imageIcon
+                        image = ImageIO.read(new File(art.getImageUrl()));
+                    }
 
-                    Image image = imageIcon.getImage(); // transform it
-                    Image newimg = image.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-                    imageIcon = new ImageIcon(newimg);  // transform it back
+                    if (image == null) {
+                        throw new IOException("Image could not be loaded or is invalid.");
+                    }
 
-                    JLabel imagelabel = new JLabel(imageIcon);
-                    imagelabel.setPreferredSize(new Dimension(200, 200)); // Fix the preferred size to prevent resizing
+                    // Scale the image
+                    Image newImg = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                    ImageIcon imageIcon = new ImageIcon(newImg);
 
-                    // Add a mouse listener to the image label for hover and click
-                    final Artwork artwork = art; // Final reference for use in the mouse listener
+                    JLabel imageLabel = new JLabel(imageIcon);
+                    imageLabel.setPreferredSize(new Dimension(200, 200)); // Fix the preferred size
 
-                    imagelabel.addMouseListener(new MouseAdapter() {
+                    final Artwork artwork = art;
+
+                    // Add mouse listeners
+                    imageLabel.addMouseListener(new MouseAdapter() {
                         @Override
                         public void mouseClicked(MouseEvent e) {
-                            // When image is clicked, set selected artwork and switch to ClickView
                             clickArtViewModel.setSelectedArtwork(artwork);
                             clickArtViewModel.firePropertyChanged();
 
-                            // Switch to ClickView
                             CardLayout cardLayout = (CardLayout) getParent().getLayout();
                             cardLayout.show(getParent(), "ClickView");
                         }
 
                         @Override
                         public void mouseEntered(MouseEvent e) {
-                            // On hover, increase the size of the image
-                            Image hoverImage = image.getScaledInstance(250, 250, java.awt.Image.SCALE_SMOOTH);
-                            ImageIcon hoverIcon = new ImageIcon(hoverImage);
-                            imagelabel.setIcon(hoverIcon); // Set the new hover icon
+                            Image hoverImage = image.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
+                            imageLabel.setIcon(new ImageIcon(hoverImage));
                         }
 
                         @Override
                         public void mouseExited(MouseEvent e) {
-                            // On exit, reset the image to its original size
-                            Image normalImage = image.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
-                            ImageIcon normalIcon = new ImageIcon(normalImage);
-                            imagelabel.setIcon(normalIcon); // Reset the original icon
+                            Image normalImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                            imageLabel.setIcon(new ImageIcon(normalImage));
                         }
                     });
-                    panelPictures.add(imagelabel);
+
+                    panelPictures.add(imageLabel);
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                    System.err.println("Failed to load image for artwork: " + art.getImageUrl());
+
+                    // Add a placeholder for the failed image
+                    JLabel placeholderLabel = new JLabel("Image not available");
+                    placeholderLabel.setPreferredSize(new Dimension(200, 200));
+                    placeholderLabel.setHorizontalAlignment(SwingConstants.CENTER);
+                    placeholderLabel.setVerticalAlignment(SwingConstants.CENTER);
+                    panelPictures.add(placeholderLabel);
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
+
             panelPictures.revalidate();
             panelPictures.repaint();
 
             revalidate();
             repaint();
         }
-
     }
+
 
     public String getViewName() {
         return viewName;
