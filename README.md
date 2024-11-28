@@ -77,6 +77,7 @@ Provides an API for retrieving information about all the artworks in the Metropo
 Meeting time outside of lab: Tuesday Afternoon (flexible)
 Mode of Communication: in person
 
+
 ### (to be removed in final README) User Stories:
 
 1. Liam wants to take his friend to a magnificent art gallery and be their tour guide. By looking up the art pieces being offered with its associated information(i.e, title, year, etc) he can do it more efficiently. Either at the moment or once he is back from the gallery, he can rate the art work out of 5 stars.
