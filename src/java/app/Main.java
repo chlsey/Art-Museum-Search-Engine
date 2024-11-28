@@ -60,7 +60,8 @@ public class Main {
         viewManagerModel.firePropertyChanged();
 
         // Configure frame for full-screen mode
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window
+        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window
+        frame.setSize(1024, 768);
         frame.setUndecorated(false); // Keep window decorations like title bar
         frame.setVisible(true);
     }

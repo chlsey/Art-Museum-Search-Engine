@@ -82,30 +82,33 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
         final Request artReq = new Request.Builder().url(String.format("%s/objects/%d", QUERY_MET, ((JSONArray) resp.get("objectIDs")).getInt(i))).build();
         final Response artResp = client.newCall(artReq).execute();
         final JSONObject artObj = new JSONObject(artResp.body().string());
+        boolean hasImage = true;
         String[] properties = {"title", "artistDisplayName", "period", "repository", "primaryImage", "tags", "department", "medium", "classification", "objectName", "artistPrefix"};
-        for (String property : properties) {
-            if (!artObj.has(property)) {
+        for (String property: properties) {
+            if (!artObj.has(property) || artObj.get(property) == JSONObject.NULL) {
                 if (property.equals("primaryImage")) {
                     artObj.put("primaryImage", "src/images/noimg.png");
-                } else {
+                }
+                else {
                     artObj.put(property, property + " Not found");
                 }
+                hasImage = false;
             }
         }
         // changed
-        if (artObj.get("primaryImage") == "") {
+        System.out.println(artObj.get("primaryImage"));
+        if (artObj.get("primaryImage").toString().isEmpty()) {
             artObj.put("primaryImage", "src/images/noimg.png");
+            hasImage = false;
         }
-        String artId = ((JSONArray) resp.get("objectIDs")).getInt(i) + "";
 
-        Artwork result = ArtworkFactory.createArtwork(artObj.get("title").toString()
+        if (hasImage){Artwork result = ArtworkFactory.createArtwork(artObj.get("title").toString()
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
                 artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
-                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"),
-                        artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")), "MET-" + artId);
+                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")), "id placeholder");
 
-        artworks.add(result);
+            artworks.add(result);}
     }
 
     private static Request reqMetBuilder(String query, String spec) {

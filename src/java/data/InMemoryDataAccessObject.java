@@ -63,15 +63,15 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     }
 
-    @Override
-    public void incrementRatingCount(int ratingValue) {
-
-    }
-
-    @Override
-    public double calculateAverageRating() {
-        return 0;
-    }
+//    @Override
+//    public void incrementRatingCount(int ratingValue) {
+//
+//    }
+//
+//    @Override
+//    public double calculateAverageRating() {
+//        return 0;
+//    }
 
     @Override
     public List<Artwork> searchArtwork(String searchMessage) {
