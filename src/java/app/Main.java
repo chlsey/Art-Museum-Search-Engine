@@ -59,7 +59,11 @@ public class Main {
         viewManagerModel.setState(searchView.getViewName());
         viewManagerModel.firePropertyChanged();
 
+
+
+
         // Configure frame for full-screen mode
+//        resize
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window
         frame.setUndecorated(false); // Keep window decorations like title bar
         frame.setVisible(true);
