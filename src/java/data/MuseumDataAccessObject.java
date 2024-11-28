@@ -204,26 +204,39 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
         for (String property : properties) {
             if (!artObj.has(property)) {
                 if (property.equals("primaryImage")) {
-                    artObj.put(property, "src/images/noimg.png");
+                    artObj.put("primaryImage", "src/images/noimg.png");
                 } else {
                     artObj.put(property, property + " Not found");
                 }
             }
         }
+        // changed
+        if (artObj.get("primaryImage") == "") {
+            artObj.put("primaryImage", "src/images/noimg.png");
+        }
+        // Convert tags JSONArray to a String
+        String keywords;
+        if (artObj.has("tags") && artObj.get("tags") instanceof JSONArray) {
+            JSONArray tagsArray = artObj.getJSONArray("tags");
+            keywords = tagsArray.join(", ").replaceAll("\"", ""); // Convert JSONArray to a comma-separated string
+        } else {
+            keywords = "No keywords available";
+        }
+
         return ArtworkFactory.createArtwork(
-                artObj.getString("title"),
-                artObj.getString("artistDisplayName"),
-                artObj.getString("period"),
-                artObj.getString("repository"),
-                artObj.getString("primaryImage"),
-                artObj.getString("tags"),
+                artObj.get("title").toString(),
+                artObj.get("artistDisplayName").toString(),
+                artObj.get("period").toString(),
+                artObj.get("repository").toString(),
+                artObj.get("primaryImage").toString(),
+                keywords,
                 String.format("%s, %s, %s, %s %s",
-                        artObj.getString("department"),
-                        artObj.getString("medium"),
-                        artObj.getString("classification"),
-                        artObj.getString("objectName"),
-                        artObj.getString("artistPrefix")),
-                "MET-" + artObj.getString("objectID")
+                        artObj.get("department").toString(),
+                        artObj.get("medium").toString(),
+                        artObj.get("classification").toString(),
+                        artObj.get("objectName").toString(),
+                        artObj.get("artistPrefix").toString()),
+                "MET-" + artObj.get("objectID").toString()
         );
     }
 
@@ -250,14 +263,14 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
         Document desc = Jsoup.parse(artObj.optString("description", "Description not found"));
 
         return ArtworkFactory.createArtwork(
-                artObj.getString("title"),
-                artObj.getString("artist_title"),
-                artObj.getString("date_display"),
+                artObj.get("title").toString(),
+                artObj.get("artist_title").toString(),
+                artObj.get("date_display").toString(),
                 "Art Institute of Chicago",
                 imageUrl,
                 "No keywords",
                 desc.body().text(),
-                "CHI-" + artObj.getString("id")
+                "CHI-" + artObj.get("id").toString()
         );
     }
 }
