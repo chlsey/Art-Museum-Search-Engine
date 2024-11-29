@@ -283,9 +283,9 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
             for (Artwork art : artworks) {
                 for (Artwork favorite : favoriteArtworks) {
-                    System.out.println(art.getId());
+                    System.out.println(art.getId().replace("MET-", ""));
                     System.out.println(favorite.getId().replace("MET-", ""));
-                    if (favorite.getId().replace("MET-", "").equals(art.getId())){
+                    if (favorite.getId().replace("MET-", "").equals(art.getId().replace("MET-", ""))){
                         art.setRating(favorite.getRating());
                         art.setFavorited(true);
                         break;
