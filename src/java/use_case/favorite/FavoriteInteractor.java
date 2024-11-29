@@ -38,4 +38,9 @@ public class FavoriteInteractor implements FavoriteInputBoundary {
         artworkPresenter.getAllFavorites(favoriteOutputData);
     }
 
+    @Override
+    public List<Artwork> getFavorites() {
+        return artworkDataAccessObject.getAllFavorites();
+    }
+
 }

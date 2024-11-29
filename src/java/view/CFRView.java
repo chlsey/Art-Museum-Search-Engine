@@ -73,7 +73,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
 
         // Star Rating
         JPanel starPanel = new JPanel();
-        ratingLabel = new JLabel("Rate This Work");
+        ratingLabel = new JLabel("Favorite This Work");
         ratingLabel.setFont(new Font("Arial", Font.BOLD, 20));
         starPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         starPanel.add(ratingLabel);

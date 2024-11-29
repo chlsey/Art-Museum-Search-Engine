@@ -278,9 +278,19 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     public void propertyChange(PropertyChangeEvent evt) {
         if ("searched".equals(evt.getPropertyName())) {
             List<Artwork> artworks = clickArtViewModel.getArtworks();
+            List<Artwork> favoriteArtworks = favoriteController.getFavorites();
             panelPictures.removeAll();
 
             for (Artwork art : artworks) {
+                for (Artwork favorite : favoriteArtworks) {
+                    System.out.println(art.getId());
+                    System.out.println(favorite.getId().replace("MET-", ""));
+                    if (favorite.getId().replace("MET-", "").equals(art.getId())){
+                        art.setRating(favorite.getRating());
+                        art.setFavorited(true);
+                        break;
+                    }
+                }
                 try {
                     // Validate and load the image safely
                     //System.out.println(art.getId());

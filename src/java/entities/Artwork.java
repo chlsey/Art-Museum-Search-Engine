@@ -54,11 +54,11 @@ public class Artwork {
     public String getImageUrl() { return imageUrl; }
     public String getKeyWords() { return keyWords; }
     public boolean checkFavorited() { return favorited; }
-    public void setFavorited() {
-        if (favorited) {
-            favorited = false;
-        } else {
+    public void setFavorited(boolean status) {
+        if (status) {
             favorited = true;
+        } else {
+            favorited = false;
         }
     }
     public List<String> getComments() {
@@ -73,9 +73,9 @@ public class Artwork {
         }
         return comments.get(comments.size() - 1);
     }
-    public String getRating() {
-        Integer value = rating;
-        String rating = value.toString();
+    public int getRating() {
+//        Integer value = rating;
+//        String rating = value.toString();
         return rating; }
 
     public void setRating(int rating) {

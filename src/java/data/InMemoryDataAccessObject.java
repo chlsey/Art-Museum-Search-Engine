@@ -18,10 +18,10 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     @Override
     public void updateFavorite(Artwork artwork) {
         if (contains(artwork.getId())) {
-            artworks.get(artwork.getId()).setFavorited();
+            artworks.get(artwork.getId()).setFavorited(!artwork.checkFavorited());
         }
         else {
-            artwork.setFavorited();
+            artwork.setFavorited(!artwork.checkFavorited());
             save(artwork);
         }
     }
