@@ -56,7 +56,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
 
                     // Set the artwork properties using the data from JSON
                     String id = jsonObject.get("id").asText();
-                    System.out.println(id);
+                    //System.out.println(id);
                     Artwork artwork = getArtworkById(id);
 
                     // Set the favorite flag and rating
@@ -164,7 +164,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     public Artwork getArtworkById(String id) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonFile);
-        if (contains(id)) {
+        if (contains(id) && rootNode.has("artworks")) {
             JsonNode node = rootNode.get(id);
             MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
             Artwork artwork = DAObj.getArtworkById(id);

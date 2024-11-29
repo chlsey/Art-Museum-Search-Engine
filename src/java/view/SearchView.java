@@ -283,6 +283,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             for (Artwork art : artworks) {
                 try {
                     // Validate and load the image safely
+                    //System.out.println(art.getId());
                     Image image = loadImageSafely(art.getImageUrl());
 
                     // Scale the image
