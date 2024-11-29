@@ -20,4 +20,8 @@ public class FavoriteController {
         favoriteUseCaseInteractor.execute(favoriteInputData);
     }
 
+    public void goToFavorite(){
+        favoriteUseCaseInteractor.getFavoriteArtworks();
+    }
+
 }

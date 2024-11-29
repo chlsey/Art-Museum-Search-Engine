@@ -31,6 +31,20 @@ public class Artwork {
         this.rating = 0;
     }
 
+    public Artwork() {
+        this.title = "";
+        this.artistName = "";
+        this.timePeriod = "";
+        this.gallery = "";
+        this.imageUrl = "";
+        this.keyWords = "";
+        this.description = "";
+        this.id = "";
+        this.favorited = false;
+        this.comments = new ArrayList<>();
+        this.rating = 0;
+    }
+
 
     public String getTitle() { return title; }
     public String getArtistName() { return artistName; }
@@ -71,8 +85,36 @@ public class Artwork {
     public String getDescription() {
         return description;
     }
+    public void setId(String id) {this.id = id;}
     public String getId() {
         return id;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public void setGallery(String gallery) {
+        this.gallery = gallery;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setKeyWords(String keyWords) {
+        this.keyWords = keyWords;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setComments(List<String> comments) {
+        this.comments = comments;
+    }
 }

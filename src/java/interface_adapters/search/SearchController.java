@@ -17,4 +17,5 @@ public class SearchController {
 
         artworkSearchInputBoundary.execute(artworkSearchInputData);
     }
+
 }

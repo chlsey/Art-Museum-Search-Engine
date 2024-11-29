@@ -1,0 +1,16 @@
+{
+  "artworks" : [
+    {
+      "id" : "MET-208302",
+      "favorite" : true,
+      "rating" : 0,
+      "comments" : []
+    },
+    {
+      "id" : "MET-560727",
+      "favorite" : true,
+      "rating" : 0,
+      "comments" : []
+    }
+  ]
+}

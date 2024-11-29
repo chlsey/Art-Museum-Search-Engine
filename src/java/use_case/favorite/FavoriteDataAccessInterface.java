@@ -3,6 +3,7 @@ package use_case.favorite;
 import entities.Artwork;
 
 import java.io.IOException;
+import java.util.List;
 
 public interface FavoriteDataAccessInterface {
     /**
@@ -16,4 +17,6 @@ public interface FavoriteDataAccessInterface {
     Artwork getArtworkById(String id) throws IOException;
 
     boolean contains(String id) throws IOException;
+
+    List<Artwork> getAllFavorites();
 }

@@ -1,26 +1,33 @@
 package app;
 
+import data.FileArtworkDataAccessObject;
 import data.MuseumDataAccessObject;
+import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtViewModel;
+import interface_adapters.favorite.FavoriteController;
+import interface_adapters.favorite.FavoritePresenter;
 import interface_adapters.filter.FilterController;
-import interface_adapters.filter.FilterPresenter;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchPresenter;
 import interface_adapters.search.SearchViewModel;
+import use_case.favorite.FavoriteInputBoundary;
+import use_case.favorite.FavoriteInteractor;
+import use_case.favorite.FavoriteOutputBoundary;
 import use_case.filter.FilterInputBoundary;
 import use_case.filter.FilterInteractor;
-import use_case.filter.FilterOutputBoundary;
 import use_case.search.*;
 import view.SearchView;
 
 public class SearchUseCaseFactory {
 
     public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel,
-                                    MuseumDataAccessObject museumDataAccessObject, ClickArtViewModel clickArtViewModel) {
+                                    MuseumDataAccessObject museumDataAccessObject, ClickArtViewModel clickArtViewModel,
+                                    FileArtworkDataAccessObject fileArtworkDataAccessObject, CFRViewModel cfrViewModel) {
         final SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
         final FilterController filterController = createFilterUseCase(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
-        return new SearchView(searchController, searchViewModel, clickArtViewModel, filterController);
+        final FavoriteController favoriteController = createFavoriteUseCase(viewManagerModel, searchViewModel,cfrViewModel, clickArtViewModel, fileArtworkDataAccessObject);
+        return new SearchView(searchController, searchViewModel, clickArtViewModel, filterController, favoriteController);
     }
 
     private static FilterController createFilterUseCase(ViewManagerModel viewManagerModel,
@@ -30,6 +37,16 @@ public class SearchUseCaseFactory {
         //final FilterOutputBoundary filterOutputBoundary = new FilterPresenter(searchViewModel,viewManagerModel, clickArtViewModel);
         final FilterInputBoundary filterInteractor = new FilterInteractor(museumDataAccessObject);
         return new FilterController(filterInteractor);
+    }
+
+    private static FavoriteController createFavoriteUseCase(ViewManagerModel viewManagerModel,
+                                                            SearchViewModel searchViewModel,
+                                                            CFRViewModel cfrViewModel,
+                                                            ClickArtViewModel clickArtViewModel,
+                                                            FileArtworkDataAccessObject fileArtworkDataAccessObject) {
+        final FavoriteOutputBoundary favoriteOutputBoundary = new FavoritePresenter(cfrViewModel, viewManagerModel, clickArtViewModel, searchViewModel);
+        final FavoriteInputBoundary favoriteInteractor = new FavoriteInteractor(fileArtworkDataAccessObject, favoriteOutputBoundary);
+        return new FavoriteController(favoriteInteractor);
     }
 
     private static SearchController createSearchUseCase(ViewManagerModel viewManagerModel,

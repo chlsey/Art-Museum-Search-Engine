@@ -36,6 +36,11 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     }
 
     @Override
+    public List<Artwork> getAllFavorites() {
+        return List.of();
+    }
+
+    @Override
     public void addCommentToArtwork(Artwork artwork, String comment) {
         Artwork art = getArtworkById(artwork.getId());
         if (artwork == null) {
