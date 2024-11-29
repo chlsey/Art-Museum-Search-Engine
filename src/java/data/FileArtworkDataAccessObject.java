@@ -1,13 +1,11 @@
 package data;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import entities.Artwork;
-import org.json.JSONObject;
 import use_case.click_art.ClickArtDataAccessInterface;
 import use_case.favorite.FavoriteDataAccessInterface;
 import use_case.comment.CommentDataAccessInterface;
@@ -89,7 +87,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
                 ((ObjectNode) node).put("favorite", !artwork.checkFavorited());
                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
             } else {
-                artwork.setFavorited();
+                artwork.setFavorited(!artwork.checkFavorited());
                 save(artwork);
             }
         } catch (IOException e) {
@@ -174,7 +172,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
                 finalArt.addComment(comment.toString());
             }
             if (node.get("favorite").toString().equals("True")) {
-                finalArt.setFavorited();
+                finalArt.setFavorited(!artwork.checkFavorited());
             }
             finalArt.setRating(parseInt(node.get("numRate").toString()));
             return finalArt;

@@ -4,6 +4,7 @@ import interface_adapters.click_art.*;
 import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtViewModel;
 import entities.Artwork;
+import org.jetbrains.annotations.NotNull;
 import use_case.click_art.ClickArtInteractor;
 import use_case.click_art.ClickArtOutputBoundary;
 
@@ -96,7 +97,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         descriptionArea.setFont(new Font("Serif", Font.PLAIN, 16));
         //JScrollPane descriptionScrollPane = new JScrollPane(descriptionArea);
         //descriptionScrollPane.setAlignmentX(CENTER_ALIGNMENT); // Center-align the scroll pane
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 100)));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         detailsPanel.add(descriptionArea);
 
         JPanel cfrPanel = new JPanel();
@@ -122,28 +123,10 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         cfrPanel.add(comment);
 
         // Add the CFR panel to the details panel
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 100)));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         detailsPanel.add(cfrPanel);
 
-        final JPanel buttons = new JPanel();
-
-        //CFR BUTTON
-        JButton cfrButton = new JButton("Rate It!");
-        cfrButton.addActionListener(e -> {
-            clickArtController.switchToCFR();
-            CardLayout cardLayout = (CardLayout) getParent().getLayout();
-            cardLayout.show(getParent(), "CFRView");
-        });
-
-        // Back button
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> {
-            clickArtController.switchToSearch();
-            CardLayout cardLayout = (CardLayout) getParent().getLayout();
-            cardLayout.show(getParent(), "search");
-        });
-        buttons.add(cfrButton);
-        buttons.add(backButton);
+        final JPanel buttons = getButtons(clickArtController);
         detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
         detailsPanel.add(buttons);
         detailsPanel.add(Box.createRigidArea(new Dimension(0, 100)));
@@ -168,6 +151,30 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         cardLayout.show(mainPanel, "DetailsView");
         mainPanel.revalidate();
         mainPanel.repaint();
+    }
+
+    @NotNull
+    private JPanel getButtons(ClickArtController clickArtController) {
+        final JPanel buttons = new JPanel();
+
+        //CFR BUTTON
+        JButton cfrButton = new JButton("Rate It!");
+        cfrButton.addActionListener(e -> {
+            clickArtController.switchToCFR();
+            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+            cardLayout.show(getParent(), "CFRView");
+        });
+
+        // Back button
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> {
+            clickArtController.switchToSearch();
+            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+            cardLayout.show(getParent(), "search");
+        });
+        buttons.add(cfrButton);
+        buttons.add(backButton);
+        return buttons;
     }
 
 

@@ -10,4 +10,5 @@ public interface FavoriteInputBoundary {
     void execute(FavoriteInputData favoriteInputData) throws IOException;
     void getFavoriteArtworks();
 
+    List<Artwork> getFavorites();
 }
