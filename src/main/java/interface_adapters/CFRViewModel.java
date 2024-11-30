@@ -19,8 +19,8 @@ public class CFRViewModel extends ViewModel<CFRState>{
         super("CFRView");
         setState(new CFRState());
         this.commentState = null;
-        this.favoriteState = null;
-        this.ratingState = null;
+        this.favoriteState = new FavoriteState();
+        this.ratingState = new RatingState();
     }
 
     public void setState(CFRState cfrState) {

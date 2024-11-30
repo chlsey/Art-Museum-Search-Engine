@@ -111,7 +111,7 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
                 artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
                 String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"),
                         artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")),
-                            artObj.get("objectID").toString());
+                            "MET-" + artObj.get("objectID").toString());
 
             artworks.add(result);}
     }

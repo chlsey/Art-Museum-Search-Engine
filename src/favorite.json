@@ -2,7 +2,7 @@
   "artworks" : [ {
     "id" : "MET-208302",
     "favorite" : true,
-    "rating" : 1,
+    "rating" : 2,
     "comments" : [ "Very Good", "Impressive", "nice!" ]
   }, {
     "id" : "MET-560727",
@@ -19,5 +19,20 @@
     "favorite" : true,
     "rating" : 5,
     "comments" : [ ]
+  }, {
+    "id" : "MET-437984",
+    "favorite" : true,
+    "rating" : 3,
+    "comments" : [ "heyheyhey", "heyheyhey", "hey" ]
+  }, {
+    "id" : "MET-329077",
+    "favorite" : true,
+    "rating" : 0,
+    "comments" : [ "hi" ]
+  }, {
+    "id" : "MET-53176",
+    "favorite" : false,
+    "rating" : 0,
+    "comments" : [ "hi" ]
   } ]
 }
