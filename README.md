@@ -89,6 +89,6 @@ Mode of Communication: in person
 
 4. Emily uses our search engine to find artworks. She is able to favorite the ones she likes.
 
-5. Anna wants to rate some artworks. She is able to rate them out of 5 stars. She is also able to change her mind and rate it a different score later.
+5. Anna wants to view some artworks. She is able to click on them upon searching and see their associated information.
 
 6. Robby sees some artworks he REALLY hates. He is able to leave hate comments under the artwork page.
