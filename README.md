@@ -39,7 +39,7 @@ query multiple museums for results at the same time.
    (screenshots TBA)
 
 ### Installation instructions: 
-The software works on Windows 10 and Ubuntu 22.04.5 LTS Linux, other operating systems are not tested. \
+The software works on Windows 10, MacOS Sonoma 14.6.1, and Ubuntu 22.04.5 LTS Linux, other operating systems are not tested. \
 The software depends on version 1.18.1 of the Jsoup library for parsing HTML query results, 
 version 4.12.0 of the okhttp library to read http, as well as version 20240303 of JSON. Junit 4.13.1,
 Jacoco 0.8.12 and RELEASE version Jupiter are used for unit testing and coverage.
