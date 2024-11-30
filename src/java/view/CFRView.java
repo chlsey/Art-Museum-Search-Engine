@@ -188,6 +188,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         favoriteButton.setIcon(isFavorited ? heartFilledIcon : heartEmptyIcon);
         artwork.setFavorited(isFavorited);
         favoriteController.execute(artwork);
+        cfrViewModel.firePropertyChanged();
     }
 
     private void submit() throws IOException {
@@ -201,13 +202,11 @@ public class CFRView extends JPanel implements PropertyChangeListener {
                 artwork.setRating(selectedRating);
                 ratingController.execute(artwork.getId(),selectedRating);
             }
-            artwork.setFavorited(isFavorited);
-            favoriteController.execute(artwork);
             cfrViewModel.firePropertyChanged();
             commentInput.setText("");
             JOptionPane.showMessageDialog(this, "Thank you for your feedback!", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Please provide a rating, comment, or favorite.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please provide a rating or comment", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
