@@ -29,24 +29,6 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         if (jsonFile.length() != 0) {
             ObjectMapper objectMapper = new ObjectMapper();
             try {
-//                // Parse the JSON file into a List of Maps
-//                List<Map<String, Object>> jsonArray = objectMapper.readValue(
-//                        jsonFile,
-//                        new TypeReference<List<Map<String, Object>>>() {}
-//                );
-//
-//                // Iterate through the list and add
-//                for (int i = 0; i < jsonArray.size(); i++) {
-//                    Map<String, Object> jsonObject = jsonArray.get(i);
-//                    ArrayList artwork = new ArrayList();
-//                    ArrayList<String> comments = objectMapper.readValue(jsonObject.get("comments").toString(), new TypeReference<ArrayList<String>>() {});
-//                    Boolean favorite = Boolean.parseBoolean((String) jsonObject.get("favorite"));
-//                    int rating = (int) jsonObject.get("rating");
-//
-//                    artwork.add(favorite);
-//                    artwork.add(rating);
-//                    artwork.add(comments);
-//                    artworks.put(jsonArray.toString(), artwork);
                 JsonNode rootNode = objectMapper.readTree(jsonFile);
                 ArrayNode artworksArray = (ArrayNode) rootNode.get("artworks");
                 // Iterate through the artworks and create Artwork objects
@@ -166,7 +148,13 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonFile);
         if (contains(id) && rootNode.has("artworks")) {
-            JsonNode node = rootNode.get(id);
+            JsonNode node = null;
+            for (JsonNode artwork : rootNode.get("artworks")) {
+                if (artwork.get("id").asText().equals(id)) {
+                    node = artwork;
+                    break;
+                }
+            }
             MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
             Artwork artwork = DAObj.getArtworkById(id);
             Artwork finalArt = new Artwork(artwork.getTitle(), artwork.getArtistName(), artwork.getCompositionDate(),
@@ -177,7 +165,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
             if (node.get("favorite").toString().equals("True")) {
                 finalArt.setFavorited(!artwork.checkFavorited());
             }
-            finalArt.setRating(parseInt(node.get("numRate").toString()));
+            finalArt.setRating(parseInt(node.get("rating").toString()));
             return finalArt;
         } else {
             MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
@@ -185,21 +173,75 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         }
     }
 
-    @Override // TODO: must fix this to work properly
+    public Artwork getArtworkByIdClick(String id) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(jsonFile);
+            if (contains(id) && rootNode.has("artworks") && rootNode.get("artworks").isArray()) {
+                for (JsonNode art : rootNode.get("artworks")) {
+                    // Match the artwork by ID
+                    if (art.has("id") && id.equals(art.get("id").asText())) {
+                        // Fetch additional artwork details
+                        MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
+                        Artwork artwork = DAObj.getArtworkById(id);
+
+                        // Build the final artwork object
+                        Artwork finalArt = new Artwork(
+                                artwork.getTitle(),
+                                artwork.getArtistName(),
+                                artwork.getCompositionDate(),
+                                artwork.getGallery(),
+                                artwork.getImageUrl(),
+                                artwork.getKeyWords(),
+                                artwork.getDescription(),
+                                id
+                        );
+                        // Add comments
+                        JsonNode commentsNode = art.get("comments");
+                        if (commentsNode != null && commentsNode.isArray()) {
+                            for (JsonNode comment : commentsNode) {
+                                finalArt.addComment(comment.asText());
+                            }
+                        }
+                        // Handle "favorite" (assumes favorite is boolean in JSON)
+                        if (art.has("favorite") && art.get("favorite").asBoolean()) {
+                            finalArt.setFavorited(!artwork.checkFavorited());
+                        }
+                        // Handle "numRate"
+                        if (art.has("numRate")) {
+                            finalArt.setRating(art.get("numRate").asInt());
+                        }
+                        return finalArt; // Return the matched and populated artwork
+                    }
+                }
+            }
+            // If not found, fallback logic
+            MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
+            return DAObj.getArtworkById(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    /**
+     * Precondition: jsonFile is not empty.
+     * @param id is the unique id of the artwork
+     * @return whether artwork with id is in the database.
+     * @throws IOException
+     */
+    @Override
     public boolean contains(String id) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonFile);
-
-        boolean containsId = false;
-        if (rootNode.isArray()) {
-            for (JsonNode node : rootNode) {
-                if (node.has(id)) {
-                    containsId = true;
-                    break;
-                }
+        ArrayNode artworks = (ArrayNode) rootNode.get("artworks");
+        for (JsonNode artwork: artworks) {
+            if (artwork.get("id").asText().equals(id)) {
+                return true;
             }
         }
-        return containsId;
+        return false;
     }
 
     @Override
