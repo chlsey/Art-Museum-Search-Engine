@@ -1,44 +1,77 @@
 package use_case.rating;
-import entities.*;
-import org.junit.Before;
-import org.junit.Test;
+
 import data.InMemoryDataAccessObject;
-import org.junit.jupiter.api.BeforeEach;
+import entities.Artwork;
+import entities.ArtworkFactory;
+import org.junit.Test;
+import use_case.favorite.*;
+
+import java.io.IOException;
+
+import static org.junit.Assert.*;
 
 import static org.junit.Assert.assertEquals;
+
 public class RatingInteractorTest {
-
-
-
-    @BeforeEach
-    void beforeEach() {
-
-    }
     @Test
-    public void ratingTest() {
-        RatingInputData ratingInputData = new RatingInputData(5);
-        RatingDataAccessInterface repository = (RatingDataAccessInterface) new InMemoryDataAccessObject();
-        RatingOutputBoundary ratingOutputBoundary = new RatingOutputBoundary() {
+    public void ratingSavedArtTest() throws IOException {
+        Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
+                "MoMA", "", "starsnightbluefamous", "no description", "111");
+        Artwork artwork2 = ArtworkFactory.createArtwork("Madame X", "John Singer Sargent", "1883",
+                "MoMA", "", "womanblackdressportrait", "no description", "112");
+        artwork2.setRating(2);
+        artwork1.setRating(3);
+        RatingInputData inputData = new RatingInputData(artwork2.getId(),artwork2.getRating());
+
+        RatingDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+
+
+        artworkRepository.save(artwork1);
+        artworkRepository.save(artwork2);
+
+        RatingOutputBoundary successPresenter = new RatingOutputBoundary() {
             @Override
-            public void prepareRatingView(RatingOutputData data) {
-                assertEquals(5, repository.getRating());
+            public void prepareSuccessView(RatingOutputData ratingOutputData) throws IOException {
+                assertEquals(artworkRepository.getArtworkById(artwork1.getId()).getRating(), artwork1.getRating());
+
+            }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                fail("Can't fail to rate!");
             }
         };
 
+
+        RatingInputBoundary ratingUC = new RatingInteractor(artworkRepository, successPresenter);
+        ratingUC.execute(inputData);
     }
 
     @Test
-    public void ratingTestAgain() {
-        RatingInputData ratingInputData = new RatingInputData(6);
-        RatingDataAccessInterface repository = (RatingDataAccessInterface) new InMemoryDataAccessObject();
-        RatingOutputBoundary ratingOutputBoundary = new RatingOutputBoundary() {
+    public void ratingForNewArt() throws IOException {
+        Artwork artwork = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
+                "MoMA", "", "starsnightbluefamous", "no description", "111");
+        RatingInputData inputData = new RatingInputData(artwork.getId(),artwork.getRating());
+        RatingDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+        artworkRepository.save(artwork);
+
+        artwork.setRating(5);
+        RatingOutputBoundary successPresenter = new RatingOutputBoundary() {
             @Override
-            public void prepareRatingView(RatingOutputData data) {
-                assertEquals(6, repository.getRating());
+            public void prepareSuccessView(RatingOutputData outputData) throws IOException {
+                assertEquals(artworkRepository.getArtworkById(artwork.getId()).getRating(), artwork.getRating());
+            }
+
+            @Override
+            public void prepareFailureView(String errorMessage) {
+                fail("Can't fail to rate!");
             }
         };
 
+        RatingInputBoundary rating = new RatingInteractor(artworkRepository, successPresenter);
+        rating.execute(inputData);
     }
+
 }
 
 
@@ -52,43 +85,5 @@ public class RatingInteractorTest {
 
 
 
-//public class RatingInteractorTest {
-//
-//    private RatingInteractor interactor;
-//    private RatingDataAccessInterface ratingDataAccessObject;
-//    private MockRatingOutputBoundary mockOutputBoundary;
-//
-//    @Before
-//    public void setUp() {
-//        ratingDataAccessObject = (RatingDataAccessInterface) new InMemoryDataAccessObject();
-//        mockOutputBoundary = new MockRatingOutputBoundary();
-//        interactor = new RatingInteractor(ratingDataAccessObject, mockOutputBoundary);
-//    }
-//
-//    @Test
-//    public void testRatingInteractor() {
-//        RatingOutputData inputData = new RatingOutputData(4, 0.0); // Initialize with a rating value
-//
-//        // Execute the interactor with the input data
-//        interactor.execute(inputData);
-//
-//        // Verify the results
-//        assertEquals(4, mockOutputBoundary.getOutputData().getRating());
-//        double expectedAverageRating = 4.0; // Assuming it's the only rating so far
-//        assertEquals(expectedAverageRating, mockOutputBoundary.getOutputData().getAverageRating(), 0.01);
-//    }
-//
-//    // Mock implementation of RatingOutputBoundary
-//    private class MockRatingOutputBoundary implements RatingOutputBoundary {
-//        private RatingOutputData outputData;
-//
-//        @Override
-//        public void prepareRatingView(RatingOutputData data) {
-//            this.outputData = data;
-//        }
-//
-//        public RatingOutputData getOutputData() {
-//            return outputData;
-//        }
-//    }
-//}
+
+

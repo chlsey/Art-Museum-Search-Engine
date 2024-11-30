@@ -1,9 +1,13 @@
 package use_case.rating;
+import entities.Artwork;
+import java.io.IOException;
 
 public interface RatingDataAccessInterface {
-    //void getAllRatings();
+//    void updateRating(Artwork artwork);
+    void saveRating(Artwork artwork) throws IOException;
     int getRating();
     void setRating(int rating);
-    void incrementRatingCount(int ratingValue);
-    double calculateAverageRating();
+    void save(Artwork artwork) throws IOException;
+    boolean contains(String id) throws IOException;
+    Artwork getArtworkById(String id) throws IOException;
 }

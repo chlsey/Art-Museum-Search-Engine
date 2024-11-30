@@ -1,18 +1,23 @@
 package interface_adapters.rating;
-import use_case.rating.RatingInputBoundary;
-import use_case.rating.RatingInputData;
-import use_case.rating.RatingInteractor;
-import entities.Artwork;
 
+import entities.Artwork;
+import use_case.rating.RatingInputData;
+import use_case.rating.RatingInputBoundary;
+
+import java.io.IOException;
 
 public class RatingController {
-    private final RatingInputBoundary ratingInputInteractor;
+    private final RatingInputBoundary ratingUseCaseInteractor;
 
-    public RatingController(RatingInputBoundary ratingInputInteractor) {
-        this.ratingInputInteractor = ratingInputInteractor;
+    public RatingController(RatingInputBoundary ratingUseCaseInteractor) {
+        this.ratingUseCaseInteractor = ratingUseCaseInteractor;
     }
-    public void execute(int rating, Artwork artwork) {
-        final RatingInputData ratingInputData = new RatingInputData(rating, artwork);
-        ratingInputInteractor.execute(ratingInputData);
+
+    public void execute(String artwork, int rating) throws IOException {
+        final RatingInputData rateInputData = new RatingInputData(
+                artwork, rating);
+
+        ratingUseCaseInteractor.execute(rateInputData);
     }
+
 }

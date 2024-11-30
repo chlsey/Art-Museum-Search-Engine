@@ -14,7 +14,6 @@ public class Artwork {
     private String id;
     private boolean favorited;
     private int rating;
-    private int numRate;
     private List<String> comments;
 
     public Artwork(String title, String artistName, String timePeriod, String gallery,
@@ -29,8 +28,7 @@ public class Artwork {
         this.id = id;
         this.favorited = false;
         this.comments = new ArrayList<>();
-        this.rating = 0;
-        this.numRate = 0;
+//        this.rating = 0;
     }
 
 
@@ -43,7 +41,13 @@ public class Artwork {
     public String getImageUrl() { return imageUrl; }
     public String getKeyWords() { return keyWords; }
     public boolean checkFavorited() { return favorited; }
-    public void setFavorited() { favorited = !favorited; }
+    public void setFavorited() {
+        if (favorited) {
+            favorited = false;
+        } else {
+            favorited = true;
+        }
+    }
     public List<String> getComments() {
         return comments;
     }
@@ -56,17 +60,13 @@ public class Artwork {
         }
         return comments.get(comments.size() - 1);
     }
-    public String getRating() {
-        if (numRate == 0) {
-            return "No Rating";
-        }
-        Integer value = rating;
-        String rating = value.toString();
-        return rating; }
+    public int getRating() {
+        int value = rating;
+//        String rating = value.toString();
+        return value; }
 
-    public void newRating(int rating) {
+    public void setRating(int rating) {
         this.rating = rating;
-        this.numRate += 1;
     }
 
     public String getDescription() {
@@ -76,23 +76,4 @@ public class Artwork {
         return id;
     }
 
-    public int getnumRate() {
-        return numRate;
-    }
-
-//    public int getTotalScore() {
-//        return totalScore;
-//    }
-
-    public void setNumRate(int num) { this.numRate = num; }
-
-    public int getTotalScore() {
-        return 0;
-    }
-
-    public void setTotalScore(int totalScore) {
-
-    }
-
-//    public void setTotalScore(int num) { this.totalScore = num; }
 }

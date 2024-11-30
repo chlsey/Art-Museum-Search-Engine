@@ -1,20 +1,20 @@
 package use_case.rating;
 
-import entities.Artwork;
-
 public class RatingInputData {
     private final int rating;
-    private final Artwork artwork;
+    private final String artworkId;
 
-    public RatingInputData(int rating, Artwork artwork) {
+    public RatingInputData(String artworkId, int rating) {
+        this.artworkId = artworkId;
         this.rating = rating;
-        this.artwork = artwork;
+
+    }
+
+    public String getArtworkId() {
+        return artworkId;
     }
     public int getRating() {
         return rating;
-    }
-    public Artwork getArtwork() {
-        return artwork;
     }
 }
 

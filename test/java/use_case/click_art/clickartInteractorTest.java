@@ -14,7 +14,7 @@ public class clickartInteractorTest {
     }
     @Test
     public void clickArtInteractorTest() {
-        Artwork artwork = new Artwork("sky", "Charles Dewolf Brownell", "", "", "", "", "The American Wing, Oil on academy board, , Painting ");
+        Artwork artwork = new Artwork("sky", "Charles Dewolf Brownell", "", "", "", "", "The American Wing, Oil on academy board, , Painting ", "");
         ClickArtInputData clickArtInputData = new ClickArtInputData(artwork);
         ClickArtDataAccessInterface respository = (ClickArtDataAccessInterface) new InMemoryDataAccessObject();
         ClickArtOutputBoundary clickArtOutputBoundary = new ClickArtOutputBoundary() {
@@ -30,6 +30,11 @@ public class clickartInteractorTest {
 
             @Override
             public void switchToSearchView() {
+
+            }
+
+            @Override
+            public void switchToCFRView() {
 
             }
         };

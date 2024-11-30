@@ -1,0 +1,18 @@
+{
+  "artworks" : [ {
+    "id" : "MET-437133",
+    "favorite" : true,
+    "rating" : "0",
+    "comments" : [ ]
+  }, {
+    "id" : "MET-437133",
+    "favorite" : false,
+    "rating" : "0",
+    "comments" : [ ]
+  }, {
+    "id" : "MET-437133",
+    "favorite" : false,
+    "rating" : "0",
+    "comments" : [ ]
+  } ]
+}

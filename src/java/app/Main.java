@@ -15,7 +15,7 @@ import view.CFRView;
 import view.ClickView;
 import view.SearchView;
 import view.ViewManager;
-import app.Main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -59,12 +59,9 @@ public class Main {
         viewManagerModel.setState(searchView.getViewName());
         viewManagerModel.firePropertyChanged();
 
-
-
-
         // Configure frame for full-screen mode
-//        resize
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window
+        //frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize window
+        frame.setSize(1024, 768);
         frame.setUndecorated(false); // Keep window decorations like title bar
         frame.setVisible(true);
     }

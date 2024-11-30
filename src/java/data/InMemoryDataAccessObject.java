@@ -7,6 +7,7 @@ import use_case.comment.CommentDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
 import use_case.rating.RatingDataAccessInterface;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     @Override
     public void save(Artwork artwork) {
-        artworks.put(artwork.getTitle(), artwork);
+        artworks.put(artwork.getId(), artwork);
     }
 
     public boolean contains(String id) {
@@ -53,6 +54,17 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
         }
     }
 
+
+//    @Override
+//    public void updateRating(Artwork artwork) {
+//
+//    }
+
+    @Override
+    public void saveRating(Artwork artwork) throws IOException {
+
+    }
+
     @Override
     public int getRating() {
         return 0;
@@ -63,15 +75,15 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     }
 
-    @Override
-    public void incrementRatingCount(int ratingValue) {
-
-    }
-
-    @Override
-    public double calculateAverageRating() {
-        return 0;
-    }
+//    @Override
+//    public void incrementRatingCount(int ratingValue) {
+//
+//    }
+//
+//    @Override
+//    public double calculateAverageRating() {
+//        return 0;
+//    }
 
     @Override
     public List<Artwork> searchArtwork(String searchMessage) {
