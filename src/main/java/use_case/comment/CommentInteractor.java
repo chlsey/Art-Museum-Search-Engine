@@ -26,5 +26,10 @@ public class CommentInteractor implements CommentInputBoundary {
         commentPresenter.presentSuccessView(outputData);
     }
 
+    @Override
+    public List<Artwork> getCommentedArtworks() {
+        return commentDataAccessObject.getCommentedArtworks();
+    }
+
 
 }

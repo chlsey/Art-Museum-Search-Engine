@@ -1,7 +1,11 @@
 package view;
 
+import entities.Artwork;
 import interface_adapters.CFRViewModel;
-import interface_adapters.comment.CommentState;
+import interface_adapters.click_art.ClickArtViewModel;
+import interface_adapters.comment.CommentController;
+import interface_adapters.favorite.FavoriteController;
+import interface_adapters.rating.RatingController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,12 +13,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 public class CFRView extends JPanel implements PropertyChangeListener {
     private final String viewName = "CFRView";
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
     private final CFRViewModel cfrViewModel;
+    private Artwork artwork;
 
     private final JTextField commentInput;
     private final JButton submitButton;
@@ -23,7 +29,11 @@ public class CFRView extends JPanel implements PropertyChangeListener {
     private final JLabel favoriteLabel;
     private final JButton favoriteButton;
     private int selectedRating = 0; // Holds the user's selected rating
-    private boolean isFavorited = false; // Tracks the favorite state
+    private boolean isFavorited; // Tracks the favorite state
+
+    private final RatingController ratingController;
+    private final FavoriteController favoriteController;
+    private final CommentController commentController;
 
     private final JButton[] stars;
     private final ImageIcon starEmptyIcon;
@@ -31,9 +41,12 @@ public class CFRView extends JPanel implements PropertyChangeListener {
     private final ImageIcon heartEmptyIcon;
     private final ImageIcon heartFilledIcon;
 
-    public CFRView(CFRViewModel cfrViewModel) {
+    public CFRView(CFRViewModel cfrViewModel, ClickArtViewModel clickArtViewModel, RatingController ratingController, FavoriteController favoriteController, CommentController commentController) {
         this.cfrViewModel = cfrViewModel;
-        this.cfrViewModel.addPropertyChangeListener(this);
+        this.ratingController = ratingController;
+        this.favoriteController = favoriteController;
+        this.commentController = commentController;
+        cfrViewModel.addPropertyChangeListener(this);
 
         // Load image icons
         ImageIcon rawStarEmpty = new ImageIcon("src/images/star_empty.png");
@@ -44,10 +57,10 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         Image imageStarFilled = rawStarFilled.getImage();
         Image imageHeartEmpty = rawHeartEmpty.getImage();
         Image imageHeartFilled = rawHeartFilled.getImage();
-        Image newStarEmpty = imageStarEmpty.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
-        Image newStarFilled = imageStarFilled.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
-        Image newHeartEmpty = imageHeartEmpty.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
-        Image newHeartFilled = imageHeartFilled.getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH);
+        Image newStarEmpty = imageStarEmpty.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image newStarFilled = imageStarFilled.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image newHeartEmpty = imageHeartEmpty.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        Image newHeartFilled = imageHeartFilled.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         starEmptyIcon = new ImageIcon(newStarEmpty);
         starFilledIcon = new ImageIcon(newStarFilled);
         heartEmptyIcon = new ImageIcon(newHeartEmpty);
@@ -70,51 +83,74 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         contentPanel.add(titleLabel);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Star Rating
-        JPanel starPanel = new JPanel();
+        // Rating Section
+        JPanel ratingPanel = new JPanel();
+        ratingPanel.setLayout(new BoxLayout(ratingPanel, BoxLayout.Y_AXIS));
         ratingLabel = new JLabel("Rate This Work");
         ratingLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        starPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        starPanel.add(ratingLabel);
+        ratingLabel.setAlignmentX(CENTER_ALIGNMENT);
+        ratingPanel.add(ratingLabel);
+
+        JPanel starPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         stars = new JButton[5];
         for (int i = 0; i < 5; i++) {
             int ratingValue = i + 1; // Rating is 1-based
             stars[i] = new JButton(starEmptyIcon);
+            stars[i].setContentAreaFilled(false);
+            stars[i].setBorderPainted(false);
             stars[i].addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     setRating(ratingValue);
                 }
             });
-
             starPanel.add(stars[i]);
         }
-        contentPanel.add(starPanel);
+        ratingPanel.add(starPanel);
+        contentPanel.add(ratingPanel);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Favorite Button
+        // Favorite Section
         JPanel favoritePanel = new JPanel();
+        favoritePanel.setLayout(new BoxLayout(favoritePanel, BoxLayout.Y_AXIS));
         favoriteLabel = new JLabel("Favorite This Work");
         favoriteLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        favoritePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        favoritePanel.add(ratingLabel);
+        favoriteLabel.setAlignmentX(CENTER_ALIGNMENT);
+        favoritePanel.add(favoriteLabel);
+
         favoriteButton = new JButton(heartEmptyIcon);
-        favoriteButton.addActionListener(e -> toggleFavorite());
-        favoritePanel.add(favoriteButton);
+        favoriteButton.setContentAreaFilled(false);
+        favoriteButton.setBorderPainted(false);
+        favoriteButton.addActionListener(e -> {
+            try {
+                toggleFavorite();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        JPanel favoriteButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        favoriteButtonPanel.add(favoriteButton);
+        favoritePanel.add(favoriteButtonPanel);
+
         contentPanel.add(favoritePanel);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Comment Input
-        JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        // Comment Section
+        JPanel commentPanel = new JPanel();
+        commentPanel.setLayout(new BoxLayout(commentPanel, BoxLayout.Y_AXIS));
         JLabel commentLabel = new JLabel("Your Comment:");
         commentLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        commentInput = new JTextField(20);
+        commentLabel.setAlignmentX(CENTER_ALIGNMENT);
         commentPanel.add(commentLabel);
+
+        commentInput = new JTextField(20);
+        commentInput.setMaximumSize(new Dimension(Integer.MAX_VALUE, commentInput.getPreferredSize().height));
         commentPanel.add(commentInput);
+
         contentPanel.add(commentPanel);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
-        // Buttons
+        // Buttons Section
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         submitButton = new JButton("Submit");
         backButton = new JButton("Back");
@@ -123,7 +159,13 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         contentPanel.add(buttonPanel);
 
         // Add functionality to buttons
-        submitButton.addActionListener(e -> submitComment());
+        submitButton.addActionListener(e -> {
+            try {
+                submit();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         backButton.addActionListener(e -> {
             CardLayout layout = (CardLayout) getParent().getLayout();
             layout.show(getParent(), "ClickView");
@@ -134,61 +176,80 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         add(mainPanel, BorderLayout.CENTER);
     }
 
-
     private void setRating(int rating) {
         selectedRating = rating;
         for (int i = 0; i < stars.length; i++) {
-            if (i < rating) {
-                stars[i].setIcon(starFilledIcon);
-            } else {
-                stars[i].setIcon(starEmptyIcon);
-            }
+            stars[i].setIcon(i < rating ? starFilledIcon : starEmptyIcon);
         }
     }
 
-    /**
-     * Toggles the favorite state and updates the heart icon.
-     */
-    private void toggleFavorite() {
+    private void toggleFavorite() throws IOException {
         isFavorited = !isFavorited;
         favoriteButton.setIcon(isFavorited ? heartFilledIcon : heartEmptyIcon);
+        artwork.setFavorited(isFavorited);
+        favoriteController.execute(artwork);
+        cfrViewModel.firePropertyChanged();
     }
 
-    /**
-     * Handles submitting the comment, rating, and favorite state.
-     */
-    private void submitComment() {
+    private void submit() throws IOException {
         String newComment = commentInput.getText().trim();
-        if (!newComment.isEmpty() || selectedRating > 0 || isFavorited) {
-            CommentState commentState = cfrViewModel.getCommentState();
-            if (commentState != null) {
-                if (!newComment.isEmpty()) {
-                    commentState.addComment(newComment);
-                }
-                if (selectedRating > 0) {
-                    commentState.setRating(selectedRating);
-                }
-                commentState.setFavorited(isFavorited); // Save favorite state
-                cfrViewModel.firePropertyChanged();
+        if (!newComment.isEmpty() || selectedRating > 0) {
+            if (!newComment.isEmpty()) {
+                artwork.addComment(newComment);
+                commentController.execute(artwork,newComment);
             }
+            if (selectedRating > 0) {
+                artwork.setRating(selectedRating);
+                ratingController.execute(artwork.getId(),selectedRating);
+            }
+            cfrViewModel.firePropertyChanged();
             commentInput.setText("");
             JOptionPane.showMessageDialog(this, "Thank you for your feedback!", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "Please provide a rating, comment, or favorite.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Please provide a rating or comment", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if ("CRFView".equals(evt.getPropertyName())) {
+        artwork = cfrViewModel.getSelectedArtwork();
+        //System.out.println(evt.getPropertyName());
+        //System.out.println(artwork.getRating());
+        if ("CFRView".equals(evt.getPropertyName())) {
+            //System.out.println(artwork.getRating());
+            updateState(artwork);
             cardLayout.show(mainPanel, viewName);
         }
         revalidate();
         repaint();
     }
 
+    private void updateState(Artwork artwork) {
+        if (artwork != null) {
+            //System.out.println(artwork.getRating());
+            int artRating = artwork.getRating();
+            showRating(artRating);
+
+            isFavorited = artwork.checkFavorited();
+            favoriteButton.setIcon(isFavorited ? heartFilledIcon : heartEmptyIcon);
+        } else {
+            showRating(0);
+            isFavorited = false;
+            favoriteButton.setIcon(heartEmptyIcon);
+        }
+    }
+
+    private void showRating(int artRating) {
+        for (int i = 0; i < stars.length; i++) {
+            if (i < artRating) {
+                stars[i].setIcon(starFilledIcon); // Set filled icon for rated stars
+            } else {
+                stars[i].setIcon(starEmptyIcon); // Set empty icon for remaining stars
+            }
+        }
+    }
+
     public String getViewName() {
         return viewName;
     }
 }
-

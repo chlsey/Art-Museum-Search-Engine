@@ -19,12 +19,14 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     private Map<String, Artwork> artworks = new HashMap<>();
 
     @Override
-    public void updateFavorite(Artwork artwork) {
-        if (contains(artwork.getId())) {
-            artworks.get(artwork.getId()).setFavorited();
+    public void updateFavorite(String id) {
+        if (contains(id)) {
+            Artwork artwork = getArtworkById(id);
+            artwork.setFavorited(!artwork.checkFavorited());
         }
         else {
-            artwork.setFavorited();
+            Artwork artwork = getArtworkById(id);
+            artwork.setFavorited(!artwork.checkFavorited());
             save(artwork);
         }
     }
@@ -36,6 +38,11 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     public boolean contains(String id) {
         return artworks.containsKey(id);
+    }
+
+    @Override
+    public List<Artwork> getAllFavorites() {
+        return List.of();
     }
 
     @Override
@@ -57,35 +64,29 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     }
 
 
-//    @Override
-//    public void updateRating(Artwork artwork) {
-//
-//    }
+    @Override
+    public List<Artwork> getCommentedArtworks() {
+        return List.of();
+    }
+
 
     @Override
-    public void saveRating(Artwork artwork) throws IOException {
-
+    public List<Artwork> getRatedArtworks() {
+        return List.of();
     }
 
     @Override
-    public int getRating() {
-        return 0;
+    public void updateRating(String id, int rating) throws IOException {
+        if (contains(id)) {
+            artworks.get(id).setRating(rating);
+        } else {
+            MuseumDataAccessObject DAO = new MuseumDataAccessObject();
+            Artwork artwork = DAO.getArtworkById(id);
+            artwork.setRating(rating);
+            save(artwork);
+        }
     }
 
-    @Override
-    public void setRating(int rating) {
-
-    }
-
-//    @Override
-//    public void incrementRatingCount(int ratingValue) {
-//
-//    }
-//
-//    @Override
-//    public double calculateAverageRating() {
-//        return 0;
-//    }
 
     @Override
     public List<Artwork> searchArtwork(String searchMessage) {
