@@ -106,7 +106,9 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
                 , artObj.get("artistDisplayName").toString(),
                 artObj.get("period").toString(), artObj.get("repository").toString(),
                 artObj.get("primaryImage").toString(), artObj.get("tags").toString(),
-                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"), artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")), "id placeholder");
+                String.format("%s, %s, %s, %s %s", artObj.get("department"), artObj.get("medium"),
+                        artObj.get("classification"), artObj.get("objectName"), artObj.get("artistPrefix")),
+                            artObj.get("objectID").toString());
 
             artworks.add(result);}
     }
@@ -199,6 +201,11 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
         }
 
         return artwork;
+    }
+
+    @Override
+    public List<Artwork> getCommentedArtworks() {
+        return List.of();
     }
 
     // Helper to parse Met Museum individual artworks

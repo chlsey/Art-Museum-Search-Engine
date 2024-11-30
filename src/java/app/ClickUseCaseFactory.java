@@ -1,6 +1,5 @@
 package app;
 
-import data.InMemoryDataAccessObject;
 import data.MuseumDataAccessObject;
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
@@ -21,7 +20,7 @@ public class ClickUseCaseFactory {
         // Create the controller for handling click actions
         final ClickArtController clickController = createClickUseCase(viewManagerModel, searchViewModel, clickViewModel, cfrViewModel, dataAccessObject);
         // Create and return the view connected to the controller and ViewModel
-        return new ClickView(clickController, clickViewModel);
+        return new ClickView(clickController, clickViewModel, cfrViewModel);
     }
 
     private static ClickArtController createClickUseCase(ViewManagerModel viewManagerModel,

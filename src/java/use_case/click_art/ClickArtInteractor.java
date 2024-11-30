@@ -1,10 +1,8 @@
 package use_case.click_art;
 
 
-import data.InMemoryDataAccessObject;
 import data.MuseumDataAccessObject;
 import entities.Artwork;
-
 
 import use_case.comment.CommentDataAccessInterface;
 
@@ -39,7 +37,8 @@ public class ClickArtInteractor implements ClickArtInputBoundary {
         clickArtPresenter.switchToSearchView();
     }
 
-    public void switchToCFRView() {
-        clickArtPresenter.switchToCFRView();
+    public void switchToCFRView(ClickArtInputData clickArtInputData) {
+        ClickArtOutputData clickArtOutputData = new ClickArtOutputData(clickArtInputData.getArtwork());
+        clickArtPresenter.switchToCFRView(clickArtOutputData);
     }
 }

@@ -19,10 +19,10 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     @Override
     public void updateFavorite(Artwork artwork) {
         if (contains(artwork.getId())) {
-            artworks.get(artwork.getId()).setFavorited();
+            artworks.get(artwork.getId()).setFavorited(!artwork.checkFavorited());
         }
         else {
-            artwork.setFavorited();
+            artwork.setFavorited(!artwork.checkFavorited());
             save(artwork);
         }
     }
@@ -34,6 +34,11 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     public boolean contains(String id) {
         return artworks.containsKey(id);
+    }
+
+    @Override
+    public List<Artwork> getAllFavorites() {
+        return List.of();
     }
 
     @Override
@@ -66,13 +71,23 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     }
 
     @Override
-    public int getRating() {
+    public List<Artwork> getCommentedArtworks() {
+        return List.of();
+    }
+
+    @Override
+    public int getRating(Artwork artwork) throws IOException {
         return 0;
     }
 
     @Override
     public void setRating(int rating) {
 
+    }
+
+    @Override
+    public List<Artwork> getRatedArtworks() {
+        return List.of();
     }
 
 //    @Override

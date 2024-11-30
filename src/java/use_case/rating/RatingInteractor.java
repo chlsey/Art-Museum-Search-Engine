@@ -5,6 +5,10 @@ import use_case.favorite.FavoriteOutputData;
 
 import java.io.IOException;
 
+import entities.Artwork;
+
+import java.util.List;
+
 public class RatingInteractor implements RatingInputBoundary{
     private final RatingDataAccessInterface ratingDataAccessObject;
     private final RatingOutputBoundary ratingOutputBoundary;
@@ -32,6 +36,11 @@ public class RatingInteractor implements RatingInputBoundary{
             ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
         }
 
+    }
+
+    @Override
+    public List<Artwork> getRatedArtworks() {
+        return ratingDataAccessObject.getRatedArtworks();
     }
 
 }
