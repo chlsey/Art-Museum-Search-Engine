@@ -143,8 +143,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
         });
 
-
-
         clearButton.addActionListener(this);
         buttons.add(favoriteButton);
         buttons.add(Box.createRigidArea(new Dimension(100, 10)));
@@ -317,7 +315,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
                 try {
                     // Validate and load the image safely
-                    //System.out.println(art.getId());
                     Image image = loadImageSafely(art.getImageUrl());
 
                     // Scale the image
@@ -325,7 +322,22 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                     ImageIcon imageIcon = new ImageIcon(newImg);
 
                     JLabel imageLabel = new JLabel(imageIcon);
-                    imageLabel.setPreferredSize(new Dimension(200, 200)); // Fix preferred size
+                    imageLabel.setPreferredSize(new Dimension(200, 200));
+
+                    // Title bar setup
+                    JPanel titleBar = new JPanel();
+                    titleBar.setBackground(Color.LIGHT_GRAY);
+                    JLabel titleLabel = new JLabel(art.getTitle());
+                    titleBar.add(titleLabel);
+                    titleBar.setPreferredSize(new Dimension(200, 30)); // Fixed size for the title bar
+                    titleBar.setVisible(false); // Initially hidden
+
+                    // Create container for image and title bar
+                    JPanel imageContainer = new JPanel();
+                    imageContainer.setLayout(new BorderLayout());
+                    imageContainer.setPreferredSize(new Dimension(200, 230)); // Fixed size for the container
+                    imageContainer.add(imageLabel, BorderLayout.CENTER);
+                    imageContainer.add(titleBar, BorderLayout.SOUTH);
 
                     final Artwork artwork = art;
 
@@ -344,16 +356,22 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                         public void mouseEntered(MouseEvent e) {
                             Image hoverImage = image.getScaledInstance(250, 250, Image.SCALE_SMOOTH);
                             imageLabel.setIcon(new ImageIcon(hoverImage));
+                            titleBar.setVisible(true);
+                            titleBar.revalidate();
+                            titleBar.repaint();
                         }
 
                         @Override
                         public void mouseExited(MouseEvent e) {
                             Image normalImage = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
                             imageLabel.setIcon(new ImageIcon(normalImage));
+                            titleBar.setVisible(false);
+                            titleBar.revalidate();
+                            titleBar.repaint();
                         }
                     });
 
-                    panelPictures.add(imageLabel);
+                    panelPictures.add(imageContainer);
 
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -371,6 +389,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             panelPictures.repaint();
         }
     }
+
+
 
     /**
      * Helper method to load an image safely. Falls back to a placeholder if loading fails.
