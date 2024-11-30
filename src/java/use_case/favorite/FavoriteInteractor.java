@@ -24,6 +24,7 @@ public class FavoriteInteractor implements FavoriteInputBoundary {
             //artworkPresenter.prepareSuccessView(new FavoriteOutputData(art));
         } else {
             artworkDataAccessObject.updateFavorite(favoriteInputData.getId());
+            System.out.println(favoriteInputData.getId());
             //artworkPresenter.prepareSuccessView(new FavoriteOutputData(art));
         }
     }
