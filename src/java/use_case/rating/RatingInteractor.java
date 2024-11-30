@@ -1,4 +1,9 @@
 package use_case.rating;
+import data.InMemoryDataAccessObject;
+import entities.Artwork;
+import use_case.favorite.FavoriteOutputData;
+
+import java.io.IOException;
 
 import entities.Artwork;
 
@@ -15,17 +20,22 @@ public class RatingInteractor implements RatingInputBoundary{
     }
 
     @Override
-    public void execute(RatingInputData ratingOutputData) {
-        int ratingValue = (int) ratingOutputData.getRating();
-        if (ratingValue < 1) {
-            ratingValue = 1;
-        } else if (ratingValue > 5) {
-            ratingValue = 5;
+    public void execute(RatingInputData ratingInputData) throws IOException {
+        if (ratingDataAccessObject.contains(ratingInputData.getArtworkId())) {
+            Artwork rating = ratingDataAccessObject.getArtworkById(ratingInputData.getArtworkId());
+            rating.setRating(ratingInputData.getRating());
+            ratingDataAccessObject.save(rating);
+            int art = ratingInputData.getRating();
+            ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
+            ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
+        } else {
+            int art = ratingInputData.getRating();
+            Artwork rating = ratingDataAccessObject.getArtworkById(ratingInputData.getArtworkId());
+            rating.setRating(ratingInputData.getRating());
+            ratingDataAccessObject.save(rating);
+            ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
         }
-        //ratingDataAccessObject.incrementRatingCount(ratingValue);
-        ratingDataAccessObject.setRating(ratingValue);
-        RatingOutputData result = new RatingOutputData(ratingValue);
-        ratingOutputBoundary.prepareRatingView(result);
+
     }
 
     @Override

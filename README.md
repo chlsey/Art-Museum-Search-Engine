@@ -44,6 +44,7 @@ The software depends on version 1.18.1 of the Jsoup library for parsing HTML que
 version 4.12.0 of the okhttp library to read http, as well as version 20240303 of JSON. Junit 4.13.1,
 Jacoco 0.8.12 and RELEASE version Jupiter are used for unit testing and coverage.
 
+
 ### Usage Guide
 (video TBA) \
 1. Searching artworks
@@ -76,9 +77,11 @@ Provides an API for retrieving information about all the artworks in the Metropo
 Meeting time outside of lab: Tuesday Afternoon (flexible)
 Mode of Communication: in person
 
+
+
 ### (to be removed in final README) User Stories:
 
-1. Liam wants to take his friend to a magnificent art gallery and be their tour guide. By looking up every art piece with all its associated information, he can do it smoothly.
+1. Liam wants to take his friend to a magnificent art gallery and be their tour guide. By looking up the art pieces being offered with its associated information(i.e, title, year, etc) he can do it more efficiently. Either at the moment or once he is back from the gallery, he can rate the art work out of 5 stars.
 
 2. James wants to view some artworks. He can smoothly scroll through a gallery of art pieces, each displayed with a clear title, artist name, date of acquisition, and brief description.
 

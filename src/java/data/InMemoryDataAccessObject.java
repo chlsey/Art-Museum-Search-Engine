@@ -29,7 +29,7 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     @Override
     public void save(Artwork artwork) {
-        artworks.put(artwork.getTitle(), artwork);
+        artworks.put(artwork.getId(), artwork);
     }
 
     public boolean contains(String id) {
@@ -57,6 +57,17 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
         } catch (Exception e) {
             return null;
         }
+    }
+
+
+//    @Override
+//    public void updateRating(Artwork artwork) {
+//
+//    }
+
+    @Override
+    public void saveRating(Artwork artwork) throws IOException {
+
     }
 
     @Override
