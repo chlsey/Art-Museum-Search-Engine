@@ -1,7 +1,5 @@
 package use_case.rating;
-import data.InMemoryDataAccessObject;
 import entities.Artwork;
-import use_case.favorite.FavoriteOutputData;
 
 import java.io.IOException;
 

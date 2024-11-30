@@ -14,12 +14,12 @@ public class FavoriteInteractorTest {
 
     @Test
     public void favoriteSavedArtTest() throws IOException {
-        Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
+        final Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
         Artwork artwork2 = ArtworkFactory.createArtwork("Madame X", "John Singer Sargent", "1883",
                 "MoMA", "", "womanblackdressportrait", "no description", "112");
         FavoriteInputData inputData = new FavoriteInputData(artwork1);
-        FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+        final FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
         artworkRepository.save(artwork1);
         artworkRepository.save(artwork2);
@@ -42,10 +42,10 @@ public class FavoriteInteractorTest {
 
     @Test
     public void favoriteNewArtTest() throws IOException {
-        Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
+        final Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
         FavoriteInputData inputData = new FavoriteInputData(artwork1);
-        FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+        final FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
         FavoriteOutputBoundary successPresenter = new FavoriteOutputBoundary() {
             @Override

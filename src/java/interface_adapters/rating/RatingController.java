@@ -1,6 +1,5 @@
 package interface_adapters.rating;
 
-import entities.Artwork;
 import use_case.rating.RatingInputData;
 import use_case.rating.RatingInputBoundary;
 

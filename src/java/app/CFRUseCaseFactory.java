@@ -3,20 +3,14 @@ package app;
 import data.MuseumDataAccessObject;
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.click_art.ClickArtController;
-import interface_adapters.click_art.ClickArtPresenter;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.comment.CommentController;
 import interface_adapters.comment.CommentPresenter;
 import interface_adapters.search.SearchViewModel;
-import use_case.click_art.ClickArtInputBoundary;
-import use_case.click_art.ClickArtInteractor;
-import use_case.click_art.ClickArtOutputBoundary;
 import use_case.comment.CommentInputBoundary;
 import use_case.comment.CommentInteractor;
 import use_case.comment.CommentOutputBoundary;
 import view.CFRView;
-import view.ClickView;
 
 public class CFRUseCaseFactory {
     public static CFRView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel,

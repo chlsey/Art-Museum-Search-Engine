@@ -1,12 +1,8 @@
 package use_case.click_art;
 
 
-import data.InMemoryDataAccessObject;
 import data.MuseumDataAccessObject;
 import entities.Artwork;
-
-
-import use_case.comment.CommentDataAccessInterface;
 
 public class ClickArtInteractor implements ClickArtInputBoundary {
     private final MuseumDataAccessObject artworkDataAccessObject;

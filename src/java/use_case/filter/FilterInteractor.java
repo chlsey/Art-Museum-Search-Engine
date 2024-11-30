@@ -1,8 +1,5 @@
 package use_case.filter;
 
-import entities.*;
-import interface_adapters.filter.FilterPresenter;
-
 public class FilterInteractor implements FilterInputBoundary{
 
     private final FilterDataAccessInterface filterDataAccessObject;

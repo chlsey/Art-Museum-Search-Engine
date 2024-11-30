@@ -1,6 +1,5 @@
 package use_case.favorite;
 
-import data.InMemoryDataAccessObject;
 import entities.Artwork;
 
 import java.io.IOException;

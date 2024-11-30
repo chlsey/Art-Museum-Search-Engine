@@ -4,15 +4,17 @@ import entities.Artwork;
 import use_case.click_art.ClickArtDataAccessInterface;
 import use_case.favorite.FavoriteDataAccessInterface;
 import use_case.comment.CommentDataAccessInterface;
+import use_case.filter.FilterDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
 import use_case.rating.RatingDataAccessInterface;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, CommentDataAccessInterface, RatingDataAccessInterface, ClickArtDataAccessInterface {
+public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, CommentDataAccessInterface, RatingDataAccessInterface, ClickArtDataAccessInterface, FilterDataAccessInterface {
 
     private Map<String, Artwork> artworks = new HashMap<>();
 
@@ -87,6 +89,27 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     @Override
     public List<Artwork> searchArtwork(String searchMessage) {
-        return List.of();
+        List<Artwork> result = new ArrayList<>();
+        Map<Artwork,List<String>> map = new HashMap<>();
+        for (Artwork artwork : artworks.values()) {
+            List<String> keywords = new ArrayList<>();
+            keywords.add(artwork.getTitle());
+            keywords.add(artwork.getDescription());
+            keywords.add(artwork.getKeyWords());
+            keywords.add(artwork.getArtistName());
+            map.put(artwork, keywords);
+        }
+        for (Artwork artwork : map.keySet()) {
+            List<String> keywords = map.get(artwork);
+            if (keywords.contains(searchMessage)) {
+                result.add(artwork);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public void changeFilter(String spec) {
+
     }
 }

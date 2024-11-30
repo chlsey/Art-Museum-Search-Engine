@@ -1,9 +1,5 @@
 package use_case.search;
 
-import entities.Artwork;
-
-import java.util.List;
-
 public interface SearchInputBoundary {
 
     /**

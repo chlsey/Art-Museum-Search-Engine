@@ -1,14 +1,10 @@
 package interface_adapters.filter;
 
-import entities.Artwork;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.click_art.ClickArtState;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.search.SearchViewModel;
 import use_case.filter.FilterOutputBoundary;
 import use_case.filter.FilterOutputData;
-
-import java.util.List;
 
 public class FilterPresenter implements FilterOutputBoundary {
 

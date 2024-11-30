@@ -1,26 +1,17 @@
 package view;
 
-import interface_adapters.click_art.*;
 import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtViewModel;
 import entities.Artwork;
-import use_case.click_art.ClickArtInteractor;
-import use_case.click_art.ClickArtOutputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 
 public class ClickView extends JPanel implements PropertyChangeListener {

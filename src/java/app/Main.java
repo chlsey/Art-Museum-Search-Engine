@@ -1,16 +1,9 @@
 package app;
-import data.InMemoryDataAccessObject;
 import data.MuseumDataAccessObject;
-import entities.Artwork;
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.click_art.ClickArtController;
-import interface_adapters.click_art.ClickArtPresenter;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.search.SearchViewModel;
-import use_case.click_art.ClickArtInteractor;
-import use_case.click_art.ClickArtOutputBoundary;
-import use_case.search.SearchDataAccessInterface;
 import view.CFRView;
 import view.ClickView;
 import view.SearchView;
@@ -18,9 +11,6 @@ import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 
 public class Main {

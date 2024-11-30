@@ -2,11 +2,9 @@ package interface_adapters.click_art;
 
 import interface_adapters.CFRViewModel;
 import interface_adapters.search.SearchViewModel;
-import use_case.click_art.ClickArtInputData;
 import use_case.click_art.ClickArtOutputBoundary;
 import use_case.click_art.ClickArtOutputData;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.click_art.*;
 
 public class ClickArtPresenter implements ClickArtOutputBoundary {
     private final SearchViewModel searchViewModel;

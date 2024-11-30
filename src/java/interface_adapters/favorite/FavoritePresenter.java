@@ -2,7 +2,6 @@ package interface_adapters.favorite;
 
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.click_art.ClickArtViewModel;
 import use_case.favorite.FavoriteOutputBoundary;
 import use_case.favorite.FavoriteOutputData;
 

@@ -2,7 +2,6 @@ package interface_adapters.rating;
 
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.rating.RatingState;
 import use_case.rating.RatingOutputBoundary;
 import use_case.rating.RatingOutputData;
 

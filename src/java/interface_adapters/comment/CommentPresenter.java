@@ -2,12 +2,8 @@ package interface_adapters.comment;
 
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.ViewModel;
 import use_case.comment.CommentOutputBoundary;
 import use_case.comment.CommentOutputData;
-import view.CFRView;
-
-import javax.swing.text.View;
 
 public class CommentPresenter implements CommentOutputBoundary {
     private final CFRViewModel cfrViewModel;

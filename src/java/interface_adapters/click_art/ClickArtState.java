@@ -2,7 +2,6 @@ package interface_adapters.click_art;
 
 import entities.Artwork;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ClickArtState {

@@ -4,7 +4,7 @@ import data.InMemoryDataAccessObject;
 import entities.Artwork;
 import entities.ArtworkFactory;
 import org.junit.Test;
-import use_case.favorite.*;
+
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
 public class RatingInteractorTest {
     @Test
     public void ratingSavedArtTest() throws IOException {
-        Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
+        final Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
         Artwork artwork2 = ArtworkFactory.createArtwork("Madame X", "John Singer Sargent", "1883",
                 "MoMA", "", "womanblackdressportrait", "no description", "112");
@@ -23,7 +23,7 @@ public class RatingInteractorTest {
         artwork1.setRating(3);
         RatingInputData inputData = new RatingInputData(artwork2.getId(),artwork2.getRating());
 
-        RatingDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+        final RatingDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
 
         artworkRepository.save(artwork1);
@@ -49,10 +49,10 @@ public class RatingInteractorTest {
 
     @Test
     public void ratingForNewArt() throws IOException {
-        Artwork artwork = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
+        final Artwork artwork = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
         RatingInputData inputData = new RatingInputData(artwork.getId(),artwork.getRating());
-        RatingDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+        final RatingDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
         artworkRepository.save(artwork);
 
         artwork.setRating(5);

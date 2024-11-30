@@ -1,6 +1,5 @@
 package interface_adapters;
 
-import interface_adapters.click_art.ClickArtState;
 import interface_adapters.comment.CommentState;
 import interface_adapters.favorite.FavoriteState;
 import interface_adapters.rating.RatingState;

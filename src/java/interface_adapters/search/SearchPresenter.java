@@ -6,13 +6,7 @@ import interface_adapters.click_art.ClickArtState;
 import interface_adapters.click_art.ClickArtViewModel;
 import use_case.search.SearchOutputBoundary;
 import use_case.search.SearchOutputData;
-import view.ClickView;
 
-import javax.swing.*;
-import java.awt.*;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 public class SearchPresenter implements SearchOutputBoundary {

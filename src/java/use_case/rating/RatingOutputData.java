@@ -1,5 +1,4 @@
 package use_case.rating;
-import entities.Artwork;
 
 public class RatingOutputData {
     private int rating;

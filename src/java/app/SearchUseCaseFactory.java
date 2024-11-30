@@ -4,13 +4,11 @@ import data.MuseumDataAccessObject;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.filter.FilterController;
-import interface_adapters.filter.FilterPresenter;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchPresenter;
 import interface_adapters.search.SearchViewModel;
 import use_case.filter.FilterInputBoundary;
 import use_case.filter.FilterInteractor;
-import use_case.filter.FilterOutputBoundary;
 import use_case.search.*;
 import view.SearchView;
 
