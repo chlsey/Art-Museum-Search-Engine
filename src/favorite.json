@@ -2,7 +2,7 @@
   "artworks" : [ {
     "id" : "MET-208302",
     "favorite" : true,
-    "rating" : 1,
+    "rating" : 2,
     "comments" : [ "Very Good", "Impressive", "nice!" ]
   }, {
     "id" : "MET-560727",
@@ -22,7 +22,7 @@
   }, {
     "id" : "MET-437984",
     "favorite" : true,
-    "rating" : 4,
+    "rating" : 3,
     "comments" : [ "heyheyhey", "heyheyhey", "hey" ]
   }, {
     "id" : "MET-329077",

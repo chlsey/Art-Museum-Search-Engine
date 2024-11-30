@@ -1,7 +1,7 @@
 package interface_adapters.favorite;
 
 public class FavoriteState {
-    private Boolean favorite;
+    private Boolean favorite = false;
 
 
     public FavoriteState() {}
