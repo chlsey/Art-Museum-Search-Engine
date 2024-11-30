@@ -1,8 +1,10 @@
 package view;
 
 import interface_adapters.click_art.ClickArtViewModel;
+import interface_adapters.comment.CommentController;
 import interface_adapters.favorite.FavoriteController;
 import interface_adapters.filter.FilterController;
+import interface_adapters.rating.RatingController;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
 
@@ -31,6 +33,8 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     private final SearchController searchController;
     private final FilterController filterController;
     private final FavoriteController favoriteController;
+    private final RatingController ratingController;
+    private final CommentController commentController;
     private final ClickArtViewModel clickArtViewModel;
 
     private final JButton favoriteButton;
@@ -46,14 +50,14 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
     //private final JButton detailButton;
 
 
-    public SearchView(SearchController controller, SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel, FilterController filterController, FavoriteController favoriteController) {
+    public SearchView(SearchController controller, SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel, FilterController filterController, FavoriteController favoriteController, RatingController ratingController, CommentController commentController) {
         this.searchController = controller;
         this.searchViewModel = searchViewModel;
         this.clickArtViewModel = clickArtViewModel;
         this.filterController = filterController;
         this.favoriteController = favoriteController;
-        //this.nextButton = nextButton;
-        //this.detailButton = detailButton;
+        this.ratingController = ratingController;
+        this.commentController = commentController;
         searchViewModel.addPropertyChangeListener(this);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -279,15 +283,35 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         if ("searched".equals(evt.getPropertyName())) {
             List<Artwork> artworks = clickArtViewModel.getArtworks();
             List<Artwork> favoriteArtworks = favoriteController.getFavorites();
+            List<Artwork> hasRatingArtworks = ratingController.getRatedArtworks();
+            List<Artwork> hasCommentArtworks = commentController.getCommentedArtworks();
             panelPictures.removeAll();
 
             for (Artwork art : artworks) {
                 for (Artwork favorite : favoriteArtworks) {
-                    System.out.println(art.getId().replace("MET-", ""));
-                    System.out.println(favorite.getId().replace("MET-", ""));
+                    //System.out.println(art.getId().replace("MET-", ""));
+                    //System.out.println(favorite.getId().replace("MET-", ""));
                     if (favorite.getId().replace("MET-", "").equals(art.getId().replace("MET-", ""))){
-                        art.setRating(favorite.getRating());
+                        //art.setRating(favorite.getRating());
                         art.setFavorited(true);
+                        break;
+                    }
+                }
+                for (Artwork hasRating : hasRatingArtworks) {
+                    //System.out.println(art.getId().replace("MET-", ""));
+                    //System.out.println(hasRating.getId().replace("MET-", ""));
+                    //System.out.println(hasRating.getRating());
+                    if (hasRating.getId().replace("MET-", "").equals(art.getId().replace("MET-", ""))){
+                        art.setRating(hasRating.getRating());
+                        break;
+                    }
+                }
+                for (Artwork hasComment : hasCommentArtworks) {
+                    //System.out.println(art.getId().replace("MET-", ""));
+                    //System.out.println(hasComment.getId().replace("MET-", ""));
+                    //System.out.println(hasComment.getComments());
+                    if (hasComment.getId().replace("MET-", "").equals(art.getId().replace("MET-", ""))){
+                        art.setComments(hasComment.getComments());
                         break;
                     }
                 }

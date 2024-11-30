@@ -203,6 +203,11 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
         return artwork;
     }
 
+    @Override
+    public List<Artwork> getCommentedArtworks() {
+        return List.of();
+    }
+
     // Helper to parse Met Museum individual artworks
     private Artwork parseMetMuseumArtwork(JSONObject artObj) {
         String[] properties = {"title", "artistDisplayName", "period", "repository", "primaryImage", "tags", "department", "medium", "classification", "objectName", "artistPrefix"};

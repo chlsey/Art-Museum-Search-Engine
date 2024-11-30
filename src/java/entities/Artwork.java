@@ -117,4 +117,6 @@ public class Artwork {
     public void setComments(List<String> comments) {
         this.comments = comments;
     }
+
+    public String getTimePeriod() {return this.timePeriod;}
 }

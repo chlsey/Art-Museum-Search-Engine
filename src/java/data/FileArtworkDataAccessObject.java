@@ -58,8 +58,8 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
                     Artwork artwork = getArtworkById(id);
 
                     // Set the favorite flag and rating
-                    //artwork.setFavorited();
-                    //artwork.setRating(jsonObject.get("rating").asInt());
+                    artwork.setFavorited(jsonObject.get("favorite").asBoolean());
+                    artwork.setRating(jsonObject.get("rating").asInt());
 
                     // Set comments if available
                     ArrayNode commentsNode = (ArrayNode) jsonObject.get("comments");
@@ -67,7 +67,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
                     for (JsonNode commentNode : commentsNode) {
                         comments.add(commentNode.asText());
                     }
-                    //artwork.setComments(comments);
+                    artwork.setComments(comments);
                     artworks.put(id, artwork);
                 }
 
@@ -248,13 +248,43 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     }
 
     @Override
-    public int getRating() {
+    public List<Artwork> getCommentedArtworks(){
+        List<Artwork> commentedArtworks = new ArrayList<>();
+        for (Artwork artwork : artworks.values()) {
+            if (!artwork.getComments().isEmpty()) {
+                commentedArtworks.add(artwork);
+            }
+        }
+        return commentedArtworks;
+    }
+
+    @Override
+    public int getRating(Artwork artwork) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(jsonFile);
+        if (contains(artwork.getId())) {
+            JsonNode node = rootNode.get(artwork.getId());
+            if (node.has("rating") && node.get("rating").isInt()) {
+                return node.get("rating").asInt();
+            }
+        }
         return 0;
     }
 
     @Override
     public void setRating(int rating) {
 
+    }
+
+    @Override
+    public List<Artwork> getRatedArtworks() {
+        List<Artwork> ratedArtworks = new ArrayList<>();
+        for (Artwork artwork : artworks.values()) {
+            if (artwork.getRating() > 0) {
+                ratedArtworks.add(artwork);
+            }
+        }
+        return ratedArtworks;
     }
 
     @Override

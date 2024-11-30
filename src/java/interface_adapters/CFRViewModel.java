@@ -1,5 +1,6 @@
 package interface_adapters;
 
+import entities.Artwork;
 import interface_adapters.click_art.ClickArtState;
 import interface_adapters.comment.CommentState;
 import interface_adapters.favorite.FavoriteState;
@@ -14,6 +15,7 @@ public class CFRViewModel extends ViewModel<CFRState>{
     private RatingState ratingState;
     private CommentState commentState;
     private FavoriteState favoriteState;
+    private Artwork selectedArtwork;
     private final String viewName = "CFRView";
 
     public CFRViewModel() {
@@ -47,9 +49,6 @@ public class CFRViewModel extends ViewModel<CFRState>{
         return viewName;
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        support.addPropertyChangeListener(listener);
-    }
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         support.removePropertyChangeListener(listener);
@@ -57,6 +56,14 @@ public class CFRViewModel extends ViewModel<CFRState>{
 
     public RatingState getRatingState() {
         return ratingState;
+    }
+
+    public void setSelectedArtwork(Artwork selectedArtwork) {
+        this.selectedArtwork = selectedArtwork;
+    }
+
+    public Artwork getSelectedArtwork(){
+        return selectedArtwork;
     }
 }
 

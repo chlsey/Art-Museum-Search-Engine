@@ -1,5 +1,9 @@
 package use_case.rating;
 
+import entities.Artwork;
+
+import java.util.List;
+
 public class RatingInteractor implements RatingInputBoundary{
     private final RatingDataAccessInterface ratingDataAccessObject;
     private final RatingOutputBoundary ratingOutputBoundary;
@@ -22,6 +26,11 @@ public class RatingInteractor implements RatingInputBoundary{
         ratingDataAccessObject.setRating(ratingValue);
         RatingOutputData result = new RatingOutputData(ratingValue);
         ratingOutputBoundary.prepareRatingView(result);
+    }
+
+    @Override
+    public List<Artwork> getRatedArtworks() {
+        return ratingDataAccessObject.getRatedArtworks();
     }
 
 }

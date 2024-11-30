@@ -3,13 +3,13 @@
     {
       "id" : "MET-208302",
       "favorite" : true,
-      "rating" : 0,
-      "comments" : []
+      "rating" : 4,
+      "comments" : ["Very Good", "Impressive"]
     },
     {
       "id" : "MET-560727",
       "favorite" : true,
-      "rating" : 0,
+      "rating" : 3,
       "comments" : []
     }
   ]

@@ -15,5 +15,5 @@ public interface ClickArtOutputBoundary {
 
     void switchToSearchView();
 
-    void switchToCFRView();
+    void switchToCFRView(ClickArtOutputData clickArtOutputData);
 }
