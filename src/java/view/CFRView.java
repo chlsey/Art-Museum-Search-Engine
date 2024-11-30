@@ -199,7 +199,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
             }
             if (selectedRating > 0) {
                 artwork.setRating(selectedRating);
-                ratingController.execute(artwork,selectedRating);
+                ratingController.execute(artwork.getId(),selectedRating);
             }
             artwork.setFavorited(isFavorited);
             favoriteController.execute(artwork);

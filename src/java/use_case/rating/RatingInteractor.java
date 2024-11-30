@@ -27,7 +27,6 @@ public class RatingInteractor implements RatingInputBoundary{
             ratingDataAccessObject.save(rating);
             int art = ratingInputData.getRating();
             ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
-            ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
         } else {
             int art = ratingInputData.getRating();
             Artwork rating = ratingDataAccessObject.getArtworkById(ratingInputData.getArtworkId());
@@ -35,7 +34,6 @@ public class RatingInteractor implements RatingInputBoundary{
             ratingDataAccessObject.save(rating);
             ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
         }
-
     }
 
     @Override

@@ -60,45 +60,17 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     }
 
 
-//    @Override
-//    public void updateRating(Artwork artwork) {
-//
-//    }
-
-    @Override
-    public void saveRating(Artwork artwork) throws IOException {
-
-    }
-
     @Override
     public List<Artwork> getCommentedArtworks() {
         return List.of();
     }
 
-    @Override
-    public int getRating(Artwork artwork) throws IOException {
-        return 0;
-    }
-
-    @Override
-    public void setRating(int rating) {
-
-    }
 
     @Override
     public List<Artwork> getRatedArtworks() {
         return List.of();
     }
 
-//    @Override
-//    public void incrementRatingCount(int ratingValue) {
-//
-//    }
-//
-//    @Override
-//    public double calculateAverageRating() {
-//        return 0;
-//    }
 
     @Override
     public List<Artwork> searchArtwork(String searchMessage) {

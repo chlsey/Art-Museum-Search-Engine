@@ -5,7 +5,7 @@ import use_case.rating.RatingInputBoundary;
 import use_case.rating.RatingInputData;
 import use_case.rating.RatingInputBoundary;
 
-import java.io.IOException
+import java.io.IOException;
 
 import java.util.List;
 
@@ -21,5 +21,9 @@ public class RatingController {
                 artwork, rating);
 
         ratingUseCaseInteractor.execute(rateInputData);
+    }
+
+    public List<Artwork> getRatedArtworks() {
+        return ratingUseCaseInteractor.getRatedArtworks();
     }
 }

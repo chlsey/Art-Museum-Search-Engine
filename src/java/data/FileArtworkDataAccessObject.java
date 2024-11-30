@@ -179,6 +179,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         }
     }
 
+
     public Artwork getArtworkByIdClick(String id) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -298,16 +299,6 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         }
     }
 
-//    @Override
-//    public void updateRating(Artwork artwork) {
-//
-//    }
-
-    @Override
-    public void saveRating(Artwork artwork) throws IOException {
-
-    }
-
     @Override
     public List<Artwork> getCommentedArtworks(){
         List<Artwork> commentedArtworks = new ArrayList<>();
@@ -319,22 +310,16 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         return commentedArtworks;
     }
 
-    @Override
-    public int getRating(Artwork artwork) throws IOException {
+    public int getRating(String id) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(jsonFile);
-        if (contains(artwork.getId())) {
-            JsonNode node = rootNode.get(artwork.getId());
+        if (contains(id)) {
+            JsonNode node = rootNode.get(id);
             if (node.has("rating") && node.get("rating").isInt()) {
                 return node.get("rating").asInt();
             }
         }
         return 0;
-    }
-
-    @Override
-    public void setRating(int rating) {
-
     }
 
     @Override
