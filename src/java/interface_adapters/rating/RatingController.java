@@ -12,8 +12,12 @@ import java.util.List;
 public class RatingController {
     private final RatingInputBoundary ratingUseCaseInteractor;
 
-    public RatingController(RatingInputBoundary ratingUseCaseInteractor) {
-        this.ratingUseCaseInteractor = ratingUseCaseInteractor;
+    public RatingController(RatingInputBoundary ratingInputInteractor) {
+        this.ratingInputInteractor = ratingInputInteractor;
+    }
+    public void execute(Artwork artwork, int rating) {
+        final RatingInputData ratingInputData = new RatingInputData(artwork.getId(), rating);
+        ratingInputInteractor.execute(ratingInputData);
     }
 
     public void execute(String artwork, int rating) throws IOException {

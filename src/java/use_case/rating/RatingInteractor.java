@@ -35,7 +35,6 @@ public class RatingInteractor implements RatingInputBoundary{
             ratingDataAccessObject.save(rating);
             ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
         }
-
     }
 
     @Override

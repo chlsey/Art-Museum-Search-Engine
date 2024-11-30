@@ -3,13 +3,13 @@ package use_case.favorite;
 import entities.Artwork;
 
 public class FavoriteInputData {
-    private final Artwork artwork;
+    private final String id;
 
-    public FavoriteInputData(Artwork artwork) {
-        this.artwork = artwork;
+    public FavoriteInputData(String id) {
+        this.id = id;
     }
 
-    public Artwork getArtwork() {
-        return artwork;
+    public String getId() {
+        return id;
     }
 }

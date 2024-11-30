@@ -17,7 +17,7 @@ public interface RatingDataAccessInterface {
     Artwork getArtworkById(String id) throws IOException;
     //void getAllRatings();
     int getRating(Artwork artwork) throws IOException;;
-    void setRating(int rating);
+    void setRating(String id, int rating);
 
     List<Artwork> getRatedArtworks();
 }

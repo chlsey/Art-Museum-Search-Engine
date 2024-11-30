@@ -8,9 +8,9 @@ import java.util.List;
 public interface FavoriteDataAccessInterface {
     /**
      * Queries the DB to find a list of artworks that match the search message.
-     * @param artwork is the artwork to be saved.
+     * @param id is the id of the artwork to be saved.
      */
-    void updateFavorite(Artwork artwork);
+    void updateFavorite(String id);
 
     void save(Artwork artwork) throws IOException;
 

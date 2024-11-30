@@ -16,7 +16,7 @@ public class FavoriteController {
 
     public void execute(Artwork artwork) throws IOException {
         final FavoriteInputData favoriteInputData = new FavoriteInputData(
-                artwork);
+                artwork.getId());
 
         favoriteUseCaseInteractor.execute(favoriteInputData);
     }

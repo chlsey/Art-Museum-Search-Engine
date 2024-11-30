@@ -60,22 +60,24 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     }
 
     @Override
-    public void updateFavorite(Artwork artwork) {
+    public void updateFavorite(String id) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonFile);
-            if (contains(artwork.getId())) {
+            if (contains(id)) {
                 JsonNode node = null;
                 for (JsonNode art : rootNode.get("artworks")) {
-                    if (art.get("id").asText().equals(artwork.getId())) {
+                    if (art.get("id").asText().equals(id)) {
                         node = art;
                         break;
                     }
                 }
-                ((ObjectNode) node).put("favorite", artwork.checkFavorited());
+                Boolean fav = node.get("favorite").asBoolean();
+                ((ObjectNode) node).put("favorite", !fav);
                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
             } else {
-                artwork.setFavorited(!artwork.checkFavorited());
+                Artwork artwork = getArtworkById(id);
+                artwork.setFavorited(true);
                 save(artwork);
             }
         } catch (IOException e) {
@@ -333,7 +335,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     }
 
     @Override
-    public void setRating(int rating) {
+    public void setRating(String id, int rating) {
 
     }
 
