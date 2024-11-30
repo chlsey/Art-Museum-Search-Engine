@@ -188,6 +188,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         favoriteButton.setIcon(isFavorited ? heartFilledIcon : heartEmptyIcon);
         artwork.setFavorited(isFavorited);
         favoriteController.execute(artwork);
+
         cfrViewModel.firePropertyChanged();
     }
 
