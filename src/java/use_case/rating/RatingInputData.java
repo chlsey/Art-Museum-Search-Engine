@@ -4,14 +4,18 @@ import entities.Artwork;
 
 public class RatingInputData {
     private final int rating;
-    private final Artwork artwork;
+    private final String id;
 
-    public RatingInputData(Artwork artwork, int rating) {
-        this.artwork = artwork;
+    public RatingInputData(String id, int rating) {
+        this.id = id;
         this.rating = rating;
     }
     public int getRating() {
         return rating;
+    }
+
+    public String getId() {
+        return id;
     }
 }
 

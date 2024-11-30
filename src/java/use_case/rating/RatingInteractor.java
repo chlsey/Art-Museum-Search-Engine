@@ -16,14 +16,14 @@ public class RatingInteractor implements RatingInputBoundary{
 
     @Override
     public void execute(RatingInputData ratingOutputData) {
-        int ratingValue = (int) ratingOutputData.getRating();
+        int ratingValue = ratingOutputData.getRating();
         if (ratingValue < 1) {
             ratingValue = 1;
         } else if (ratingValue > 5) {
             ratingValue = 5;
         }
         //ratingDataAccessObject.incrementRatingCount(ratingValue);
-        ratingDataAccessObject.setRating(ratingValue);
+        ratingDataAccessObject.setRating(ratingOutputData.getId(), ratingValue);
         RatingOutputData result = new RatingOutputData(ratingValue);
         ratingOutputBoundary.prepareRatingView(result);
     }

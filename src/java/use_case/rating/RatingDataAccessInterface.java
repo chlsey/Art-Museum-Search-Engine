@@ -8,7 +8,7 @@ import java.util.List;
 public interface RatingDataAccessInterface {
     //void getAllRatings();
     int getRating(Artwork artwork) throws IOException;;
-    void setRating(int rating);
+    void setRating(String id, int rating);
 
     List<Artwork> getRatedArtworks();
 }

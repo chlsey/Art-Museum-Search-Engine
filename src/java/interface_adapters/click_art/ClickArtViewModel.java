@@ -14,6 +14,7 @@ public class ClickArtViewModel extends ViewModel<ClickArtState> {
     public ClickArtViewModel() {
         super("clickView");
         setState(new ClickArtState());
+
     }
 
     public List<Artwork> getFavoriteArtworks() {

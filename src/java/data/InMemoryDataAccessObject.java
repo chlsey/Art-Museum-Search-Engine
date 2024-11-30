@@ -17,12 +17,14 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     private Map<String, Artwork> artworks = new HashMap<>();
 
     @Override
-    public void updateFavorite(Artwork artwork) {
-        if (contains(artwork.getId())) {
-            artworks.get(artwork.getId()).setFavorited(!artwork.checkFavorited());
+    public void updateFavorite(String id) {
+        if (contains(id)) {
+            Artwork artwork = artworks.get(id);
+            artwork.setFavorited(!artwork.checkFavorited());
         }
         else {
-            artwork.setFavorited(!artwork.checkFavorited());
+            Artwork artwork = getArtworkById(id);
+            artwork.setFavorited(true);
             save(artwork);
         }
     }
@@ -52,10 +54,11 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     @Override
     public Artwork getArtworkById(String id) {
-        try {
+        if (contains(id)) {
             return artworks.get(id);
-        } catch (Exception e) {
-            return null;
+        } else {
+            return new Artwork("Starry Night", "Vincent Van Gogh", "1889",
+                    "MoMA", "", "starsnightbluefamous", "no description", id);
         }
     }
 
@@ -70,7 +73,7 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     }
 
     @Override
-    public void setRating(int rating) {
+    public void setRating(String id, int rating) {
 
     }
 

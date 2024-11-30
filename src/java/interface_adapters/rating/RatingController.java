@@ -14,7 +14,7 @@ public class RatingController {
         this.ratingInputInteractor = ratingInputInteractor;
     }
     public void execute(Artwork artwork, int rating) {
-        final RatingInputData ratingInputData = new RatingInputData(artwork, rating);
+        final RatingInputData ratingInputData = new RatingInputData(artwork.getId(), rating);
         ratingInputInteractor.execute(ratingInputData);
     }
 
