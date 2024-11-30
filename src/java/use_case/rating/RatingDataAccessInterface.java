@@ -13,4 +13,6 @@ public interface RatingDataAccessInterface {
     boolean contains(String id) throws IOException;
     Artwork getArtworkById(String id) throws IOException;
     List<Artwork> getRatedArtworks();
+
+    void updateRating(String id, int rating) throws IOException;
 }

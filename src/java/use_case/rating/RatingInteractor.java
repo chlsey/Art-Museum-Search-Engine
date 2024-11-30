@@ -24,14 +24,14 @@ public class RatingInteractor implements RatingInputBoundary{
         if (ratingDataAccessObject.contains(ratingInputData.getArtworkId())) {
             Artwork rating = ratingDataAccessObject.getArtworkById(ratingInputData.getArtworkId());
             rating.setRating(ratingInputData.getRating());
-            ratingDataAccessObject.save(rating);
+            ratingDataAccessObject.updateRating(rating.getId(), rating.getRating());
             int art = ratingInputData.getRating();
             ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
         } else {
             int art = ratingInputData.getRating();
             Artwork rating = ratingDataAccessObject.getArtworkById(ratingInputData.getArtworkId());
             rating.setRating(ratingInputData.getRating());
-            ratingDataAccessObject.save(rating);
+            ratingDataAccessObject.updateRating(rating.getId(), rating.getRating());
             ratingOutputBoundary.prepareSuccessView(new RatingOutputData(art));
         }
     }

@@ -73,6 +73,18 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
         return List.of();
     }
 
+    @Override
+    public void updateRating(String id, int rating) throws IOException {
+        if (contains(id)) {
+            artworks.get(id).setRating(rating);
+        } else {
+            MuseumDataAccessObject DAO = new MuseumDataAccessObject();
+            Artwork artwork = DAO.getArtworkById(id);
+            artwork.setRating(rating);
+            save(artwork);
+        }
+    }
+
 
     @Override
     public List<Artwork> searchArtwork(String searchMessage) {

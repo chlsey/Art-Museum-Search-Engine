@@ -283,6 +283,30 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
     }
 
     @Override
+    public void updateRating(String id, int rating) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(jsonFile);
+            if (contains(id)) {
+                JsonNode node = null;
+                for (JsonNode art : rootNode.get("artworks")) {
+                    if (art.get("id").asText().equals(id)) {
+                        node = art;
+                        break;
+                    }
+                }
+                ((ObjectNode) node).put("rating", rating);
+                objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
+            } else {
+                Artwork artwork = getArtworkById(id);
+                artwork.setRating(rating);
+                save(artwork);
+            }
+        } catch (IOException e) {
+        }
+    }
+
+    @Override
     public List<Artwork> searchArtwork(String searchMessage) {
         return List.of();
     }
