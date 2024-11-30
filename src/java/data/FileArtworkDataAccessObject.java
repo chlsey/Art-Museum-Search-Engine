@@ -120,7 +120,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
 
             // Create a new JSON object for the new artwork
             ObjectNode newArtwork = objectMapper.createObjectNode();
-            newArtwork.put("id", artwork.getId());
+            newArtwork.put("id", "MET-"+artwork.getId().replace("MET-",""));
             newArtwork.put("favorite", artwork.checkFavorited());
             newArtwork.put("rating", artwork.getRating());
 
