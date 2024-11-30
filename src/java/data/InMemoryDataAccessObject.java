@@ -17,11 +17,13 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     private Map<String, Artwork> artworks = new HashMap<>();
 
     @Override
-    public void updateFavorite(Artwork artwork) {
-        if (contains(artwork.getId())) {
-            artworks.get(artwork.getId()).setFavorited(!artwork.checkFavorited());
+    public void updateFavorite(String id) {
+        if (contains(id)) {
+            Artwork artwork = getArtworkById(id);
+            artwork.setFavorited(!artwork.checkFavorited());
         }
         else {
+            Artwork artwork = getArtworkById(id);
             artwork.setFavorited(!artwork.checkFavorited());
             save(artwork);
         }

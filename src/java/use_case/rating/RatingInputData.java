@@ -14,7 +14,7 @@ public class RatingInputData {
     }
 
     public String getArtworkId() {
-        return artworkId;
+        return id;
     }
     public int getRating() {
         return rating;

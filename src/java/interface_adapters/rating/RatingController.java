@@ -13,11 +13,11 @@ public class RatingController {
     private final RatingInputBoundary ratingUseCaseInteractor;
 
     public RatingController(RatingInputBoundary ratingInputInteractor) {
-        this.ratingInputInteractor = ratingInputInteractor;
+        this.ratingUseCaseInteractor = ratingInputInteractor;
     }
-    public void execute(Artwork artwork, int rating) {
+    public void execute(Artwork artwork, int rating) throws IOException {
         final RatingInputData ratingInputData = new RatingInputData(artwork.getId(), rating);
-        ratingInputInteractor.execute(ratingInputData);
+        ratingUseCaseInteractor.execute(ratingInputData);
     }
 
     public void execute(String artwork, int rating) throws IOException {
