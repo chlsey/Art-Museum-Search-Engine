@@ -1,4 +1,5 @@
 package use_case.rating;
+import entities.Artwork;
 
 public class RatingOutputData {
     private int rating;
@@ -7,7 +8,6 @@ public class RatingOutputData {
     public RatingOutputData(int rating) {
         this.rating = rating;
     }
-
     public int getRating() {
         return rating;
     }

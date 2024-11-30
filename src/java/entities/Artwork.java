@@ -28,7 +28,7 @@ public class Artwork {
         this.id = id;
         this.favorited = false;
         this.comments = new ArrayList<>();
-        this.rating = 0;
+//        this.rating = 0;
     }
 
     public Artwork() {
@@ -44,6 +44,7 @@ public class Artwork {
         this.comments = new ArrayList<>();
         this.rating = 0;
     }
+
 
 
     public String getTitle() { return title; }
@@ -74,9 +75,9 @@ public class Artwork {
         return comments.get(comments.size() - 1);
     }
     public int getRating() {
-//        Integer value = rating;
+        int value = rating;
 //        String rating = value.toString();
-        return rating; }
+        return value; }
 
     public void setRating(int rating) {
         this.rating = rating;

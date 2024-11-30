@@ -300,6 +300,16 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
         }
     }
 
+//    @Override
+//    public void updateRating(Artwork artwork) {
+//
+//    }
+
+    @Override
+    public void saveRating(Artwork artwork) throws IOException {
+
+    }
+
     @Override
     public List<Artwork> getCommentedArtworks(){
         List<Artwork> commentedArtworks = new ArrayList<>();
