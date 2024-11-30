@@ -13,20 +13,10 @@
     "id" : "MET-764095",
     "favorite" : true,
     "rating" : 4,
-    "comments" : [ ]
-  }, {
-    "id" : "MET-764095",
-    "favorite" : true,
-    "rating" : 4,
     "comments" : [ "I like this one" ]
   }, {
     "id" : "MET-459027",
     "favorite" : true,
-    "rating" : 5,
-    "comments" : [ ]
-  }, {
-    "id" : "MET-459027",
-    "favorite" : false,
     "rating" : 5,
     "comments" : [ ]
   } ]
