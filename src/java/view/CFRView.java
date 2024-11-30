@@ -3,7 +3,9 @@ package view;
 import entities.Artwork;
 import interface_adapters.CFRViewModel;
 import interface_adapters.click_art.ClickArtViewModel;
-import interface_adapters.comment.CommentState;
+import interface_adapters.comment.CommentController;
+import interface_adapters.favorite.FavoriteController;
+import interface_adapters.rating.RatingController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,12 +13,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 
 public class CFRView extends JPanel implements PropertyChangeListener {
     private final String viewName = "CFRView";
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
     private final CFRViewModel cfrViewModel;
+    private Artwork artwork;
 
     private final JTextField commentInput;
     private final JButton submitButton;
@@ -25,7 +29,11 @@ public class CFRView extends JPanel implements PropertyChangeListener {
     private final JLabel favoriteLabel;
     private final JButton favoriteButton;
     private int selectedRating = 0; // Holds the user's selected rating
-    private boolean isFavorited = false; // Tracks the favorite state
+    private boolean isFavorited; // Tracks the favorite state
+
+    private final RatingController ratingController;
+    private final FavoriteController favoriteController;
+    private final CommentController commentController;
 
     private final JButton[] stars;
     private final ImageIcon starEmptyIcon;
@@ -33,8 +41,11 @@ public class CFRView extends JPanel implements PropertyChangeListener {
     private final ImageIcon heartEmptyIcon;
     private final ImageIcon heartFilledIcon;
 
-    public CFRView(CFRViewModel cfrViewModel, ClickArtViewModel clickArtViewModel) {
+    public CFRView(CFRViewModel cfrViewModel, ClickArtViewModel clickArtViewModel, RatingController ratingController, FavoriteController favoriteController, CommentController commentController) {
         this.cfrViewModel = cfrViewModel;
+        this.ratingController = ratingController;
+        this.favoriteController = favoriteController;
+        this.commentController = commentController;
         cfrViewModel.addPropertyChangeListener(this);
 
         // Load image icons
@@ -142,7 +153,13 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         contentPanel.add(buttonPanel);
 
         // Add functionality to buttons
-        submitButton.addActionListener(e -> submitComment());
+        submitButton.addActionListener(e -> {
+            try {
+                submit();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         backButton.addActionListener(e -> {
             CardLayout layout = (CardLayout) getParent().getLayout();
             layout.show(getParent(), "ClickView");
@@ -165,20 +182,20 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         favoriteButton.setIcon(isFavorited ? heartFilledIcon : heartEmptyIcon);
     }
 
-    private void submitComment() {
+    private void submit() throws IOException {
         String newComment = commentInput.getText().trim();
         if (!newComment.isEmpty() || selectedRating > 0 || isFavorited) {
-            CommentState commentState = cfrViewModel.getCommentState();
-            if (commentState != null) {
-                if (!newComment.isEmpty()) {
-                    commentState.addComment(newComment);
-                }
-                if (selectedRating > 0) {
-                    commentState.setRating(selectedRating);
-                }
-                commentState.setFavorited(isFavorited);
-                cfrViewModel.firePropertyChanged();
+            if (!newComment.isEmpty()) {
+                artwork.addComment(newComment);
+                commentController.execute(artwork,newComment);
             }
+            if (selectedRating > 0) {
+                artwork.setRating(selectedRating);
+                ratingController.execute(artwork,selectedRating);
+            }
+            artwork.setFavorited(isFavorited);
+            favoriteController.execute(artwork);
+            cfrViewModel.firePropertyChanged();
             commentInput.setText("");
             JOptionPane.showMessageDialog(this, "Thank you for your feedback!", "Success", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -188,7 +205,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Artwork artwork = cfrViewModel.getSelectedArtwork();
+        artwork = cfrViewModel.getSelectedArtwork();
         //System.out.println(evt.getPropertyName());
         //System.out.println(artwork.getRating());
         if ("CFRView".equals(evt.getPropertyName())) {

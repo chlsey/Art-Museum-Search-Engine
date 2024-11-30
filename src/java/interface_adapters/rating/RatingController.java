@@ -13,8 +13,8 @@ public class RatingController {
     public RatingController(RatingInputBoundary ratingInputInteractor) {
         this.ratingInputInteractor = ratingInputInteractor;
     }
-    public void execute(int rating) {
-        final RatingInputData ratingInputData = new RatingInputData(rating);
+    public void execute(Artwork artwork, int rating) {
+        final RatingInputData ratingInputData = new RatingInputData(artwork, rating);
         ratingInputInteractor.execute(ratingInputData);
     }
 

@@ -1,16 +1,18 @@
 {
-  "artworks" : [
-    {
-      "id" : "MET-208302",
-      "favorite" : true,
-      "rating" : 4,
-      "comments" : ["Very Good", "Impressive"]
-    },
-    {
-      "id" : "MET-560727",
-      "favorite" : true,
-      "rating" : 3,
-      "comments" : []
-    }
-  ]
+  "artworks" : [ {
+    "id" : "208302",
+    "favorite" : true,
+    "rating" : 4,
+    "comments" : [ "Very Good", "Impressive" ]
+  }, {
+    "id" : "560727",
+    "favorite" : true,
+    "rating" : 3,
+    "comments" : [ ]
+  }, {
+    "id" : "764095",
+    "favorite" : true,
+    "rating" : 4,
+    "comments" : [ ]
+  }]
 }

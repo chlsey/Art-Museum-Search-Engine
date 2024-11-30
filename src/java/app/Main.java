@@ -41,7 +41,7 @@ public class Main {
         // ClickArt view setup
         //final ClickArtPresenter clickArtPresenter = new ClickArtPresenter(searchViewModel, clickArtViewModel, viewManagerModel);
         final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, museumDataAccessObject);
-        final CFRView cfrView = CFRUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, museumDataAccessObject);
+        final CFRView cfrView = CFRUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, fileArtworkDataAccessObject);
 
         // Add views to CardLayout
         views.add(searchView, searchView.getViewName());
