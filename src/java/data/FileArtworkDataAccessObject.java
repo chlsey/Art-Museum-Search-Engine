@@ -138,8 +138,15 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
             JsonNode rootNode = objectMapper.readTree(jsonFile);
 
             if (artwork != null){
-                if (contains(artwork.getId())) {
-                    JsonNode node = rootNode.get(artwork.getId());
+                String id = artwork.getId();
+                if (contains(id)) {
+                    JsonNode node = null;
+                    for (JsonNode art : rootNode.get("artworks")) {
+                        if (art.get("id").asText().equals(id)) {
+                            node = art;
+                            break;
+                        }
+                    }
                     ((ArrayNode) node.get("comments")).add(comment);
                     objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
                 } else {

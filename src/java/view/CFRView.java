@@ -193,7 +193,7 @@ public class CFRView extends JPanel implements PropertyChangeListener {
 
     private void submit() throws IOException {
         String newComment = commentInput.getText().trim();
-        if (!newComment.isEmpty() || selectedRating > 0 || isFavorited) {
+        if (!newComment.isEmpty() || selectedRating > 0) {
             if (!newComment.isEmpty()) {
                 artwork.addComment(newComment);
                 commentController.execute(artwork,newComment);
