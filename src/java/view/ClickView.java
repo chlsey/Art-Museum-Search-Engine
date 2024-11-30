@@ -1,33 +1,26 @@
 package view;
 
-import interface_adapters.click_art.*;
+import interface_adapters.CFRViewModel;
 import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtViewModel;
 import entities.Artwork;
 import org.jetbrains.annotations.NotNull;
-import use_case.click_art.ClickArtInteractor;
-import use_case.click_art.ClickArtOutputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import javax.swing.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 
 public class ClickView extends JPanel implements PropertyChangeListener {
     private final String viewName = "ClickView";
     private final ClickArtController clickArtController;
     private final ClickArtViewModel clickArtViewModel;
+    private final CFRViewModel cfrViewModel;
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -44,10 +37,12 @@ public class ClickView extends JPanel implements PropertyChangeListener {
 
 
 
-    public ClickView(ClickArtController clickArtController, ClickArtViewModel clickArtViewModel) {
+    public ClickView(ClickArtController clickArtController, ClickArtViewModel clickArtViewModel, CFRViewModel cfrViewModel) {
         this.clickArtController = clickArtController;
         this.clickArtViewModel = clickArtViewModel;
+        this.cfrViewModel = cfrViewModel;
         clickArtViewModel.addPropertyChangeListener(this);
+
 
         // Initialize the CardLayout and main panel
         cardLayout = new CardLayout();
@@ -110,6 +105,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         favorite.setFont(new Font("Arial", Font.BOLD, 28)); // Larger font
         comment = new JLabel();
         comment.setFont(new Font("Arial", Font.BOLD, 28)); // Larger font
+        comment.setHorizontalAlignment(SwingConstants.LEFT);
 
         // Add spacing between CFR elements
         JPanel frPanel = new JPanel();
@@ -120,7 +116,9 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         frPanel.add(favorite);
         cfrPanel.add(frPanel);
         cfrPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        cfrPanel.add(comment);
+        JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        commentPanel.add(comment);
+        cfrPanel.add(commentPanel);
 
         // Add the CFR panel to the details panel
         detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
@@ -160,7 +158,10 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         //CFR BUTTON
         JButton cfrButton = new JButton("Rate It!");
         cfrButton.addActionListener(e -> {
-            clickArtController.switchToCFR();
+            cfrViewModel.setSelectedArtwork(clickArtViewModel.getSelectedArtwork());
+            clickArtController.switchToCFR(clickArtViewModel.getSelectedArtwork());
+            //System.out.println(clickArtViewModel.getSelectedArtwork());
+            cfrViewModel.firePropertyChanged("CFRView");
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "CFRView");
         });
@@ -180,10 +181,12 @@ public class ClickView extends JPanel implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        //System.out.println(evt.getPropertyName());
         // Check if the state has changed and we are now viewing artwork details
         if (ClickArtViewModel.STATE_CHANGED_PROPERTY.equals(evt.getPropertyName())) {
             Artwork selectedArtwork = clickArtViewModel.getSelectedArtwork();
             if (selectedArtwork != null) {
+                //System.out.println(selectedArtwork.getRating());
                 URI newuri = null;
                 try {
                     newuri = new URI(selectedArtwork.getImageUrl());
@@ -214,7 +217,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
                 rating.setText("Rating: " + selectedArtwork.getRating());
                 comment.setText("Comment: " + selectedArtwork.getLastComment());
                 if (selectedArtwork.checkFavorited()) {
-                    favorite.setText("It's my favorite");
+                    favorite.setText("It's my favorite!");
                 } else {
                     favorite.setText("It's not my favorite");
                 }

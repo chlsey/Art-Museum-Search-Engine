@@ -20,8 +20,8 @@ public class ClickArtController {
         clickArtUseCaseInteractor.switchToSearchView();
     }
 
-    public void switchToCFR(){
-        clickArtUseCaseInteractor.switchToCFRView();
+    public void switchToCFR(Artwork artwork){
+        clickArtUseCaseInteractor.switchToCFRView(new ClickArtInputData(artwork));
     }
 }
 

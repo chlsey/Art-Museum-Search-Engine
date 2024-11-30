@@ -7,6 +7,7 @@ import use_case.comment.CommentDataAccessInterface;
 import use_case.search.SearchDataAccessInterface;
 import use_case.rating.RatingDataAccessInterface;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,13 +60,23 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     }
 
     @Override
-    public int getRating() {
+    public List<Artwork> getCommentedArtworks() {
+        return List.of();
+    }
+
+    @Override
+    public int getRating(Artwork artwork) throws IOException {
         return 0;
     }
 
     @Override
     public void setRating(int rating) {
 
+    }
+
+    @Override
+    public List<Artwork> getRatedArtworks() {
+        return List.of();
     }
 
 //    @Override

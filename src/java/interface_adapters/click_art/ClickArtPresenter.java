@@ -1,12 +1,13 @@
 package interface_adapters.click_art;
 
+import entities.Artwork;
 import interface_adapters.CFRViewModel;
 import interface_adapters.search.SearchViewModel;
-import use_case.click_art.ClickArtInputData;
 import use_case.click_art.ClickArtOutputBoundary;
 import use_case.click_art.ClickArtOutputData;
 import interface_adapters.ViewManagerModel;
-import interface_adapters.click_art.*;
+
+import java.util.List;
 
 public class ClickArtPresenter implements ClickArtOutputBoundary {
     private final SearchViewModel searchViewModel;
@@ -48,9 +49,15 @@ public class ClickArtPresenter implements ClickArtOutputBoundary {
         viewManagerModel.firePropertyChanged("search");
     }
 
-    public void switchToCFRView(){
-        System.out.println(cfrViewModel.getViewName());
+    public void switchToCFRView(ClickArtOutputData clickArtOutputData){
+        //System.out.println(cfrViewModel.getViewName());
+        this.cfrViewModel.setState(cfrViewModel.getState());
+        this.cfrViewModel.firePropertyChanged("CFRView");
         viewManagerModel.setState(cfrViewModel.getViewName());
         viewManagerModel.firePropertyChanged("CFRView");
+        //System.out.println(viewManagerModel.getState());
+        cfrViewModel.setSelectedArtwork(clickArtViewModel.getSelectedArtwork());
+        //System.out.println(cfrViewModel.getSelectedArtwork().getRating());
+
     }
 }
