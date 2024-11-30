@@ -65,8 +65,14 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(jsonFile);
             if (contains(artwork.getId())) {
-                JsonNode node = rootNode.get(artwork.getId());
-                ((ObjectNode) node).put("favorite", !artwork.checkFavorited());
+                JsonNode node = null;
+                for (JsonNode art : rootNode.get("artworks")) {
+                    if (art.get("id").asText().equals(artwork.getId())) {
+                        node = art;
+                        break;
+                    }
+                }
+                ((ObjectNode) node).put("favorite", artwork.checkFavorited());
                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
             } else {
                 artwork.setFavorited(!artwork.checkFavorited());

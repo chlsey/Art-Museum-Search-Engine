@@ -121,7 +121,13 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         favoriteButton = new JButton(heartEmptyIcon);
         favoriteButton.setContentAreaFilled(false);
         favoriteButton.setBorderPainted(false);
-        favoriteButton.addActionListener(e -> toggleFavorite());
+        favoriteButton.addActionListener(e -> {
+            try {
+                toggleFavorite();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
         JPanel favoriteButtonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         favoriteButtonPanel.add(favoriteButton);
         favoritePanel.add(favoriteButtonPanel);
@@ -177,9 +183,11 @@ public class CFRView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    private void toggleFavorite() {
+    private void toggleFavorite() throws IOException {
         isFavorited = !isFavorited;
         favoriteButton.setIcon(isFavorited ? heartFilledIcon : heartEmptyIcon);
+        artwork.setFavorited(isFavorited);
+        favoriteController.execute(artwork);
     }
 
     private void submit() throws IOException {
