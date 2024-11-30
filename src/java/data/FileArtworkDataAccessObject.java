@@ -72,8 +72,8 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
                         break;
                     }
                 }
-                Artwork artwork = getArtworkById(id);
-                ((ObjectNode) node).put("favorite", !artwork.checkFavorited());
+                boolean fav = node.get("favorite").asBoolean();
+                ((ObjectNode) node).put("favorite", !fav);
                 objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
             } else {
                 Artwork artwork = getArtworkById(id);
@@ -180,59 +180,6 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface, 
             return DAObj.getArtworkById(id);
         }
     }
-
-
-    public Artwork getArtworkByIdClick(String id) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(jsonFile);
-            if (contains(id) && rootNode.has("artworks") && rootNode.get("artworks").isArray()) {
-                for (JsonNode art : rootNode.get("artworks")) {
-                    // Match the artwork by ID
-                    if (art.has("id") && id.equals(art.get("id").asText())) {
-                        // Fetch additional artwork details
-                        MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
-                        Artwork artwork = DAObj.getArtworkById(id);
-
-                        // Build the final artwork object
-                        Artwork finalArt = new Artwork(
-                                artwork.getTitle(),
-                                artwork.getArtistName(),
-                                artwork.getCompositionDate(),
-                                artwork.getGallery(),
-                                artwork.getImageUrl(),
-                                artwork.getKeyWords(),
-                                artwork.getDescription(),
-                                id
-                        );
-                        // Add comments
-                        JsonNode commentsNode = art.get("comments");
-                        if (commentsNode != null && commentsNode.isArray()) {
-                            for (JsonNode comment : commentsNode) {
-                                finalArt.addComment(comment.asText());
-                            }
-                        }
-                        // Handle "favorite" (assumes favorite is boolean in JSON)
-                        if (art.has("favorite") && art.get("favorite").asBoolean()) {
-                            finalArt.setFavorited(!artwork.checkFavorited());
-                        }
-                        // Handle "numRate"
-                        if (art.has("numRate")) {
-                            finalArt.setRating(art.get("numRate").asInt());
-                        }
-                        return finalArt; // Return the matched and populated artwork
-                    }
-                }
-            }
-            // If not found, fallback logic
-            MuseumDataAccessObject DAObj = new MuseumDataAccessObject();
-            return DAObj.getArtworkById(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
 
     /**
      * Precondition: jsonFile is not empty.
