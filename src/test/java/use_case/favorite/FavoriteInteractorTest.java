@@ -18,7 +18,7 @@ public class FavoriteInteractorTest {
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
         Artwork artwork2 = ArtworkFactory.createArtwork("Madame X", "John Singer Sargent", "1883",
                 "MoMA", "", "womanblackdressportrait", "no description", "112");
-        FavoriteInputData inputData = new FavoriteInputData(artwork1);
+        FavoriteInputData inputData = new FavoriteInputData(artwork1.getId());
         final FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
 
         artworkRepository.save(artwork1);
@@ -26,64 +26,51 @@ public class FavoriteInteractorTest {
 
         FavoriteOutputBoundary successPresenter = new FavoriteOutputBoundary() {
             @Override
-            public void prepareSuccessView(FavoriteOutputData outputData) throws IOException {
-                assertTrue(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail("Use case failure is unexpected.");
+            public void getAllFavorites(FavoriteOutputData outputData) {
             }
         };
 
         FavoriteInputBoundary favoriteUseCase = new FavoriteInteractor(artworkRepository, successPresenter);
         favoriteUseCase.execute(inputData);
+        assertTrue(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
     }
 
     @Test
     public void favoriteNewArtTest() throws IOException {
         final Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
-        FavoriteInputData inputData = new FavoriteInputData(artwork1);
+        FavoriteInputData inputData = new FavoriteInputData(artwork1.getId());
         final FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+        artworkRepository.save(artwork1);
 
         FavoriteOutputBoundary successPresenter = new FavoriteOutputBoundary() {
             @Override
-            public void prepareSuccessView(FavoriteOutputData outputData) throws IOException {
-                assertTrue(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail("Use case failure is unexpected.");
+            public void getAllFavorites(FavoriteOutputData outputData) {
             }
         };
 
         FavoriteInputBoundary favoriteUseCase = new FavoriteInteractor(artworkRepository, successPresenter);
         favoriteUseCase.execute(inputData);
+        assertTrue(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
     }
 
     @Test
     public void unfavoriteTest() throws IOException {
         Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
-        artwork1.setFavorited();
-        FavoriteInputData inputData = new FavoriteInputData(artwork1);
+        artwork1.setFavorited(true);
         FavoriteDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+        artworkRepository.save(artwork1);
+        FavoriteInputData inputData = new FavoriteInputData(artwork1.getId());
 
         FavoriteOutputBoundary successPresenter = new FavoriteOutputBoundary() {
             @Override
-            public void prepareSuccessView(FavoriteOutputData outputData) throws IOException {
-                assertFalse(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
-            }
+            public void getAllFavorites(FavoriteOutputData outputData) {
 
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail("Use case failure is unexpected.");
             }
         };
-
         FavoriteInputBoundary favoriteUseCase = new FavoriteInteractor(artworkRepository, successPresenter);
         favoriteUseCase.execute(inputData);
+        assertFalse(artworkRepository.getArtworkById(artwork1.getId()).checkFavorited());
     }
 }

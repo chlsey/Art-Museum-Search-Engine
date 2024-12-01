@@ -39,7 +39,7 @@ public class clickartInteractorTest {
             }
 
             @Override
-            public void switchToCFRView() {
+            public void switchToCFRView(ClickArtOutputData clickArtOutputData) {
 
             }
         };
