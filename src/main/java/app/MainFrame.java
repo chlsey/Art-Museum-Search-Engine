@@ -1,12 +1,18 @@
 package app;
 
+import java.awt.*;
+
+import javax.swing.*;
+
 import view.ClickView;
 import view.SearchView;
 
-import javax.swing.*;
-import java.awt.*;
-
+/**
+ * Main frame class.
+ */
 public class MainFrame extends JFrame {
+    private static final int WIDTH = 900;
+    private static final int HEIGHT = 900;
     private final SearchView searchView;
     private final ClickView clickView;
 
@@ -16,10 +22,9 @@ public class MainFrame extends JFrame {
 
         setLayout(new CardLayout());
         add(searchView, "SearchView");
-        //add(clickView, "ClickView");
 
         setTitle("Artwork Explorer");
-        setSize(900, 900);
+        setSize(WIDTH, WIDTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
