@@ -1,7 +1,7 @@
 package view;
 
 import entities.Artwork;
-import interface_adapters.CFRViewModel;
+import interface_adapters.CfrViewModel;
 import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtViewModel;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +19,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
     private final String viewName = "ClickView";
     private final ClickArtController clickArtController;
     private final ClickArtViewModel clickArtViewModel;
-    private final CFRViewModel cfrViewModel;
+    private final CfrViewModel cfrViewModel;
 
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
@@ -35,7 +35,7 @@ public class ClickView extends JPanel implements PropertyChangeListener {
     private final JTextArea descriptionArea;
 
 
-    public ClickView(ClickArtController clickArtController, ClickArtViewModel clickArtViewModel, CFRViewModel cfrViewModel) {
+    public ClickView(ClickArtController clickArtController, ClickArtViewModel clickArtViewModel, CfrViewModel cfrViewModel) {
         this.clickArtController = clickArtController;
         this.clickArtViewModel = clickArtViewModel;
         this.cfrViewModel = cfrViewModel;

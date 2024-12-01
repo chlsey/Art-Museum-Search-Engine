@@ -1,13 +1,12 @@
 package app;
 
 import data.MuseumDataAccessObject;
-import interface_adapters.CFRViewModel;
+import interface_adapters.CfrViewModel;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtController;
 import interface_adapters.click_art.ClickArtPresenter;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.search.SearchViewModel;
-import use_case.click_art.*;
 
 import use_case.click_art.ClickArtInputBoundary;
 import use_case.click_art.ClickArtInteractor;
@@ -19,7 +18,7 @@ import view.ClickView;
  */
 public class ClickUseCaseFactory {
 
-    public static ClickView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, CFRViewModel cfrViewModel, ClickArtViewModel clickViewModel,
+    public static ClickView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel, CfrViewModel cfrViewModel, ClickArtViewModel clickViewModel,
                                    MuseumDataAccessObject dataAccessObject) {
         // Create the controller for handling click actions
         final ClickArtController clickController = createClickUseCase(viewManagerModel, searchViewModel, clickViewModel, cfrViewModel, dataAccessObject);
@@ -30,7 +29,7 @@ public class ClickUseCaseFactory {
     private static ClickArtController createClickUseCase(ViewManagerModel viewManagerModel,
                                                          SearchViewModel searchViewModel,
                                                          ClickArtViewModel clickViewModel,
-                                                         CFRViewModel cfrViewModel,
+                                                         CfrViewModel cfrViewModel,
                                                          MuseumDataAccessObject dataAccessObject) {
         // Create the output boundary (Presenter) to handle UI updates and view transitions
         final ClickArtOutputBoundary clickArtOutputBoundary = new ClickArtPresenter(searchViewModel, clickViewModel, cfrViewModel,viewManagerModel);

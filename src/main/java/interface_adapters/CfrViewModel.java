@@ -5,7 +5,7 @@ import entities.Artwork;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class CFRViewModel extends ViewModel<CFRState>{
+public class CfrViewModel extends ViewModel<CfrState>{
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 //    private RatingState ratingState;
 //    private CommentState commentState;
@@ -13,15 +13,15 @@ public class CFRViewModel extends ViewModel<CFRState>{
     private Artwork selectedArtwork;
     private final String viewName = "CFRView";
 
-    public CFRViewModel() {
+    public CfrViewModel() {
         super("CFRView");
-        setState(new CFRState());
+        setState(new CfrState());
 //        this.commentState = null;
 //        this.favoriteState = new FavoriteState();
 //        this.ratingState = new RatingState();
     }
 
-    public void setState(CFRState cfrState) {
+    public void setState(CfrState cfrState) {
         super.setState(cfrState);
         firePropertyChanged("CFRView");
     }
