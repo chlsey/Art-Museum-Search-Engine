@@ -33,24 +33,44 @@ import use_case.search.SearchInteractor;
 import use_case.search.SearchOutputBoundary;
 import view.SearchView;
 
+/**
+ * Search use case factory class.
+ */
 public class SearchUseCaseFactory {
-
+    /**
+     * Search view state.
+     * @param viewManagerModel viewManagerModel
+     * @param searchViewModel searchViewModel
+     * @param museumDataAccessObject museumDataAccessObject
+     * @param clickArtViewModel clickArtViewModel
+     * @param fileArtworkDataAccessObject fileArtworkDataAccessObject
+     * @param cfrViewModel cfrViewModel
+     * @return view
+     */
     public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel,
                                     MuseumDataAccessObject museumDataAccessObject, ClickArtViewModel clickArtViewModel,
-                                    FileArtworkDataAccessObject fileArtworkDataAccessObject, CfrViewModel cfrViewModel) {
-        final SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
-        final FilterController filterController = createFilterUseCase(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
-        final FavoriteController favoriteController = createFavoriteUseCase(viewManagerModel, searchViewModel,cfrViewModel, clickArtViewModel, fileArtworkDataAccessObject);
-        final RatingController ratingController= createRatingUseCase(viewManagerModel, searchViewModel, cfrViewModel, clickArtViewModel, fileArtworkDataAccessObject);
-        final CommentController commentController = createCommentUseCase(viewManagerModel, searchViewModel, cfrViewModel, clickArtViewModel, fileArtworkDataAccessObject);;
-        return new SearchView(searchController, searchViewModel, clickArtViewModel, filterController, favoriteController, ratingController, commentController);
+                                    FileArtworkDataAccessObject fileArtworkDataAccessObject,
+                                    CfrViewModel cfrViewModel) {
+        final SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel,
+                museumDataAccessObject, clickArtViewModel);
+        final FilterController filterController = createFilterUseCase(viewManagerModel, searchViewModel,
+                museumDataAccessObject, clickArtViewModel);
+        final FavoriteController favoriteController = createFavoriteUseCase(viewManagerModel, searchViewModel,
+                cfrViewModel, clickArtViewModel, fileArtworkDataAccessObject);
+        final RatingController ratingController = createRatingUseCase(viewManagerModel, searchViewModel,
+                cfrViewModel, clickArtViewModel, fileArtworkDataAccessObject);
+        final CommentController commentController = createCommentUseCase(viewManagerModel, searchViewModel,
+                cfrViewModel, clickArtViewModel, fileArtworkDataAccessObject);
+        return new SearchView(searchController, searchViewModel, clickArtViewModel, filterController,
+                favoriteController, ratingController, commentController);
     }
 
     private static FilterController createFilterUseCase(ViewManagerModel viewManagerModel,
                                                         SearchViewModel searchViewModel,
                                                         MuseumDataAccessObject museumDataAccessObject,
                                                         ClickArtViewModel clickArtViewModel) {
-        final FilterOutputBoundary filterOutputBoundary = new FilterPresenter(searchViewModel,viewManagerModel, clickArtViewModel);
+        final FilterOutputBoundary filterOutputBoundary = new FilterPresenter(searchViewModel, viewManagerModel,
+                clickArtViewModel);
         final FilterInputBoundary filterInteractor = new FilterInteractor(museumDataAccessObject, filterOutputBoundary);
         return new FilterController(filterInteractor);
     }
@@ -60,8 +80,10 @@ public class SearchUseCaseFactory {
                                                             CfrViewModel cfrViewModel,
                                                             ClickArtViewModel clickArtViewModel,
                                                             FileArtworkDataAccessObject fileArtworkDataAccessObject) {
-        final FavoriteOutputBoundary favoriteOutputBoundary = new FavoritePresenter(cfrViewModel, viewManagerModel, clickArtViewModel, searchViewModel);
-        final FavoriteInputBoundary favoriteInteractor = new FavoriteInteractor(fileArtworkDataAccessObject, favoriteOutputBoundary);
+        final FavoriteOutputBoundary favoriteOutputBoundary = new FavoritePresenter(cfrViewModel, viewManagerModel,
+                clickArtViewModel, searchViewModel);
+        final FavoriteInputBoundary favoriteInteractor = new FavoriteInteractor(fileArtworkDataAccessObject,
+                favoriteOutputBoundary);
         return new FavoriteController(favoriteInteractor);
     }
 
@@ -70,8 +92,10 @@ public class SearchUseCaseFactory {
                                                             CfrViewModel cfrViewModel,
                                                             ClickArtViewModel clickArtViewModel,
                                                             FileArtworkDataAccessObject fileArtworkDataAccessObject) {
-        final RatingOutputBoundary ratingOutputBoundary = new RatingPresenter(cfrViewModel, viewManagerModel, clickArtViewModel, searchViewModel);
-        final RatingInputBoundary ratingInteractor = new RatingInteractor(fileArtworkDataAccessObject, ratingOutputBoundary);
+        final RatingOutputBoundary ratingOutputBoundary = new RatingPresenter(cfrViewModel, viewManagerModel,
+                clickArtViewModel, searchViewModel);
+        final RatingInputBoundary ratingInteractor = new RatingInteractor(fileArtworkDataAccessObject,
+                ratingOutputBoundary);
         return new RatingController(ratingInteractor);
     }
 
@@ -80,8 +104,10 @@ public class SearchUseCaseFactory {
                                                             CfrViewModel cfrViewModel,
                                                             ClickArtViewModel clickArtViewModel,
                                                             FileArtworkDataAccessObject fileArtworkDataAccessObject) {
-        final CommentOutputBoundary commentOutputBoundary = new CommentPresenter(cfrViewModel, viewManagerModel, clickArtViewModel, searchViewModel);
-        final CommentInputBoundary commentInteractor = new CommentInteractor(fileArtworkDataAccessObject, commentOutputBoundary);
+        final CommentOutputBoundary commentOutputBoundary = new CommentPresenter(cfrViewModel, viewManagerModel,
+                clickArtViewModel, searchViewModel);
+        final CommentInputBoundary commentInteractor = new CommentInteractor(fileArtworkDataAccessObject,
+                commentOutputBoundary);
         return new CommentController(commentInteractor);
     }
 
@@ -89,8 +115,10 @@ public class SearchUseCaseFactory {
                                                         SearchViewModel searchViewModel,
                                                         MuseumDataAccessObject museumDataAccessObject,
                                                         ClickArtViewModel clickArtViewModel) {
-        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(viewManagerModel, searchViewModel, clickArtViewModel);
-        final SearchInputBoundary searchInteractor = new SearchInteractor(museumDataAccessObject, searchOutputBoundary);
+        final SearchOutputBoundary searchOutputBoundary = new SearchPresenter(viewManagerModel,
+                searchViewModel, clickArtViewModel);
+        final SearchInputBoundary searchInteractor = new SearchInteractor(museumDataAccessObject,
+                searchOutputBoundary);
 
         return new SearchController(searchInteractor);
     }
