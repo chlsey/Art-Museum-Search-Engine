@@ -167,8 +167,11 @@ public class CFRView extends JPanel implements PropertyChangeListener {
             }
         });
         backButton.addActionListener(e -> {
-            CardLayout layout = (CardLayout) getParent().getLayout();
-            layout.show(getParent(), "ClickView");
+            clickArtViewModel.setSelectedArtwork(artwork);
+            clickArtViewModel.firePropertyChanged();
+
+            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+            cardLayout.show(getParent(), "ClickView");
         });
 
         // Add to Main Panel
