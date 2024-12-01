@@ -14,20 +14,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, CommentDataAccessInterface, RatingDataAccessInterface, ClickArtDataAccessInterface, FilterDataAccessInterface {
+public class InMemoryDataAccessObject implements SearchDataAccessInterface, FavoriteDataAccessInterface, RatingDataAccessInterface, ClickArtDataAccessInterface, FilterDataAccessInterface,CommentDataAccessInterface {
 
     private Map<String, Artwork> artworks = new HashMap<>();
 
     @Override
     public void updateFavorite(String id) {
-        if (contains(id)) {
-            Artwork artwork = getArtworkById(id);
+        Artwork artwork = artworks.get(id);
+        if (artwork != null) {
             artwork.setFavorited(!artwork.checkFavorited());
-        }
-        else {
-            Artwork artwork = getArtworkById(id);
-            artwork.setFavorited(!artwork.checkFavorited());
-            save(artwork);
+        } else {
+            System.out.println("Artwork with ID " + id + " does not exist.");
         }
     }
 
@@ -42,16 +39,22 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     @Override
     public List<Artwork> getAllFavorites() {
-        return List.of();
+        List<Artwork> favorites = new ArrayList<>();
+        for (Artwork artwork : artworks.values()) {
+            if (artwork.checkFavorited()) {
+                favorites.add(artwork);
+            }
+        }
+        return favorites;
     }
 
     @Override
     public void addCommentToArtwork(Artwork artwork, String comment) {
         Artwork art = getArtworkById(artwork.getId());
-        if (artwork == null) {
+        if (art == null) {
             throw new IllegalArgumentException("Artwork with id '" + artwork.getId() + "' does not exist.");
         }
-        artwork.addComment(comment);
+        art.addComment(comment);
     }
 
     @Override
@@ -72,7 +75,14 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
 
     @Override
     public List<Artwork> getRatedArtworks() {
-        return List.of();
+
+        List<Artwork> ratedArtworks = new ArrayList<>();
+        for (Artwork artwork : artworks.values()) {
+            if (artwork.getRating() > 0) {
+                ratedArtworks.add(artwork);
+            }
+        }
+        return ratedArtworks;
     }
 
     @Override
@@ -113,4 +123,11 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     public void changeFilter(String spec) {
 
     }
+
+
+
+
+
+
+
 }

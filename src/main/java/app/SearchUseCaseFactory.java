@@ -10,6 +10,7 @@ import interface_adapters.comment.CommentPresenter;
 import interface_adapters.favorite.FavoriteController;
 import interface_adapters.favorite.FavoritePresenter;
 import interface_adapters.filter.FilterController;
+import interface_adapters.filter.FilterPresenter;
 import interface_adapters.rating.RatingController;
 import interface_adapters.rating.RatingPresenter;
 import interface_adapters.search.SearchController;
@@ -23,6 +24,7 @@ import use_case.favorite.FavoriteInteractor;
 import use_case.favorite.FavoriteOutputBoundary;
 import use_case.filter.FilterInputBoundary;
 import use_case.filter.FilterInteractor;
+import use_case.filter.FilterOutputBoundary;
 import use_case.rating.RatingInputBoundary;
 import use_case.rating.RatingInteractor;
 import use_case.rating.RatingOutputBoundary;
@@ -48,8 +50,8 @@ public class SearchUseCaseFactory {
                                                         SearchViewModel searchViewModel,
                                                         MuseumDataAccessObject museumDataAccessObject,
                                                         ClickArtViewModel clickArtViewModel) {
-        //final FilterOutputBoundary filterOutputBoundary = new FilterPresenter(searchViewModel,viewManagerModel, clickArtViewModel);
-        final FilterInputBoundary filterInteractor = new FilterInteractor(museumDataAccessObject);
+        final FilterOutputBoundary filterOutputBoundary = new FilterPresenter(searchViewModel,viewManagerModel, clickArtViewModel);
+        final FilterInputBoundary filterInteractor = new FilterInteractor(museumDataAccessObject, filterOutputBoundary);
         return new FilterController(filterInteractor);
     }
 

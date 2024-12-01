@@ -1,8 +1,6 @@
 package use_case.filter;
 
-
 public class FilterOutputData {
-
     private final String filter;
     private final Boolean usecaseFailed;
 
@@ -11,6 +9,11 @@ public class FilterOutputData {
         this.usecaseFailed = usecaseFailed;
     }
 
-    public String getFilter() { return filter;
+    public String getFilter() {
+        return filter;
+    }
+
+    public Boolean getUsecaseFailed() {
+        return usecaseFailed;
     }
 }

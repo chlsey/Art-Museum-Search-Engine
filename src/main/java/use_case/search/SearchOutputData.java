@@ -18,4 +18,7 @@ public class SearchOutputData {
         return artworks;
     }
 
+    public boolean isUseCaseFailed() {
+        return useCaseFailed;
+    }
 }

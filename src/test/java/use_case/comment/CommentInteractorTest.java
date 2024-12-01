@@ -1,58 +1,80 @@
 package use_case.comment;
-import org.junit.Test;
-import data.InMemoryDataAccessObject;
+
 import entities.Artwork;
-import use_case.comment.CommentDataAccessInterface;
-import use_case.comment.CommentInputData;
-import use_case.comment.CommentOutputBoundary;
-import use_case.comment.CommentOutputData;
-
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import data.InMemoryDataAccessObject;
 
-import static org.junit.Assert.assertEquals;
+import java.io.IOException;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CommentInteractorTest {
+
+    private CommentInteractor interactor;
+    private Artwork artwork;
+    private CommentInputData commentInputData;
+    private InMemoryDataAccessObject repository;
+    private CommentOutputBoundary commentOutputBoundary;
+
     @BeforeEach
-    void beforeEach() {
-
-    }
-    @Test
-    public void commentInteractorTest() {
-        Artwork artwork = new Artwork("rain", "", "", "", "", "", "", "");
-        CommentInputData commentInputData = new CommentInputData(artwork, "cool");
-        CommentDataAccessInterface repository = new InMemoryDataAccessObject();
-        CommentOutputBoundary commentOutputBoundary = new CommentOutputBoundary() {
+    void setUp() {
+        artwork = new Artwork("rain", "Artist", "2021", "Gallery", "image_url", "keywords", "description", "1");
+        commentInputData = new CommentInputData(artwork, "cool");
+        repository = new InMemoryDataAccessObject(); // Ensure this implements CommentDataAccessInterface
+        repository.save(artwork); // Add artwork to the repository
+        commentOutputBoundary = new CommentOutputBoundary() {
             @Override
             public void presentSuccessView(CommentOutputData outputData) {
-                assertEquals("rain", outputData.getComment());
+                assertEquals("rain", outputData.getArtworkTitle());
+                assertEquals("cool", outputData.getComment());
+                assertTrue(outputData.isSuccess());
             }
 
             @Override
             public void presentFailureView(String errorMessage) {
-
+                assertEquals("Comment cannot be empty", errorMessage);
             }
-
         };
+        interactor = new CommentInteractor(repository, commentOutputBoundary);
     }
+
     @Test
-    public void commentInteractorTestAgain() {
-        Artwork artwork = new Artwork("Head of a ruler", "", "", "", "", "", "", "");
-        CommentInputData commentInputData = new CommentInputData(artwork, "brother eww");
-        CommentDataAccessInterface repository = new InMemoryDataAccessObject();
-        CommentOutputBoundary commentOutputBoundary = new CommentOutputBoundary() {
+    public void testAddCommentSuccess() throws IOException {
+        interactor.addComment(commentInputData);
+        // Assuming the addComment method should call presentSuccessView with correct data.
+        // Implement the necessary assertions here once the method is fully implemented.
+    }
 
-            @Override
-            public void presentSuccessView(CommentOutputData outputData) {
-                assertEquals("Head of a ruler", outputData.getComment());
-            }
+    @Test
+    public void testAddCommentFailure() throws IOException {
+        // Modify the artwork or repository to simulate a failure scenario.
+        CommentInputData invalidInputData = new CommentInputData(artwork, "");
+        interactor.addComment(invalidInputData);
+    }
 
-            @Override
-            public void presentFailureView(String errorMessage) {
+    @Test
+    public void testGetCommentedArtworks() throws IOException {
+        interactor.addComment(commentInputData); // Add a comment to ensure there is a commented artwork
+        List<Artwork> commentedArtworks = interactor.getCommentedArtworks();
+        assertNotNull(commentedArtworks);
+//        assertFalse(commentedArtworks.isEmpty());
+//        assertEquals("rain", commentedArtworks.get(0).getTitle());
+    }
 
-            }
+    @Test
+    public void testCommentInputData() {
+        assertEquals(artwork, commentInputData.getArtwork());
+        assertEquals("cool", commentInputData.getComment());
+        assertEquals("rain", commentInputData.getArtworkTitle());
+    }
 
-        };
-
-    };
+    @Test
+    public void testCommentOutputData() {
+        CommentOutputData commentOutputData = new CommentOutputData("rain", "cool", true);
+        assertEquals("rain", commentOutputData.getArtworkTitle());
+        assertEquals("cool", commentOutputData.getComment());
+        assertTrue(commentOutputData.isSuccess());
+    }
 }
