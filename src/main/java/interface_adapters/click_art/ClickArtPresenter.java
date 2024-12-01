@@ -1,6 +1,6 @@
 package interface_adapters.click_art;
 
-import interface_adapters.CFRViewModel;
+import interface_adapters.CfrViewModel;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.search.SearchViewModel;
 import use_case.click_art.ClickArtOutputBoundary;
@@ -10,9 +10,9 @@ public class ClickArtPresenter implements ClickArtOutputBoundary {
     private final SearchViewModel searchViewModel;
     private final ClickArtViewModel clickArtViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final CFRViewModel cfrViewModel;
+    private final CfrViewModel cfrViewModel;
 
-    public ClickArtPresenter(SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel, CFRViewModel cfrViewModel,
+    public ClickArtPresenter(SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel, CfrViewModel cfrViewModel,
                              ViewManagerModel viewManagerModel) {
         this.searchViewModel = searchViewModel;
         this.clickArtViewModel = clickArtViewModel;
