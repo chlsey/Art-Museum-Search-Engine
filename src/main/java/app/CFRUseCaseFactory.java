@@ -1,7 +1,6 @@
 package app;
 
 import data.FileArtworkDataAccessObject;
-import data.MuseumDataAccessObject;
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtViewModel;

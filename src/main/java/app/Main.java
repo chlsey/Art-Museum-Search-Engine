@@ -1,4 +1,5 @@
 package app;
+import data.FileArtworkDataAccessObject;
 import data.MuseumDataAccessObject;
 import interface_adapters.CFRViewModel;
 import interface_adapters.ViewManagerModel;
@@ -11,10 +12,11 @@ import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Create the main JFrame
         final JFrame frame = new JFrame("Museum Search Engine");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,14 +33,15 @@ public class Main {
         // Search view setup
         final SearchViewModel searchViewModel = new SearchViewModel();
         final MuseumDataAccessObject museumDataAccessObject = new MuseumDataAccessObject();
+        final FileArtworkDataAccessObject fileArtworkDataAccessObject = new FileArtworkDataAccessObject("src/favorite.json");
         final ClickArtViewModel clickArtViewModel = new ClickArtViewModel();
         final CFRViewModel cfrViewModel = new CFRViewModel();
-        final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
+        final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel,fileArtworkDataAccessObject,cfrViewModel);
 
         // ClickArt view setup
         //final ClickArtPresenter clickArtPresenter = new ClickArtPresenter(searchViewModel, clickArtViewModel, viewManagerModel);
         final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, museumDataAccessObject);
-        final CFRView cfrView = CFRUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, museumDataAccessObject);
+        final CFRView cfrView = CFRUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, fileArtworkDataAccessObject);
 
         // Add views to CardLayout
         views.add(searchView, searchView.getViewName());

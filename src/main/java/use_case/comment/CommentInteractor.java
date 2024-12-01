@@ -3,6 +3,7 @@ package use_case.comment;
 import entities.Artwork;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CommentInteractor implements CommentInputBoundary {
     private final CommentDataAccessInterface commentDataAccessObject;

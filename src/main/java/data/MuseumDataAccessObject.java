@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MuseumDataAccessObject implements SearchDataAccessInterface, CommentDataAccessInterface, FilterDataAccessInterface, RatingDataAccessInterface, FavoriteDataAccessInterface, ClickArtDataAccessInterface {
+public class MuseumDataAccessObject implements SearchDataAccessInterface, CommentDataAccessInterface, FilterDataAccessInterface {
     private static final String QUERY_CHI = "https://api.artic.edu/api/v1/artworks";
     private static final String QUERY_MET = "https://collectionapi.metmuseum.org/public/collection/v1";
     private String spec;
@@ -172,36 +172,6 @@ public class MuseumDataAccessObject implements SearchDataAccessInterface, Commen
 
     @Override
     public void addCommentToArtwork(Artwork artwork, String comment) throws IOException {
-    }
-
-    @Override
-    public void saveRating(Artwork artwork) throws IOException {
-
-    }
-
-    @Override
-    public int getRating() {
-        return 0;
-    }
-
-    @Override
-    public void setRating(int rating) {
-
-    }
-
-    @Override
-    public void updateFavorite(Artwork artwork) {
-
-    }
-
-    @Override
-    public void save(Artwork artwork) throws IOException {
-
-    }
-
-    @Override
-    public boolean contains(String id) throws IOException {
-        return false;
     }
 
     @Override
