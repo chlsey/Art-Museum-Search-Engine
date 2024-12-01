@@ -1,11 +1,11 @@
 package app;
 import data.FileArtworkDataAccessObject;
 import data.MuseumDataAccessObject;
-import interface_adapters.CFRViewModel;
+import interface_adapters.CfrViewModel;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.search.SearchViewModel;
-import view.CFRView;
+import view.CfrView;
 import view.ClickView;
 import view.SearchView;
 import view.ViewManager;
@@ -35,13 +35,13 @@ public class Main {
         final MuseumDataAccessObject museumDataAccessObject = new MuseumDataAccessObject();
         final FileArtworkDataAccessObject fileArtworkDataAccessObject = new FileArtworkDataAccessObject("src/favorite.json");
         final ClickArtViewModel clickArtViewModel = new ClickArtViewModel();
-        final CFRViewModel cfrViewModel = new CFRViewModel();
+        final CfrViewModel cfrViewModel = new CfrViewModel();
         final SearchView searchView = SearchUseCaseFactory.create(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel,fileArtworkDataAccessObject,cfrViewModel);
 
         // ClickArt view setup
         //final ClickArtPresenter clickArtPresenter = new ClickArtPresenter(searchViewModel, clickArtViewModel, viewManagerModel);
         final ClickView clickView = ClickUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, museumDataAccessObject);
-        final CFRView cfrView = CFRUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, fileArtworkDataAccessObject);
+        final CfrView cfrView = CfrUseCaseFactory.create(viewManagerModel, searchViewModel, cfrViewModel,clickArtViewModel, fileArtworkDataAccessObject);
 
         // Add views to CardLayout
         views.add(searchView, searchView.getViewName());

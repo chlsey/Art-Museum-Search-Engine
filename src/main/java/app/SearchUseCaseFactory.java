@@ -2,7 +2,7 @@ package app;
 
 import data.FileArtworkDataAccessObject;
 import data.MuseumDataAccessObject;
-import interface_adapters.CFRViewModel;
+import interface_adapters.CfrViewModel;
 import interface_adapters.ViewManagerModel;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.comment.CommentController;
@@ -37,7 +37,7 @@ public class SearchUseCaseFactory {
 
     public static SearchView create(ViewManagerModel viewManagerModel, SearchViewModel searchViewModel,
                                     MuseumDataAccessObject museumDataAccessObject, ClickArtViewModel clickArtViewModel,
-                                    FileArtworkDataAccessObject fileArtworkDataAccessObject, CFRViewModel cfrViewModel) {
+                                    FileArtworkDataAccessObject fileArtworkDataAccessObject, CfrViewModel cfrViewModel) {
         final SearchController searchController = createSearchUseCase(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
         final FilterController filterController = createFilterUseCase(viewManagerModel, searchViewModel, museumDataAccessObject, clickArtViewModel);
         final FavoriteController favoriteController = createFavoriteUseCase(viewManagerModel, searchViewModel,cfrViewModel, clickArtViewModel, fileArtworkDataAccessObject);
@@ -57,7 +57,7 @@ public class SearchUseCaseFactory {
 
     private static FavoriteController createFavoriteUseCase(ViewManagerModel viewManagerModel,
                                                             SearchViewModel searchViewModel,
-                                                            CFRViewModel cfrViewModel,
+                                                            CfrViewModel cfrViewModel,
                                                             ClickArtViewModel clickArtViewModel,
                                                             FileArtworkDataAccessObject fileArtworkDataAccessObject) {
         final FavoriteOutputBoundary favoriteOutputBoundary = new FavoritePresenter(cfrViewModel, viewManagerModel, clickArtViewModel, searchViewModel);
@@ -67,7 +67,7 @@ public class SearchUseCaseFactory {
 
     private static RatingController createRatingUseCase(ViewManagerModel viewManagerModel,
                                                             SearchViewModel searchViewModel,
-                                                            CFRViewModel cfrViewModel,
+                                                            CfrViewModel cfrViewModel,
                                                             ClickArtViewModel clickArtViewModel,
                                                             FileArtworkDataAccessObject fileArtworkDataAccessObject) {
         final RatingOutputBoundary ratingOutputBoundary = new RatingPresenter(cfrViewModel, viewManagerModel, clickArtViewModel, searchViewModel);
@@ -77,7 +77,7 @@ public class SearchUseCaseFactory {
 
     private static CommentController createCommentUseCase(ViewManagerModel viewManagerModel,
                                                             SearchViewModel searchViewModel,
-                                                            CFRViewModel cfrViewModel,
+                                                            CfrViewModel cfrViewModel,
                                                             ClickArtViewModel clickArtViewModel,
                                                             FileArtworkDataAccessObject fileArtworkDataAccessObject) {
         final CommentOutputBoundary commentOutputBoundary = new CommentPresenter(cfrViewModel, viewManagerModel, clickArtViewModel, searchViewModel);
