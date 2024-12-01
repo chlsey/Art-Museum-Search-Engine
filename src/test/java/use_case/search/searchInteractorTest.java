@@ -6,13 +6,12 @@ import entities.ArtworkFactory;
 import org.junit.Test;
 
 import java.io.IOException;
-import use_case.search.*;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
-import static org.junit.Assert.assertEquals;
-
 public class searchInteractorTest {
+
     @Test
     public void searchArtTest() throws IOException {
         final Artwork artwork1 = ArtworkFactory.createArtwork("Starry Night", "Vincent Van Gogh", "1889",
@@ -22,45 +21,29 @@ public class searchInteractorTest {
         final InMemoryDataAccessObject dao = new InMemoryDataAccessObject();
         dao.save(artwork1);
         dao.save(artwork2);
-//        dao.searchArtwork("star");
 
         SearchInputData inputData = new SearchInputData("Starry Night");
 
         SearchDataAccessInterface artworkRepository = new InMemoryDataAccessObject();
+        ((InMemoryDataAccessObject) artworkRepository).save(artwork1);
+        ((InMemoryDataAccessObject) artworkRepository).save(artwork2);
 
         SearchOutputBoundary successPresenter = new SearchOutputBoundary() {
 
             @Override
             public void prepareSuccessView(SearchOutputData outputData) {
-                assertEquals( artwork1.getTitle(), dao.searchArtwork("Starry Night").get(0).getTitle() );
+                System.out.println("Search results size: " + outputData.getArtworks().size()); // Debug statement
+                assertEquals(artwork1.getTitle(), outputData.getArtworks().get(0).getTitle());
+                assertFalse(outputData.isUseCaseFailed());
             }
 
             @Override
             public void prepareFailView(String errorMessage) {
                 fail("can't fail to search!");
             }
-
-
         };
 
-        SearchInputBoundary ratingUC = new SearchInteractor(artworkRepository, successPresenter);
-        ratingUC.execute(inputData);
+        SearchInputBoundary searchUC = new SearchInteractor(artworkRepository, successPresenter);
+        searchUC.execute(inputData);
     }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
