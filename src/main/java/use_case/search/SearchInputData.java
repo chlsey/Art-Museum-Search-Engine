@@ -1,5 +1,8 @@
 package use_case.search;
 
+/**
+ * The input data of searching.
+ */
 public class SearchInputData {
 
     private final String searchMessage;

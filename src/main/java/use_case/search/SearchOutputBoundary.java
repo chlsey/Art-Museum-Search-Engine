@@ -1,5 +1,8 @@
 package use_case.search;
 
+/**
+ * The output boundary of search.
+ */
 public interface SearchOutputBoundary {
     /**
      * Prepares the success view for the Search Use Case.
