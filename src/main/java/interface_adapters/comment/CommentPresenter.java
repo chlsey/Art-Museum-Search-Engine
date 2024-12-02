@@ -7,6 +7,9 @@ import interface_adapters.search.SearchViewModel;
 import use_case.comment.CommentOutputBoundary;
 import use_case.comment.CommentOutputData;
 
+/**
+ * Comment Presenter class.
+ */
 public class CommentPresenter implements CommentOutputBoundary {
     private final CfrViewModel cfrViewModel;
     private final ViewManagerModel viewManagerModel;
@@ -23,8 +26,6 @@ public class CommentPresenter implements CommentOutputBoundary {
 
     @Override
     public void presentSuccessView(CommentOutputData outputData) {
-        //final CommentState commentState = CFRViewModel.getState();
-        //this.cfrViewModel.setState(commentState);
         this.cfrViewModel.firePropertyChanged();
         this.viewManagerModel.setState(cfrViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
@@ -33,9 +34,6 @@ public class CommentPresenter implements CommentOutputBoundary {
 
     @Override
     public void presentFailureView(String errorMessage) {
-        //final CommentState commentState = CFRViewModel.getState();
-        //commentState.setCommentError(errorMessage);
         cfrViewModel.firePropertyChanged();
     }
 }
-
