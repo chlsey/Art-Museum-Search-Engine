@@ -2,6 +2,9 @@ package use_case.comment;
 
 import entities.Artwork;
 
+/**
+ * Comment Input Data.
+ */
 public class CommentInputData {
     private final String artworkTitle;
     private final String comment;
