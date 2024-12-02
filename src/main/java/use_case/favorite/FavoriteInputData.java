@@ -1,10 +1,15 @@
 package use_case.favorite;
 
-import entities.Artwork;
-
+/**
+ * Favorite input data.
+ */
 public class FavoriteInputData {
     private final String id;
 
+    /**
+     * Favorite input data.
+     * @param id id
+     */
     public FavoriteInputData(String id) {
         this.id = id;
     }

@@ -42,4 +42,3 @@ public class ClickArtController {
         clickArtUseCaseInteractor.switchToCFRView(new ClickArtInputData(artwork));
     }
 }
-

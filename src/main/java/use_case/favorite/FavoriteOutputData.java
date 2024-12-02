@@ -1,22 +1,27 @@
 package use_case.favorite;
 
-import entities.Artwork;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class FavoriteOutputData {
-    //private boolean favorited;
-    private final List<Artwork> favoritedArtworks;
+import entities.Artwork;
 
+/**
+ * Favorite output data.
+ */
+public class FavoriteOutputData {
+    private final List<Artwork> favoritedArtworks;
+    /**
+     * Favorite ouput data.
+     * @param favoritedArtworks favoritedArtworks
+     */
     public FavoriteOutputData(List<Artwork> favoritedArtworks) {
-        //favorited = artwork.checkFavorited();
         this.favoritedArtworks = favoritedArtworks;
     }
 
-//    public boolean getFavoritedArtworks() {
-//        return favorited;
-//    }
-
-    public List<Artwork> getFavoriteArtworks() {return favoritedArtworks;}
+    /**
+     * Get favorite artworks.
+     * @return list artwork
+     */
+    public List<Artwork> getFavoriteArtworks() {
+        return favoritedArtworks;
+    }
 }

@@ -1,6 +1,5 @@
 package view;
 
-// Standard Library Imports
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -8,10 +7,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-// Swing Imports
 import javax.swing.*;
 
-// Application-Specific Imports
 import entities.Artwork;
 import interface_adapters.CfrViewModel;
 import interface_adapters.click_art.ClickArtViewModel;
