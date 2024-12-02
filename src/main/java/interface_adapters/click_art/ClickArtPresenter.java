@@ -6,13 +6,24 @@ import interface_adapters.search.SearchViewModel;
 import use_case.click_art.ClickArtOutputBoundary;
 import use_case.click_art.ClickArtOutputData;
 
+/**
+ * Click art presenter class.
+ */
 public class ClickArtPresenter implements ClickArtOutputBoundary {
     private final SearchViewModel searchViewModel;
     private final ClickArtViewModel clickArtViewModel;
     private final ViewManagerModel viewManagerModel;
     private final CfrViewModel cfrViewModel;
 
-    public ClickArtPresenter(SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel, CfrViewModel cfrViewModel,
+    /**
+     * Click art presenter.
+     * @param searchViewModel searchViewModel
+     * @param clickArtViewModel clickArtViewModel
+     * @param cfrViewModel cfrViewModel
+     * @param viewManagerModel viewManagerModel
+     */
+    public ClickArtPresenter(SearchViewModel searchViewModel, ClickArtViewModel clickArtViewModel,
+                             CfrViewModel cfrViewModel,
                              ViewManagerModel viewManagerModel) {
         this.searchViewModel = searchViewModel;
         this.clickArtViewModel = clickArtViewModel;
@@ -20,7 +31,10 @@ public class ClickArtPresenter implements ClickArtOutputBoundary {
         this.cfrViewModel = cfrViewModel;
     }
 
-
+    /**
+     * Prepare success view.
+     * @param artWork the output data
+     */
     @Override
     public void prepareSuccessView(ClickArtOutputData artWork) {
         final ClickArtState clickArtState = clickArtViewModel.getState();
@@ -41,20 +55,23 @@ public class ClickArtPresenter implements ClickArtOutputBoundary {
         clickArtViewModel.firePropertyChanged();
     }
 
-    public void switchToSearchView(){
+    /**
+     * Switch to search view.
+     */
+    public void switchToSearchView() {
         viewManagerModel.setState(searchViewModel.getViewName());
         viewManagerModel.firePropertyChanged("search");
     }
 
-    public void switchToCFRView(ClickArtOutputData clickArtOutputData){
-        //System.out.println(cfrViewModel.getViewName());
+    /**
+     * Switch to crf view.
+     * @param clickArtOutputData clickArtOutputData
+     */
+    public void switchToCFRView(ClickArtOutputData clickArtOutputData) {
         this.cfrViewModel.setState(cfrViewModel.getState());
         this.cfrViewModel.firePropertyChanged("CFRView");
         viewManagerModel.setState(cfrViewModel.getViewName());
         viewManagerModel.firePropertyChanged("CFRView");
-        //System.out.println(viewManagerModel.getState());
         cfrViewModel.setSelectedArtwork(clickArtViewModel.getSelectedArtwork());
-        //System.out.println(cfrViewModel.getSelectedArtwork().getRating());
-
     }
 }

@@ -10,6 +10,7 @@ public class ArtworkFactory {
      * Artwork.
      * @param title the title
      * @param artistName the name
+     * @param timePeriod the time
      * @param gallery the galery
      * @param imageUrl image
      * @param keyWords keyword
