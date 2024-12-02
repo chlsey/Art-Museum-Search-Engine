@@ -1,9 +1,12 @@
 package use_case.search;
 
-import entities.Artwork;
-
 import java.util.List;
 
+import entities.Artwork;
+
+/**
+ * The Output data.
+ */
 public class SearchOutputData {
 
     private final List<Artwork> artworks;

@@ -1,5 +1,9 @@
 package use_case.search;
 
+/**
+ * The input boundary for search.
+ */
+
 public interface SearchInputBoundary {
 
     /**
