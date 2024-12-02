@@ -22,6 +22,7 @@ public class CommentInteractorTest {
     void setUp() {
         artwork = new Artwork("rain", "Artist", "2021", "Gallery", "image_url", "keywords", "description", "1");
         commentInputData = new CommentInputData(artwork, "cool");
+
         repository = new InMemoryDataAccessObject(); // Ensure this implements CommentDataAccessInterface
         repository.save(artwork); // Add artwork to the repository
         commentOutputBoundary = new CommentOutputBoundary() {

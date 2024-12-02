@@ -21,7 +21,7 @@ public class CommentInteractor implements CommentInputBoundary {
         final String comment = commentInputData.getComment();
         Artwork artwork = commentDataAccessObject.getArtworkById(commentInputData.getArtwork().getId());
 
-        if (comment == null || comment.isEmpty()) {
+        if (comment.isEmpty()) {
             commentPresenter.presentFailureView("Comment cannot be empty");
             return;
         }
