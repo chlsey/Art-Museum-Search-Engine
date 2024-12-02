@@ -3,6 +3,9 @@ package interface_adapters.comment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Comment state class.
+ */
 public class CommentState {
     private List<String> comments = new ArrayList<>();
     private String artworkTitle;
@@ -19,23 +22,35 @@ public class CommentState {
         return comments;
     }
 
+    /**
+     * Get artwork title.
+     * @return artwork title
+     */
     public String getArtworkTitle() {
         return artworkTitle;
     }
 
+    /**
+     * Add comment.
+     * @param comment comment
+     */
     public void addComment(String comment) {
         comments.add(comment);
     }
 
+    /**
+     * Set rating.
+     * @param selectedRating selectedRating
+     */
     public void setRating(int selectedRating) {
 
     }
 
+    /**
+     * Set favorited.
+     * @param isFavorited isFavorited
+     */
     public void setFavorited(boolean isFavorited) {
 
     }
-
-    //public void setCommentError(String errorMessage) {
-    //    System.out.println(errorMessage);
-    //}
 }
