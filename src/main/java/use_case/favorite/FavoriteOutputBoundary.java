@@ -1,11 +1,12 @@
 package use_case.favorite;
 
+/**
+ * Favorite output boundary.
+ */
 public interface FavoriteOutputBoundary {
-    //void prepareSuccessView(FavoriteOutputData outputData) throws IOException;
-
-    //void prepareFailView(String errorMessage);
-
+    /**
+     * Get all favorite.
+     * @param outputData outputData
+     */
     void getAllFavorites(FavoriteOutputData outputData);
-
-
 }
