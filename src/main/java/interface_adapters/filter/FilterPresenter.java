@@ -22,12 +22,7 @@ public class FilterPresenter implements FilterOutputBoundary {
         this.clickArtViewModel = clickArtViewModel;
     }
 
-    /**
-     * Prepare Filter.
-     * @param currentfilter currentfilter
-     */
     @Override
-    public void prepareFilter(FilterOutputData currentfilter) {
-        final String filter = currentfilter.getFilter();
+    public void setFilter(FilterOutputData currentFilter) {
     }
 }

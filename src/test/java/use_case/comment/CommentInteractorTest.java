@@ -42,22 +42,22 @@ public class CommentInteractorTest {
     }
 
     @Test
-    public void testAddCommentSuccess() throws IOException {
-        interactor.addComment(commentInputData);
+    public void testExecuteSuccess() throws IOException {
+        interactor.execute(commentInputData);
         // Assuming the addComment method should call presentSuccessView with correct data.
         // Implement the necessary assertions here once the method is fully implemented.
     }
 
     @Test
-    public void testAddCommentFailure() throws IOException {
+    public void testExecuteFailure() throws IOException {
         // Modify the artwork or repository to simulate a failure scenario.
         CommentInputData invalidInputData = new CommentInputData(artwork, "");
-        interactor.addComment(invalidInputData);
+        interactor.execute(invalidInputData);
     }
 
     @Test
     public void testGetCommentedArtworks() throws IOException {
-        interactor.addComment(commentInputData); // Add a comment to ensure there is a commented artwork
+        interactor.execute(commentInputData); // Add a comment to ensure there is a commented artwork
         List<Artwork> commentedArtworks = interactor.getCommentedArtworks();
         assertNotNull(commentedArtworks);
 //        assertFalse(commentedArtworks.isEmpty());

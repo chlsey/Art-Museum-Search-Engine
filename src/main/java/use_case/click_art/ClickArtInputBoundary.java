@@ -1,5 +1,7 @@
 package use_case.click_art;
 
+import java.io.IOException;
+
 /**
  * Click art input boundary.
  */
@@ -7,8 +9,9 @@ public interface ClickArtInputBoundary {
     /**
      * Executes the login use case.
      * @param clickArtInputData the input data
+     * @throws IOException An exception
      */
-    void execute(ClickArtInputData clickArtInputData);
+    void execute(ClickArtInputData clickArtInputData) throws IOException;
 
     /**
      * Switch to search view.

@@ -26,6 +26,7 @@ import interface_adapters.search.SearchViewModel;
  */
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
     private static final int HUNDRED = 100;
+    private static final int TWO_HUNDRED = 200;
     private static final int TWO_HUNDRED_FIFTY = 250;
     private static final int TWO_HUNDRED_THIRTY = 230;
     private static final int TEN = 10;

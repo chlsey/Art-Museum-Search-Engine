@@ -14,7 +14,7 @@ public interface CommentInputBoundary {
      * @param commentInputData commentInputData
      * @throws IOException exception
      */
-    void addComment(CommentInputData commentInputData) throws IOException;
+    void execute(CommentInputData commentInputData) throws IOException;
 
     /**
      * Get comment artwork.

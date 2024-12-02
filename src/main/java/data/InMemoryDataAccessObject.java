@@ -131,4 +131,9 @@ public class InMemoryDataAccessObject implements SearchDataAccessInterface, Favo
     public void changeFilter(String spec) {
 
     }
+
+    @Override
+    public Artwork getSelectedArtwork(Artwork artwork) {
+        return null;
+    }
 }
