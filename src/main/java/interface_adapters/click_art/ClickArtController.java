@@ -1,5 +1,7 @@
 package interface_adapters.click_art;
 
+import java.io.IOException;
+
 import entities.Artwork;
 import use_case.click_art.ClickArtInputBoundary;
 import use_case.click_art.ClickArtInputData;
@@ -21,8 +23,9 @@ public class ClickArtController {
     /**
      * Exectue.
      * @param artwork artwork
+     * @throws IOException an exception
      */
-    public void execute(Artwork artwork) {
+    public void execute(Artwork artwork) throws IOException {
         final ClickArtInputData clickArtInputData = new ClickArtInputData(artwork);
         clickArtUseCaseInteractor.execute(clickArtInputData);
     }

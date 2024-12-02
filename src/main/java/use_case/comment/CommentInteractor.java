@@ -24,18 +24,13 @@ public class CommentInteractor implements CommentInputBoundary {
      * @throws IOException exception
      */
     @Override
-    public void addComment(CommentInputData commentInputData) throws IOException {
+    public void execute(CommentInputData commentInputData) throws IOException {
         final String artworkTitle = commentInputData.getArtworkTitle();
         final String comment = commentInputData.getComment();
+        final boolean success = !comment.isEmpty();
         final Artwork artwork = commentDataAccessObject.getArtworkById(commentInputData.getArtwork().getId());
-
-        if (comment.isEmpty()) {
-            commentPresenter.presentFailureView("Comment cannot be empty");
-            return;
-        }
-
         commentDataAccessObject.addCommentToArtwork(artwork, comment);
-        final CommentOutputData outputData = new CommentOutputData(artworkTitle, comment, true);
+        final CommentOutputData outputData = new CommentOutputData(artworkTitle, comment, success);
         commentPresenter.presentSuccessView(outputData);
     }
 

@@ -25,7 +25,7 @@ public class CommentController {
      */
     public void execute(Artwork artwork, String comment) throws IOException {
         final CommentInputData commentInputData = new CommentInputData(artwork, comment);
-        commentInteractor.addComment(commentInputData);
+        commentInteractor.execute(commentInputData);
     }
 
     public List<Artwork> getCommentedArtworks() {

@@ -29,6 +29,8 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
     private static final String ID = "id";
     private static final String FAVORITE = "favorite";
     private static final String RATING = "rating";
+    private static final String FILE_NOT_FOUND_ATTEMPTING_TO_USE_A_DEFAULT_FILE =
+            "File not found, attempting to use a default file...";
     private final File jsonFile;
     private final Map<String, Artwork> artworks = new HashMap<>();
 
@@ -91,7 +93,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
             }
         }
         catch (IOException event) {
-            System.err.println("File not found, attempting to use a default file...");
+            System.err.println(FILE_NOT_FOUND_ATTEMPTING_TO_USE_A_DEFAULT_FILE);
         }
     }
 
@@ -170,7 +172,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
 
         }
         catch (IOException event) {
-            System.err.println("File not found, attempting to use a default file...");
+            System.err.println(FILE_NOT_FOUND_ATTEMPTING_TO_USE_A_DEFAULT_FILE);
         }
     }
 
@@ -201,8 +203,8 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
             return finalArt;
         }
         else {
-            final MuseumDataAccessObject baoBj = new MuseumDataAccessObject();
-            return DaoBj.getArtworkById(id);
+            final MuseumDataAccessObject daoBj = new MuseumDataAccessObject();
+            return daoBj.getArtworkById(id);
         }
     }
 
@@ -345,12 +347,17 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
             }
         }
         catch (IOException event) {
-            System.err.println("File not found, attempting to use a default file...");
+            System.err.println(FILE_NOT_FOUND_ATTEMPTING_TO_USE_A_DEFAULT_FILE);
         }
     }
 
     @Override
     public List<Artwork> searchArtwork(String searchMessage) {
         return List.of();
+    }
+
+    @Override
+    public Artwork getSelectedArtwork(Artwork artwork) throws IOException {
+        return null;
     }
 }

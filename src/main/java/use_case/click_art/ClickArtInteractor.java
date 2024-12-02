@@ -1,5 +1,7 @@
 package use_case.click_art;
 
+import java.io.IOException;
+
 import data.MuseumDataAccessObject;
 import entities.Artwork;
 
@@ -7,21 +9,21 @@ import entities.Artwork;
  * Click art interactor.
  */
 public class ClickArtInteractor implements ClickArtInputBoundary {
-    private final MuseumDataAccessObject artworkDataAccessObject;
+    private final ClickArtDataAccessInterface clickDataAccessObject;
     private final ClickArtOutputBoundary clickArtPresenter;
 
     public ClickArtInteractor(MuseumDataAccessObject artworkDataAccessObject,
                               ClickArtOutputBoundary clickArtOutputBoundary) {
-        this.artworkDataAccessObject = artworkDataAccessObject;
+        this.clickDataAccessObject = artworkDataAccessObject;
         this.clickArtPresenter = clickArtOutputBoundary;
     }
 
     @Override
-    public void execute(ClickArtInputData clickArtInputData) {
+    public void execute(ClickArtInputData clickArtInputData) throws IOException {
         final Artwork artwork = clickArtInputData.getArtwork();
-        final String url = artwork.getImageUrl();
-        final String title = artwork.getTitle();
-        final String artistName = artwork.getArtistName();
+        clickDataAccessObject.getSelectedArtwork(artwork);
+        final ClickArtOutputData clickArtOutputData = new ClickArtOutputData(clickArtInputData.getArtwork());
+        clickArtPresenter.switchToCFRView(clickArtOutputData);
     }
 
     @Override

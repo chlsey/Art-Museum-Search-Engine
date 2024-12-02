@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -149,8 +150,14 @@ public class ClickView extends JPanel implements PropertyChangeListener {
 
         final JButton backButton = new JButton("Back");
         backButton.addActionListener(event -> {
+            try {
+                clickArtController.execute(clickArtViewModel.getSelectedArtwork());
+            }
+            catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             clickArtController.switchToSearch();
-            final CardLayout cardLayout = (CardLayout) getParent().getLayout();
+            CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "search");
         });
         buttons.add(cfrButton);

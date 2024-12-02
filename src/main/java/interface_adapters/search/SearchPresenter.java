@@ -71,5 +71,7 @@ public class SearchPresenter implements SearchOutputBoundary {
     public void prepareFailView(String errorMessage) {
         final SearchState searchState = searchViewModel.getState();
         searchViewModel.firePropertyChanged();
+        this.viewManagerModel.setState(clickArtViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged("searched");
     }
 }

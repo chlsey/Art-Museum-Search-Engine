@@ -12,10 +12,9 @@ public class FilterInteractor implements FilterInputBoundary {
 
     @Override
     public void execute(FilterInputData filterInputData) {
-        boolean failed = false;
         final String filter = filterInputData.getCurrentFilter();
         filterDataAccessObject.changeFilter(filter);
-        final FilterOutputData currentFilter = new FilterOutputData(filter, failed);
-        filterPresenter.prepareFilter(currentFilter);
+        final FilterOutputData filterOutputData = new FilterOutputData(filter,false);
+        filterPresenter.setFilter(filterOutputData);
     }
 }
