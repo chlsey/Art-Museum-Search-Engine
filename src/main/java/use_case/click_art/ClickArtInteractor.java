@@ -1,9 +1,11 @@
 package use_case.click_art;
 
-
 import data.MuseumDataAccessObject;
 import entities.Artwork;
 
+/**
+ * Click art interactor.
+ */
 public class ClickArtInteractor implements ClickArtInputBoundary {
     private final MuseumDataAccessObject artworkDataAccessObject;
     private final ClickArtOutputBoundary clickArtPresenter;
@@ -14,20 +16,12 @@ public class ClickArtInteractor implements ClickArtInputBoundary {
         this.clickArtPresenter = clickArtOutputBoundary;
     }
 
-
     @Override
     public void execute(ClickArtInputData clickArtInputData) {
         final Artwork artwork = clickArtInputData.getArtwork();
-        String url = artwork.getImageUrl();
-        String title = artwork.getTitle();
-//        String description = artwork.getDescription();
-        String artistName = artwork.getArtistName();
-//        String timePeriod = artwork.getTimePeriod();
-//        final ClickArtOutputData clickArtOutputData = new ClickArtOutputData(url, title,
-//                description, artistName, timePeriod);
-//        clickArtPresenter.prepareSuccessView(clickArtOutputData);
-//        clickArtPresenter.prepareFailView("Page not found.");
-
+        final String url = artwork.getImageUrl();
+        final String title = artwork.getTitle();
+        final String artistName = artwork.getArtistName();
     }
 
     @Override
@@ -35,8 +29,12 @@ public class ClickArtInteractor implements ClickArtInputBoundary {
         clickArtPresenter.switchToSearchView();
     }
 
+    /**
+     * Switch to cfr view.
+     * @param clickArtInputData clickArtInputData
+     */
     public void switchToCFRView(ClickArtInputData clickArtInputData) {
-        ClickArtOutputData clickArtOutputData = new ClickArtOutputData(clickArtInputData.getArtwork());
+        final ClickArtOutputData clickArtOutputData = new ClickArtOutputData(clickArtInputData.getArtwork());
         clickArtPresenter.switchToCFRView(clickArtOutputData);
     }
 }
