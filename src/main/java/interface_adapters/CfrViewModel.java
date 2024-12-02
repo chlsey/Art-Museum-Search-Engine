@@ -1,63 +1,49 @@
 package interface_adapters;
 
-import entities.Artwork;
-
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class CfrViewModel extends ViewModel<CfrState>{
+import entities.Artwork;
+
+/**
+ * Cfr view model.
+ */
+public class CfrViewModel extends ViewModel<CfrState> {
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
-//    private RatingState ratingState;
-//    private CommentState commentState;
-//    private FavoriteState favoriteState;
     private Artwork selectedArtwork;
     private final String viewName = "CFRView";
 
     public CfrViewModel() {
         super("CFRView");
         setState(new CfrState());
-//        this.commentState = null;
-//        this.favoriteState = new FavoriteState();
-//        this.ratingState = new RatingState();
     }
 
+    /**
+     * Set State.
+     * @param cfrState cfrState
+     */
     public void setState(CfrState cfrState) {
         super.setState(cfrState);
         firePropertyChanged("CFRView");
     }
 
-//    public CommentState getCommentState() {
-//        return commentState;
-//    }
-//
-//    public FavoriteState getFavoriteState() {
-//        return favoriteState;
-//    }
-//
-//    public void setCommentState(CommentState commentState) {
-//        this.commentState = commentState;
-//    }
-//
-//    public void setFavoriteState(FavoriteState favoriteState) { this.favoriteState = favoriteState; }
-
     public String getViewName() {
         return viewName;
     }
 
-
+    /**
+     * Remove property change listener.
+     * @param listener listener
+     */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         support.removePropertyChangeListener(listener);
     }
-
-//    public RatingState getRatingState() {
-//        return ratingState;
-//    }
 
     public void setSelectedArtwork(Artwork selectedArtwork) {
         this.selectedArtwork = selectedArtwork;
     }
 
-    public Artwork getSelectedArtwork(){
+    public Artwork getSelectedArtwork() {
         return selectedArtwork;
     }
 }
