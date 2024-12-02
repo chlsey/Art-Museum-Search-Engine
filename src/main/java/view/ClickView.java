@@ -1,21 +1,35 @@
 package view;
 
-import entities.Artwork;
-import interface_adapters.CfrViewModel;
-import interface_adapters.click_art.ClickArtController;
-import interface_adapters.click_art.ClickArtViewModel;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import javax.swing.*;
 
+import org.jetbrains.annotations.NotNull;
 
+import entities.Artwork;
+import interface_adapters.CfrViewModel;
+import interface_adapters.click_art.ClickArtController;
+import interface_adapters.click_art.ClickArtViewModel;
+
+/**
+ * Click view.
+ */
 public class ClickView extends JPanel implements PropertyChangeListener {
+    private static final int FORTY = 40;
+    private static final int FIFTY = 50;
+    private static final int THIRTY = 30;
+    private static final int SIXTEEN = 16;
+    private static final int TEN = 10;
+    private static final int TWENTY_EIGHT = 28;
+    private static final int HUNDRED = 100;
+    private static final int TWO_HUNDRED = 200;
+    private static final int FOUR_HUNDRED = 400;
+    private static final String ARIAL = "Arial";
+
     private final String viewName = "ClickView";
     private final ClickArtController clickArtController;
     private final ClickArtViewModel clickArtViewModel;
@@ -24,7 +38,6 @@ public class ClickView extends JPanel implements PropertyChangeListener {
     private final CardLayout cardLayout;
     private final JPanel mainPanel;
     private final JPanel detailsPanel;
-//    private final JPanel galleryPanel;
 
     private final JLabel imageLabel;
     private final JLabel titleLabel;
@@ -34,115 +47,89 @@ public class ClickView extends JPanel implements PropertyChangeListener {
     private final JLabel favorite;
     private final JTextArea descriptionArea;
 
-
-    public ClickView(ClickArtController clickArtController, ClickArtViewModel clickArtViewModel, CfrViewModel cfrViewModel) {
+    /**
+     * Click view.
+     * @param clickArtController clickArtController
+     * @param clickArtViewModel clickArtViewModel
+     * @param cfrViewModel cfrViewModel
+     */
+    public ClickView(ClickArtController clickArtController, ClickArtViewModel clickArtViewModel,
+                     CfrViewModel cfrViewModel) {
         this.clickArtController = clickArtController;
         this.clickArtViewModel = clickArtViewModel;
         this.cfrViewModel = cfrViewModel;
         clickArtViewModel.addPropertyChangeListener(this);
 
-        // Initialize the CardLayout and main panel
         cardLayout = new CardLayout();
         mainPanel = new JPanel(cardLayout);
 
-        // Initialize Gallery panel
-//        galleryPanel = new JPanel();
-//        galleryPanel.setLayout(new BoxLayout(galleryPanel, BoxLayout.Y_AXIS));
-//        JButton viewDetailsButton = new JButton("View Artwork Details");
-//        viewDetailsButton.setAlignmentX(CENTER_ALIGNMENT);
-//        viewDetailsButton.addActionListener(e -> cardLayout.show(mainPanel, "DetailsView"));
-//        galleryPanel.add(viewDetailsButton);
-//        galleryPanel.add(new JLabel("Gallery View (Placeholder)"));
-
-        // Initialize Details panel
         detailsPanel = new JPanel();
         detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, THIRTY)));
 
-        //Image label
         imageLabel = new JLabel();
         imageLabel.setAlignmentX(CENTER_ALIGNMENT);
-        imageLabel.setPreferredSize(new Dimension(400, 400));
+        imageLabel.setPreferredSize(new Dimension(FOUR_HUNDRED, FOUR_HUNDRED));
         imageLabel.repaint();
         detailsPanel.add(imageLabel);
 
-        // Title label
         titleLabel = new JLabel();
-        titleLabel.setAlignmentX(CENTER_ALIGNMENT); // Center-align the label
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 40));
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+        titleLabel.setAlignmentX(CENTER_ALIGNMENT);
+        titleLabel.setFont(new Font(ARIAL, Font.BOLD, FORTY));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, FIFTY)));
         detailsPanel.add(titleLabel);
 
-        // Artist label
         artistLabel = new JLabel();
-        artistLabel.setAlignmentX(CENTER_ALIGNMENT); // Center-align the label
-        artistLabel.setFont(new Font("Arial", Font.PLAIN, 30));
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 30)));
+        artistLabel.setAlignmentX(CENTER_ALIGNMENT);
+        artistLabel.setFont(new Font(ARIAL, Font.PLAIN, THIRTY));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, THIRTY)));
         detailsPanel.add(artistLabel);
 
-
-        // Description text area
-        descriptionArea = new JTextArea(3, 10);
+        descriptionArea = new JTextArea(1 + 1 + 1, TEN);
         descriptionArea.setEditable(false);
         descriptionArea.setLineWrap(true);
         descriptionArea.setWrapStyleWord(true);
-        descriptionArea.setFont(new Font("Serif", Font.PLAIN, 16));
-        //JScrollPane descriptionScrollPane = new JScrollPane(descriptionArea);
-        //descriptionScrollPane.setAlignmentX(CENTER_ALIGNMENT); // Center-align the scroll pane
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+        descriptionArea.setFont(new Font("Serif", Font.PLAIN, SIXTEEN));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, FIFTY)));
         detailsPanel.add(descriptionArea);
 
-        JPanel cfrPanel = new JPanel();
+        final JPanel cfrPanel = new JPanel();
         cfrPanel.setLayout(new BoxLayout(cfrPanel, BoxLayout.Y_AXIS));
         cfrPanel.setAlignmentX(CENTER_ALIGNMENT);
 
         rating = new JLabel();
-        rating.setFont(new Font("Arial", Font.BOLD, 28)); // Larger font
+        rating.setFont(new Font(ARIAL, Font.BOLD, TWENTY_EIGHT));
         favorite = new JLabel();
-        favorite.setFont(new Font("Arial", Font.BOLD, 28)); // Larger font
+        favorite.setFont(new Font(ARIAL, Font.BOLD, TWENTY_EIGHT));
         comment = new JLabel();
-        comment.setFont(new Font("Arial", Font.BOLD, 28)); // Larger font
+        comment.setFont(new Font(ARIAL, Font.BOLD, TWENTY_EIGHT));
         comment.setHorizontalAlignment(SwingConstants.LEFT);
 
-        // Add spacing between CFR elements
-        JPanel frPanel = new JPanel();
+        final JPanel frPanel = new JPanel();
         frPanel.setLayout(new BoxLayout(frPanel, BoxLayout.X_AXIS));
         frPanel.setAlignmentX(CENTER_ALIGNMENT);
         frPanel.add(rating);
-        frPanel.add(Box.createRigidArea(new Dimension(100, 0)));
+        frPanel.add(Box.createRigidArea(new Dimension(HUNDRED, 0)));
         frPanel.add(favorite);
         cfrPanel.add(frPanel);
-        cfrPanel.add(Box.createRigidArea(new Dimension(0, 30)));
-        JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        cfrPanel.add(Box.createRigidArea(new Dimension(0, THIRTY)));
+        final JPanel commentPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         commentPanel.add(comment);
         cfrPanel.add(commentPanel);
 
-        // Add the CFR panel to the details panel
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, FIFTY)));
         detailsPanel.add(cfrPanel);
 
         final JPanel buttons = getButtons(clickArtController);
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 50)));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, FIFTY)));
         detailsPanel.add(buttons);
-        detailsPanel.add(Box.createRigidArea(new Dimension(0, 100)));
+        detailsPanel.add(Box.createRigidArea(new Dimension(0, HUNDRED)));
 
-//
-//        backButton.addActionListener(e -> {
-//            // Set the state to "search" in the view model
-//            clickArtViewModel.setState(new ClickArtState("search");
-//        });
-//        detailsPanel.add(backButton);
-
-        // Add panels to the CardLayout
-//        mainPanel.add(galleryPanel, "GalleryView");
         mainPanel.add(detailsPanel, "DetailsView");
 
-        // Add the main panel to the ClickView
         setLayout(new BorderLayout());
         add(mainPanel, BorderLayout.CENTER);
 
-        // Show the gallery view by default
-        // cardLayout.show(mainPanel, "GalleryView");
         cardLayout.show(mainPanel, "DetailsView");
         mainPanel.revalidate();
         mainPanel.repaint();
@@ -151,23 +138,19 @@ public class ClickView extends JPanel implements PropertyChangeListener {
     @NotNull
     private JPanel getButtons(ClickArtController clickArtController) {
         final JPanel buttons = new JPanel();
-
-        //CFR BUTTON
-        JButton cfrButton = new JButton("Rate It!");
-        cfrButton.addActionListener(e -> {
+        final JButton cfrButton = new JButton("Rate It!");
+        cfrButton.addActionListener(event -> {
             cfrViewModel.setSelectedArtwork(clickArtViewModel.getSelectedArtwork());
             clickArtController.switchToCFR(clickArtViewModel.getSelectedArtwork());
-            //System.out.println(clickArtViewModel.getSelectedArtwork());
             cfrViewModel.firePropertyChanged("CFRView");
-            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+            final CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "CFRView");
         });
 
-        // Back button
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> {
+        final JButton backButton = new JButton("Back");
+        backButton.addActionListener(event -> {
             clickArtController.switchToSearch();
-            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+            final CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), "search");
         });
         buttons.add(cfrButton);
@@ -175,61 +158,55 @@ public class ClickView extends JPanel implements PropertyChangeListener {
         return buttons;
     }
 
-
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //System.out.println(evt.getPropertyName());
-        // Check if the state has changed and we are now viewing artwork details
         if (ClickArtViewModel.STATE_CHANGED_PROPERTY.equals(evt.getPropertyName())) {
-            Artwork selectedArtwork = clickArtViewModel.getSelectedArtwork();
+            final Artwork selectedArtwork = clickArtViewModel.getSelectedArtwork();
             if (selectedArtwork != null) {
-                //System.out.println(selectedArtwork.getRating());
                 URI newuri = null;
                 try {
                     newuri = new URI(selectedArtwork.getImageUrl());
-                } catch (URISyntaxException e) {
-                    throw new RuntimeException(e);
+                }
+                catch (URISyntaxException event) {
+                    throw new RuntimeException(event);
                 }
                 ImageIcon imageIcon;
                 if (newuri.isAbsolute()) {
                     try {
                         imageIcon = new ImageIcon(newuri.toURL());
-                    } catch (MalformedURLException e) {
-                        throw new RuntimeException(e);
                     }
-                } else {
+                    catch (MalformedURLException event) {
+                        throw new RuntimeException(event);
+                    }
+                }
+                else {
                     imageIcon = new ImageIcon(selectedArtwork.getImageUrl());
                 }
 
-                Image image = imageIcon.getImage(); // transform it
-                Image newimg = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH); // scale it the smooth way
-                imageIcon = new ImageIcon(newimg);  // transform it back
+                final Image image = imageIcon.getImage();
+                final Image newimg = image.getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+                imageIcon = new ImageIcon(newimg);
 
                 imageLabel.setIcon(imageIcon);
-                imageLabel.setPreferredSize(new Dimension(200, 200));
+                imageLabel.setPreferredSize(new Dimension(TWO_HUNDRED, TWO_HUNDRED));
 
                 titleLabel.setText("Title: " + selectedArtwork.getTitle());
                 artistLabel.setText("Artist: " + selectedArtwork.getArtistName());
                 descriptionArea.setText(selectedArtwork.getDescription());
                 rating.setText("Rating: " + selectedArtwork.getRating());
                 comment.setText("Comment: " + selectedArtwork.getLastComment());
-//                Boolean favorited = cfrViewModel.getState().getFavorited();
-//                if (favorited != null) {
-//                    if (favorited) {
-//                        favorite.setText("It's my favorite!");
-//                    } else {
-//                        favorite.setText("It's not my favorite");
-//                    }
-//                } else {
+
                 if (selectedArtwork.checkFavorited()) {
                     favorite.setText("It's my favorite!");
-                } else {
+                }
+                else {
                     favorite.setText("It's not my favorite");
                 }
 
-                cardLayout.show(mainPanel, "DetailsView"); // Switch to the details view
-            } else {
-                cardLayout.show(mainPanel, "GalleryView"); // Switch back to the gallery view
+                cardLayout.show(mainPanel, "DetailsView");
+            }
+            else {
+                cardLayout.show(mainPanel, "GalleryView");
             }
         }
         revalidate();

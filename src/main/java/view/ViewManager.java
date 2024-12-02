@@ -2,9 +2,9 @@ package view;
 
 import java.awt.CardLayout;
 
-import interface_adapters.ViewManagerModel;
-
 import javax.swing.JPanel;
+
+import interface_adapters.ViewManagerModel;
 
 /**
  * The View Manager for the program. It listens for property change events
@@ -21,5 +21,4 @@ public class ViewManager {
         this.viewManagerModel = viewManagerModel;
 
     }
-
 }

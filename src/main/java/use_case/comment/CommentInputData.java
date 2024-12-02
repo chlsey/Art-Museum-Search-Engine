@@ -3,7 +3,7 @@ package use_case.comment;
 import entities.Artwork;
 
 /**
- * Comment Input Data.
+ * Comment input data.
  */
 public class CommentInputData {
     private final String artworkTitle;

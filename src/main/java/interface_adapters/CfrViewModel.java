@@ -47,5 +47,3 @@ public class CfrViewModel extends ViewModel<CfrState> {
         return selectedArtwork;
     }
 }
-
-

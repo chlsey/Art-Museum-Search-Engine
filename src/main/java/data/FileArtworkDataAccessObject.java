@@ -91,6 +91,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
             }
         }
         catch (IOException event) {
+            System.err.println("File not found, attempting to use a default file...");
         }
     }
 
@@ -132,10 +133,8 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
             }
             newArtwork.set(COMMENTS, commentsArray);
 
-            // Add the new artwork to the "artworks" array
             artworksArray.add(newArtwork);
 
-            // Write the updated structure back to the file
             objectMapper.writerWithDefaultPrettyPrinter().writeValue(jsonFile, rootNode);
 
         }
@@ -171,6 +170,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
 
         }
         catch (IOException event) {
+            System.err.println("File not found, attempting to use a default file...");
         }
     }
 
@@ -186,8 +186,8 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
                     break;
                 }
             }
-            final MuseumDataAccessObject DaoBj = new MuseumDataAccessObject();
-            final Artwork artwork = DaoBj.getArtworkById(id);
+            final MuseumDataAccessObject baoBj = new MuseumDataAccessObject();
+            final Artwork artwork = baoBj.getArtworkById(id);
             final Artwork finalArt = new Artwork(artwork.getTitle(), artwork.getArtistName(),
                     artwork.getCompositionDate(),
                     artwork.getGallery(), artwork.getImageUrl(), artwork.getKeyWords(), artwork.getDescription(), id);
@@ -201,7 +201,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
             return finalArt;
         }
         else {
-            final MuseumDataAccessObject DaoBj = new MuseumDataAccessObject();
+            final MuseumDataAccessObject baoBj = new MuseumDataAccessObject();
             return DaoBj.getArtworkById(id);
         }
     }
@@ -345,6 +345,7 @@ public class FileArtworkDataAccessObject implements CommentDataAccessInterface,
             }
         }
         catch (IOException event) {
+            System.err.println("File not found, attempting to use a default file...");
         }
     }
 

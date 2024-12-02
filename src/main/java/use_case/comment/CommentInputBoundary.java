@@ -6,19 +6,19 @@ import java.util.List;
 import entities.Artwork;
 
 /**
- * Comment Inpuut Boundary.
+ * Comment input boundary.
  */
 public interface CommentInputBoundary {
     /**
      * Add comment.
-     * @param commentInputData CommentInputData
-     * @throws IOException failed comment
+     * @param commentInputData commentInputData
+     * @throws IOException exception
      */
     void addComment(CommentInputData commentInputData) throws IOException;
 
     /**
-     * Get all commented artworks.
-     * @return a list of artworks
+     * Get comment artwork.
+     * @return list of artwork
      */
     List<Artwork> getCommentedArtworks();
 }

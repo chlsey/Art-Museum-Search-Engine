@@ -6,28 +6,28 @@ import java.util.List;
 import entities.Artwork;
 
 /**
- * Comment Data Access Interface.
+ * Comment data access interface.
  */
 public interface CommentDataAccessInterface {
     /**
-     * Add a comment.
-     * @param artwork Artwork
-     * @param comment String
-     * @throws IOException String
+     * Add comment to artwork.
+     * @param artwork artwork
+     * @param comment comment
+     * @throws IOException exception
      */
     void addCommentToArtwork(Artwork artwork, String comment) throws IOException;
 
     /**
-     * Get artwork by its id.
-     * @param id String
-     * @return the artwork with the same id.
-     * @throws IOException string
+     * Get artwork by id.
+     * @param id id
+     * @return exception
+     * @throws IOException exception
      */
     Artwork getArtworkById(String id) throws IOException;
 
     /**
-     * Get all commented artworks.
-     * @return a list of commented artworks.
+     * Get comment artwork.
+     * @return list of artwork
      */
     List<Artwork> getCommentedArtworks();
 }
