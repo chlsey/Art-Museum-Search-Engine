@@ -1,19 +1,19 @@
 package view;
 
 import java.awt.*;
-import org.jetbrains.annotations.NotNull;
-import javax.swing.*;
-
-import entities.Artwork;
-import interface_adapters.CfrViewModel;
-import interface_adapters.click_art.ClickArtController;
-import interface_adapters.click_art.ClickArtViewModel;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import javax.swing.*;
+
+import org.jetbrains.annotations.NotNull;
+
+import entities.Artwork;
+import interface_adapters.CfrViewModel;
+import interface_adapters.click_art.ClickArtController;
+import interface_adapters.click_art.ClickArtViewModel;
 
 /**
  * Click view.

@@ -1,5 +1,17 @@
 package view;
 
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
 import entities.Artwork;
 import interface_adapters.click_art.ClickArtViewModel;
 import interface_adapters.comment.CommentController;
@@ -9,24 +21,17 @@ import interface_adapters.rating.RatingController;
 import interface_adapters.search.SearchController;
 import interface_adapters.search.SearchViewModel;
 
-import java.awt.event.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 /**
  * The View for the Search Use Case.
  */
 public class SearchView extends JPanel implements ActionListener, PropertyChangeListener {
-    private static final int TWO_HUNDRED = 200;
-    private static final int TWO_HUNDRED_Fifty = 250;
+    private static final int HUNDRED = 100;
+    private static final int TWO_HUNDRED_FIFTY = 250;
+    private static final int TWO_HUNDRED_THIRTY = 230;
+    private static final int TEN = 10;
+    private static final int SEVEN = 7;
+    private static final int THIRTY = 30;
+    private static final String ARTIST = "Artist";
 
     private final String viewName = "search";
 
@@ -64,7 +69,6 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchViewModel.addPropertyChangeListener(this);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-
         final JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
 
@@ -75,7 +79,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         inputPanel.add(keywordInfo);
         panelPictures = new JPanel();
-        panelPictures.setLayout(new GridLayout(0, 7, 10, 10));
+        panelPictures.setLayout(new GridLayout(0, SEVEN, TEN, TEN));
         scrollPanelPictures = new JScrollPane(panelPictures);
         scrollPanelPictures.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPanelPictures.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -84,11 +88,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         searchButton = new JButton("Search");
         clearButton = new JButton("Clear");
 
-        JPanel radioPanel = new JPanel();
+        final JPanel radioPanel = new JPanel();
         radioPanel.setLayout(new BoxLayout(radioPanel, BoxLayout.X_AXIS));
         radioPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        ButtonGroup group = new ButtonGroup();
-        artistButton = new JRadioButton("Artist");
+        final ButtonGroup group = new ButtonGroup();
+        artistButton = new JRadioButton(ARTIST);
         hasImageButton = new JRadioButton("Has Image");
         highLightButton = new JRadioButton("High Light");
         onViewButton = new JRadioButton("On View");
@@ -103,11 +107,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         radioPanel.add(highLightButton);
         radioPanel.add(onViewButton);
 
-        searchButton.addActionListener(e -> {
-            String keyword = keywordInputField.getText();
+        searchButton.addActionListener(event -> {
+            final String keyword = keywordInputField.getText();
             String qual = "";
             if (artistButton.isSelected()) {
-                qual = "Artist";
+                qual = ARTIST;
             }
             else if (hasImageButton.isSelected()) {
                 qual = "Hasimages";
@@ -119,7 +123,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 qual = "Onview";
             }
             else {
-                qual = "Artist";
+                qual = ARTIST;
             }
             filterController.execute(qual);
             searchController.execute(keyword);
@@ -133,7 +137,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             @Override
             public void keyPressed(java.awt.event.KeyEvent event) {
                 if (event.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String keyword = keywordInputField.getText();
+                    final String keyword = keywordInputField.getText();
                     searchController.execute(keyword);
                 }
             }
@@ -141,7 +145,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
         clearButton.addActionListener(this);
         buttons.add(favoriteButton);
-        buttons.add(Box.createRigidArea(new Dimension(100, 10)));
+        buttons.add(Box.createRigidArea(new Dimension(HUNDRED, TEN)));
         buttons.add(searchButton);
         buttons.add(clearButton);
 
@@ -152,12 +156,11 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
         this.add(inputPanel);
         this.add(radioPanel);
         this.add(buttons);
-        JLabel searchResults = new JLabel("Results:");
+        final JLabel searchResults = new JLabel("Results:");
         searchResults.setAlignmentX(Component.CENTER_ALIGNMENT);
         this.add(searchResults);
         this.add(scrollPanelPictures);
     }
-
 
     private void addKeywordListener() {
     }
@@ -169,7 +172,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             searchController.execute(keyword);
             String qual = "";
             if (artistButton.isSelected()) {
-                qual = "Artist";
+                qual = ARTIST;
             }
 
             else if (hasImageButton.isSelected()) {
@@ -185,7 +188,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
             }
 
             else {
-                qual = "Artist";
+                qual = ARTIST;
             }
             filterController.execute(qual);
 
@@ -232,23 +235,22 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
                 try {
                     final Image image = loadImageSafely(art.getImageUrl());
-
                     final Image newImg = image.getScaledInstance(TWO_HUNDRED, TWO_HUNDRED, Image.SCALE_SMOOTH);
                     final ImageIcon imageIcon = new ImageIcon(newImg);
 
                     final JLabel imageLabel = new JLabel(imageIcon);
-                    imageLabel.setPreferredSize(new Dimension(TWO_HUNDRED, 200));
+                    imageLabel.setPreferredSize(new Dimension(TWO_HUNDRED, TWO_HUNDRED));
 
                     final JPanel titleBar = new JPanel();
                     titleBar.setBackground(Color.LIGHT_GRAY);
                     final JLabel titleLabel = new JLabel(art.getTitle());
                     titleBar.add(titleLabel);
-                    titleBar.setPreferredSize(new Dimension(TWO_HUNDRED, 30));
+                    titleBar.setPreferredSize(new Dimension(TWO_HUNDRED, THIRTY));
                     titleBar.setVisible(false);
 
                     final JPanel imageContainer = new JPanel();
                     imageContainer.setLayout(new BorderLayout());
-                    imageContainer.setPreferredSize(new Dimension(TWO_HUNDRED, 230));
+                    imageContainer.setPreferredSize(new Dimension(TWO_HUNDRED, TWO_HUNDRED_THIRTY));
                     imageContainer.add(imageLabel, BorderLayout.CENTER);
                     imageContainer.add(titleBar, BorderLayout.SOUTH);
 
@@ -266,7 +268,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
 
                         @Override
                         public void mouseEntered(MouseEvent event) {
-                            final Image hoverImage = image.getScaledInstance(TWO_HUNDRED_Fifty, TWO_HUNDRED_Fifty,
+                            final Image hoverImage = image.getScaledInstance(TWO_HUNDRED_FIFTY, TWO_HUNDRED_FIFTY,
                                     Image.SCALE_SMOOTH);
                             imageLabel.setIcon(new ImageIcon(hoverImage));
                             titleBar.setVisible(true);
@@ -290,9 +292,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
                 }
                 catch (Exception ex) {
                     ex.printStackTrace();
-
-                    // If loading fails, add a placeholder
-                    JLabel placeholderLabel = new JLabel("Image not available");
+                    final JLabel placeholderLabel = new JLabel("Image not available");
                     placeholderLabel.setPreferredSize(new Dimension(TWO_HUNDRED, TWO_HUNDRED));
                     placeholderLabel.setHorizontalAlignment(SwingConstants.CENTER);
                     placeholderLabel.setVerticalAlignment(SwingConstants.CENTER);
@@ -312,7 +312,7 @@ public class SearchView extends JPanel implements ActionListener, PropertyChange
      */
     private Image loadImageSafely(String imageUrl) {
         try {
-            URL url = new URL(imageUrl);
+            final URL url = new URL(imageUrl);
             return ImageIO.read(url);
         }
         catch (Exception event) {
