@@ -1,7 +1,5 @@
 package interface_adapters.search;
 
-import use_case.search.*;
-
 import use_case.search.SearchInputBoundary;
 import use_case.search.SearchInputData;
 
@@ -15,10 +13,13 @@ public class SearchController {
         this.artworkSearchInputBoundary = artworkSearchInputBoundary;
     }
 
-    public void execute(String keyword){
+    /**
+     * Execute.
+     * @param keyword keyword
+     */
+    public void execute(String keyword) {
         final SearchInputData artworkSearchInputData = new SearchInputData(keyword);
 
         artworkSearchInputBoundary.execute(artworkSearchInputData);
     }
-
 }
