@@ -1,10 +1,13 @@
 package use_case.comment;
 
-import entities.Artwork;
-
 import java.io.IOException;
 import java.util.List;
 
+import entities.Artwork;
+
+/**
+ * Comment Interactor.
+ */
 public class CommentInteractor implements CommentInputBoundary {
     private final CommentDataAccessInterface commentDataAccessObject;
     private final CommentOutputBoundary commentPresenter;
@@ -15,11 +18,16 @@ public class CommentInteractor implements CommentInputBoundary {
         this.commentPresenter = commentOutputBoundary;
     }
 
+    /**
+     * Add comment.
+     * @param commentInputData commentInputData
+     * @throws IOException exception
+     */
     @Override
     public void addComment(CommentInputData commentInputData) throws IOException {
         final String artworkTitle = commentInputData.getArtworkTitle();
         final String comment = commentInputData.getComment();
-        Artwork artwork = commentDataAccessObject.getArtworkById(commentInputData.getArtwork().getId());
+        final Artwork artwork = commentDataAccessObject.getArtworkById(commentInputData.getArtwork().getId());
 
         if (comment.isEmpty()) {
             commentPresenter.presentFailureView("Comment cannot be empty");
@@ -27,8 +35,7 @@ public class CommentInteractor implements CommentInputBoundary {
         }
 
         commentDataAccessObject.addCommentToArtwork(artwork, comment);
-
-        CommentOutputData outputData = new CommentOutputData(artworkTitle, comment, true);
+        final CommentOutputData outputData = new CommentOutputData(artworkTitle, comment, true);
         commentPresenter.presentSuccessView(outputData);
     }
 
