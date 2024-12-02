@@ -3,6 +3,10 @@ package interface_adapters;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+/**
+ * View model.
+ * @param <T> parameter
+ */
 public class ViewModel<T> {
 
     private final String viewName;
