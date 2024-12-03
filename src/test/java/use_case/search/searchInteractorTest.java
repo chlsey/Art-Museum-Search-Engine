@@ -18,6 +18,7 @@ public class searchInteractorTest {
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
         Artwork artwork2 = ArtworkFactory.createArtwork("Madame X", "John Singer Sargent", "1883",
                 "MoMA", "", "womanblackdressportrait", "no description", "112");
+        Artwork artwork3 = null;
         final InMemoryDataAccessObject dao = new InMemoryDataAccessObject();
         dao.save(artwork1);
         dao.save(artwork2);
@@ -39,6 +40,7 @@ public class searchInteractorTest {
 
             @Override
             public void prepareFailView(String errorMessage) {
+
                 fail("can't fail to search!");
             }
         };
