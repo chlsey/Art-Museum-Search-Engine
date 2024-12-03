@@ -58,37 +58,3 @@ Click on the button in the main window, and all rated or favorited artworks will
 ### License
 Program code is licensed under MIT License.
 
-### (to be removed in final README) Proposed Entities for the Domain:
-#### Artwork: 
-- Title
-- Time period
-- Artist
-- Gallery
-- List of keywords
-- Image
-
-### (to be removed in final README) Proposed API for the project:
-https://api.artic.edu/docs
-API for the database of the Art institute of Chicago
-https://metmuseum.github.io/ 
-Provides an API for retrieving information about all the artworks in the Metropolitan Museum of Modern Art.
-
-### (to be removed in final README) Scheduled Meeting Times + Mode of Communication:
-Meeting time outside of lab: Tuesday Afternoon (flexible)
-Mode of Communication: in person
-
-
-
-### (to be removed in final README) User Stories:
-
-1. Liam wants to take his friend to a magnificent art gallery and be their tour guide. By looking up the art pieces being offered with its associated information(i.e, title, year, etc) he can do it more efficiently. Either at the moment or once he is back from the gallery, he can rate the art work out of 5 stars.
-
-2. James wants to view some artworks. He can smoothly scroll through a gallery of art pieces, each displayed with a clear title, artist name, date of acquisition, and brief description.
-
-3. Bobby saw an artwork in the Metropolitan Museum of Art but needed to remember what the piece was called. Thankfully, he remembers the artist and searches it up. He is given the picture, title, location, time, artist name, etc… of the potential pieces it could be.
-
-4. Emily uses our search engine to find artworks. She is able to favorite the ones she likes.
-
-5. Anna wants to view some artworks. She is able to click on them upon searching and see their associated information.
-
-6. Robby sees some artworks he REALLY hates. He is able to leave hate comments under the artwork page.
