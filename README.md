@@ -36,7 +36,9 @@ query multiple museums for results at the same time.
 1. Search artworks by name, artist, etc. With a filter 
 2. View artwork descriptions by clicking into the image of the artwork
 3. Local rating and favoriting system, and the user is able to access the artworks that are favorited or rated. \
-   (screenshots TBA)
+   <img width="705" alt="Screen Shot 2024-12-03 at 12 09 21 AM" src="https://github.com/user-attachments/assets/4ae9bc18-2d4e-441a-bfc3-f33f2d5e9097">
+   <img width="578" alt="Screen Shot 2024-12-03 at 12 09 35 AM" src="https://github.com/user-attachments/assets/57e15024-6069-4872-bc44-e86f77f599a4">
+
 
 ### Installation instructions: 
 The software works on Windows 10, MacOS Sonoma 14.6.1, and Ubuntu 22.04.5 LTS Linux, other operating systems are not tested. \
