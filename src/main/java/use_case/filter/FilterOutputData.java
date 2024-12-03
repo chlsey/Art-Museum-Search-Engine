@@ -13,7 +13,4 @@ public class FilterOutputData {
         return filter;
     }
 
-    public Boolean getUsecaseFailed() {
-        return usecaseFailed;
-    }
 }
