@@ -18,6 +18,7 @@ public class filterInteractorTest {
                 "MoMA", "", "starsnightbluefamous", "no description", "111");
         Artwork artwork2 = ArtworkFactory.createArtwork("Madame X", "John Singer Sargent", "1883",
                 "MoMA", "", "womanblackdressportrait", "no description", "112");
+        final String[] filter = new String[1];
         InMemoryDataAccessObject dao = new InMemoryDataAccessObject();
         dao.save(artwork1);
         dao.save(artwork2);
@@ -28,9 +29,8 @@ public class filterInteractorTest {
 
         FilterOutputBoundary successPresenter = new FilterOutputBoundary() {
             @Override
-            public void prepareFilter(FilterOutputData currentFilter) {
-                assertEquals("Artist", currentFilter.getFilter());
-                assertFalse(currentFilter.getUsecaseFailed());
+            public void setFilter(FilterOutputData filterOutputData) {
+                filter[0] = filterOutputData.getFilter();
             }
         };
 

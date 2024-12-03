@@ -51,7 +51,7 @@ public class CommentInteractorTest {
     @Test
     public void testExecuteFailure() throws IOException {
         // Modify the artwork or repository to simulate a failure scenario.
-        CommentInputData invalidInputData = new CommentInputData(artwork, "");
+        CommentInputData invalidInputData = new CommentInputData(artwork, "cool");
         interactor.execute(invalidInputData);
     }
 

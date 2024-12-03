@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import data.MockMuseumDataAccessObject;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class clickArtInteractorTest {
@@ -50,7 +52,7 @@ public class clickArtInteractorTest {
     }
 
     @Test
-    public void testExecuteSuccess() {
+    public void testExecuteSuccess() throws IOException {
         interactor.execute(clickArtInputData);
         // Assuming the execute method should call prepareSuccessView with correct data.
         // Implement the necessary assertions here once the method is fully implemented.
