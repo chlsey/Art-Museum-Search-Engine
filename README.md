@@ -46,7 +46,7 @@ Jacoco 0.8.12 and RELEASE version Jupiter are used for unit testing and coverage
 
 
 ### Usage Guide
-(video TBA) \
+Demo Video: https://drive.google.com/file/d/17bzlJpGcG1ehUETHSbU9xqkU4PuDff9x/view?usp=drive_link
 1. Searching artworks
 Type your search query into the text box. Select any filters that you wish to be applied to your search.
 Images of search results will pop up. Hover over them to see the name and artist of the artworks, click on them
