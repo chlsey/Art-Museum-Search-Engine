@@ -38,6 +38,8 @@ query multiple museums for results at the same time.
 3. Local rating and favoriting system, and the user is able to access the artworks that are favorited or rated. \
    <img width="705" alt="Screen Shot 2024-12-03 at 12 09 21 AM" src="https://github.com/user-attachments/assets/4ae9bc18-2d4e-441a-bfc3-f33f2d5e9097">
    <img width="578" alt="Screen Shot 2024-12-03 at 12 09 35 AM" src="https://github.com/user-attachments/assets/57e15024-6069-4872-bc44-e86f77f599a4">
+   <img width="576" alt="Screen Shot 2024-12-03 at 12 10 36 AM" src="https://github.com/user-attachments/assets/3b918cb6-1fe6-40dd-92f0-d9d0960736cb">
+
 
 
 ### Installation instructions: 
